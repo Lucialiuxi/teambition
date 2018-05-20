@@ -1,0 +1,170 @@
+body{
+    font-family: Helvetica Neue,PingFang SC,Microsoft Yahei,\\5FAE\8F6F\96C5\9ED1,STXihei,\\534E\6587\7EC6\9ED1,sans-serif
+}
+h1,h2,h3,h4,h5{
+    padding: 0;
+}
+ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.projectPage{
+    color: #383838;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: Helvetica Neue,PingFang SC,Microsoft Yahei,\\5FAE\8F6F\96C5\9ED1,STXihei,\\534E\6587\7EC6\9ED1,sans-serif;
+
+}
+.projectPageHead{
+    position: relative;
+    background-color: #fff;
+    padding: 0;
+    height: 48px;
+    position: relative;
+    z-index: 100;
+    background-color: hsla(0,0%,100%,.95);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.15)
+}
+.projectPageHead .Nav-bar-left{
+    position: relative;
+    top: 0;
+    left: 15px;
+    height: 48px;
+    width: 380px;
+}
+.projectPageHead .Nav-bar-left .search-bar{
+    margin-top: 8px;
+    position: relative;
+    font-size: 14px;
+    color: #a6a6a6;
+}
+.projectPageHead .Nav-bar-left .ProjectTypeSelect{
+    position: absolute;
+    top: 60px;
+    left: 310px;
+    color: #383838;
+}
+.projectPageHead .Nav-bar-left .extendBtn{
+    position: absolute;
+    top: 5px;
+    left: 310px;
+    cursor: pointer;
+}
+.projectPageHead .search-bar i{
+    position: absolute;
+    top: 8px;
+    left: 15px;
+}
+.projectPageHead .searchProject{
+    padding-left: 8px;
+    border: none;
+    outline: none;
+    background: transparent;
+    flex-grow: 1;
+    font-size: 14px;
+    color: #a6a6a6;
+    height: 32px;
+    width: 280px;
+    border-radius: 19px;
+    background-color: #f5f5f5;
+    text-indent: 36px;
+}
+.projectPageHead .search-bar{
+    width: 280px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 37px;
+    transition: all 218ms;
+    height: 32px;
+    margin-right: 12px;
+}
+.ant-spin-container{
+    padding-left: 5px;
+    box-sizing: border-box;
+}
+.projectPageHead .ProjectTypeSelect{
+    border-radius: 4px;
+    background: #fff;
+    list-style: none;
+    overflow: auto;
+    margin: 0;
+    padding: 4px 0;
+    height: 190px;
+    width: 190px;
+    display: none;
+}
+.projectPageHead .ProjectTypeSelect .ProjectTypeItem{
+    height: 36px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    color: #383838;
+    box-sizing: border-box;
+}
+.ant-list-item-meta{
+    flex:none;
+}
+.ant-list-split .ant-list-item {
+    border-bottom: none;
+
+} 
+.ant-list-item:nth-child(1){
+    border-bottom: 1px solid #e8e8e8
+}
+.ant-list-item {
+    padding: 0;
+}
+.projectPageContent{
+    height: 800px;
+    background-color: #f5f5f5;
+
+}
+.projectPageHead .commonNav{
+    height: 100%;
+    width: 100%;
+}
+.siteLogo{
+    width: 95px;
+    height: 14px;
+    text-indent: -9999px;
+    background: url(./teambition-logo@2x.773fd502.png) no-repeat 0 0;
+    background-size: 92px 14px;
+    position: absolute;
+    top: 15px;
+    left: 570px;
+}
+.projectPage .projectPageHead .Nav-bar-right{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 48px;
+    width: 380px;
+}
+.Nav-bar-right span{
+    float: right;
+    color: #808080;
+    cursor: pointer;
+}
+.Nav-bar-right .mine,
+.Nav-bar-right .schedule,
+.Nav-bar-right .loginOut{
+    width: 60px;
+    height: 48px;
+    line-height: 48px;
+}
+.Nav-bar-right .msgIcon{
+    width: 40px;
+    height: 48px;
+    line-height: 48px;
+    margin-right: 10px;
+}
+.Nav-bar-right .userAvatar{
+    margin-top: 4px;
+}

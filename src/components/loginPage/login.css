@@ -1,0 +1,49 @@
+body{
+    margin: 0;
+}
+input{
+    padding:0;
+}
+.loginPage{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+.loginPage form{
+    margin: auto;
+    /* height: 250px; */
+    width: 340px;
+    background-color: #fff;
+}
+.loginPage form .username,
+.loginPage form .pw{
+    height: auto;
+    width: 100%;
+    margin-bottom: 25px;
+    padding: 12px;
+    font-size: 16px;
+    line-height: 20px;
+    -webkit-appearance: none;
+    border-radius: 5px;
+}
+.loginPage form span{
+    height: 46px;
+    display: block;
+    background-color: #3DA8F5;
+    color: #FFF;
+    transition: padding-right 218ms ease;
+    border: 1px solid #3DA8F5;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 46px;
+}
+.logo{
+    text-indent: -9999px;
+    margin-top: 0;
+    width: 202px;
+    background: url(./logo.svg) no-repeat 0 0;
+    background-size: 202px 30px;
+    margin-left: 77px;
+    margin-bottom: 15px;
+}

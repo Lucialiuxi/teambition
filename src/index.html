@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            background-color: aliceblue;
+        }
+        input{
+            padding:0;
+        }
+        .loginPage{
+            height: 100%;
+            width: 100%;
+        }
+        .loginPage form{
+            height: 250px;
+            width: 400px;
+            background-color: #fff;
+            margin: 10% 32%;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 5px solid rgb(217, 243, 240);
+        }
+        .loginPage form .username,
+        .loginPage form .pw{
+            float: left;
+            height: 40px;
+            line-height: 40px;
+            box-sizing: border-box;
+            width: 100%;
+            outline: none;
+            border: 1px solid rgb(217, 243, 240);
+            border-radius: 5px;
+            vertical-align: top;
+            border-right: none;
+            border-left: none;
+            margin-bottom: 15px;
+            padding-left: 15px;
+        }
+        .loginPage form span{
+            float: left;
+            height: 40px;
+            line-height: 40px;
+            width: 80px;
+            background-color: rgb(217, 243, 240);
+            border: 1px solid rgb(217, 243, 240);
+            box-sizing: border-box;
+            border-radius: 5px;
+            margin: 5px 60px;
+            color: #fff;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bolder;
+            cursor: pointer;
+        }
+        .logo{
+            text-indent: -9999px;
+            margin-top: 0;
+            width: 202px;
+            background: url(./logo.svg) no-repeat 0 0;
+            background-size: 202px 30px;
+            margin-left: 100px;
+        }
+    </style>
+</head>
+<body>
+    <section class="loginPage">
+
+        <form>
+            <h1 class="logo">Teambition</h1>
+            <input type="text" class="username" placeholder="用户名"/>
+            <input type="password" class="pw" placeholder="密码"/>
+            <span class="register">注册</span>
+            <span class="login">登录</span>
+        </form>
+    </section>
+</body>
+</html>

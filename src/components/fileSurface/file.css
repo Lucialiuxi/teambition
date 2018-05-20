@@ -1,0 +1,92 @@
+.myOwnfiles{
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    margin: 0;
+    list-style: none;
+    display:flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    align-content:flex-start;
+    /* background-color: aliceblue; */
+}
+h2{
+    text-align: start;
+    text-indent: 40px;
+    font-size: 18px;
+    height: 20px;
+    line-height: 20px;
+    margin: 0;
+    color: #383838;
+}
+.myOwnfiles .fileItem{
+    width: 270px;
+    height: 140px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background: url(./cover-media.jpg) no-repeat 0 0;
+    background-size: 270px 140px;
+    text-align: start;
+    overflow: hidden;
+    transform: translateY(0);
+    position: relative;
+    margin: 0 10px;
+    margin-bottom: 10px; 
+    transition: transform .218s ease,-webkit-transform .218s ease;
+}
+.fileItem h3, .fileItem h4{
+    color: #fff;
+}
+.myOwnfiles .fileItem:hover{
+    transform: translateY(-2px)
+}
+.fileItem .anticon-edit{
+    position: absolute;
+    top: 10px;
+    right: 35px;
+    cursor: pointer;
+    color: #a6a6a6
+}
+.fileItem .anticon-star{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #a6a6a6
+}
+.fileItem .editFileInfo:hover,
+.fileItem .favorite:hover{
+    color: #fff;
+}
+
+.projectPageContent .myOwnfiles .newAfile{
+    background: #fff;
+}
+
+.myOwnfiles .newAfile .anticon-plus-circle{
+    position: absolute;
+    top: 23%;
+    left: 39%;
+    font-size: 40px;
+    color: #a6a6a6;
+}
+.projectPageContent .myOwnfiles .tip{
+    margin-top: 80px;
+    font-size: 18px;
+    line-height: 24px;
+    height: 24px;
+    color: #a6a6a6;
+    text-indent: 60px;
+}
+.newAfile:hover .anticon-plus-circle,
+.newAfile:hover .tip{
+    color:#3b91ff;
+}
+.recycledFlies .switchIsShow{
+    font-size: 14px;
+    color: gray;
+    margin-left: 15px;
+    cursor: pointer;
+}

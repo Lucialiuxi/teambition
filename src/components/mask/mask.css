@@ -1,0 +1,105 @@
+#rcDialogTitle0{
+    text-align: center;
+}
+.ant-modal-wrap  .ant-modal{
+    width: 800px;
+    height: 535px;
+}
+.ant-modal .ant-modal-content{
+    height: 535px;
+    width: 800px;
+}
+.ant-modal .ant-modal-content .ant-modal-body{
+    height: 430px;
+}
+.ant-modal-content .ant-modal-body .title,
+.ant-modal-content .ant-modal-body .projectInfo,
+.ant-modal-content .ant-modal-body .projectOption{
+    float: left;
+}
+.ant-modal-content .ant-modal-body .title{
+    width: 180px;
+    height: 100%;
+    margin-right: 30px;
+}
+.ant-modal-content .ant-modal-body .title .active{
+    color: #3da8f5;
+}
+.ant-modal-body .title li{
+    padding-left: 10px;
+    box-sizing: border-box;
+    height: 55px;
+    border-bottom: 1px solid #eeeeee;
+    line-height: 55px;
+    font-size: 14px;
+    color: #808080;
+}
+.ant-modal-body .title span{
+    display: inline-block;
+    margin-left: 10px;
+}
+.ant-modal-content .ant-modal-body .projectInfo,
+.ant-modal-content .ant-modal-body .projectOption{
+    width: 500px;
+    height: 100%;
+}
+.ant-modal-content .ant-modal-body .projectInfo{
+    display: none;
+}
+.ant-modal-content .ant-modal-body .projectOption{
+    /* display: none; */
+}
+.ant-modal-body .projectOption label,
+.ant-modal-body .projectInfo label{
+    height: 48px;
+    line-height: 48px;
+    display: block;
+    font-size: 14px;
+    color: #383838;
+}
+.ant-modal-body .projectInfo .projectNameinput{
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    line-height: 24px;
+    transition: border-color 218ms ease;
+}
+.ant-modal-body .projectInfo .projectProfiles{
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    line-height: 24px;
+    transition: border-color 218ms ease;
+}
+
+.ant-modal-body .projectOption div{
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #a6a6a6;
+}
+.ant-modal-body .projectOption button{
+    padding: 8px 15px;
+    outline:none;
+    background-color: #ff4f3e;
+    border-color: #ff4f3e;
+    font-size: 14px;
+    line-height: 20px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 3px;
+    white-space: nowrap;
+    color: #fff;
+}
+.moveFileToRecycleBin .ant-modal-content{
+    width: 600px;
+    height: 175px;
+}
+.moveFileToRecycleBin .ant-modal-content .ant-modal-body{
+    height: 155px;
+}
