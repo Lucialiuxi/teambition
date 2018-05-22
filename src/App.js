@@ -2,28 +2,32 @@ import React, { Component } from 'react';
 import './App.css';
 import 'antd/dist/antd.css'
 
-//路由
-/**
- * BrowserRouter as Router 意思就是从react-router-dom引入BrowserRouter取名Router
- */
-import {BrowserRouter as Router ,Route , Link } from 'react-router-dom'
-// import routes from '@/router/router'
-import Login from '@/components/loginPage/login';
-import Project from '@/components/projectPage/projectHome';
+import {BrowserRouter as Router ,Route , Redirect , withRouter } from 'react-router-dom'
+import { withCookies} from 'react-cookie';
+
+import LoginOrProject from '@/router/index';
+import { CookiesProvider } from 'react-cookie';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {  }
+  }
+  componentDidMount(){
+    const { cookies,history } = this.props;
+    if(cookies.get('UserName')){
+      history.push('/project')
+    }else{
+      history.push('/login')
+    }
+  }
   render() {
     return (
-      <div className="App">
-        <Router>
-            <Route path="/login" component={Login}/>
-        </Router>
-        <Router>
-            <Route path="/project" component={Project}/>
-        </Router>
-      </div>
+        <div className="App">
+            <LoginOrProject/>
+        </div>
     );
   }
 }
 
-export default App;
+export default withCookies(withRouter(App));

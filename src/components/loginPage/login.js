@@ -1,26 +1,144 @@
 import React, { Component } from 'react';
-import { Router, Route, browserHistory } from 'react-router';
+import { connect } from 'react-redux';
 
+import {BrowserRouter as Router ,Route , Redirect , Link , withRouter } from 'react-router-dom'
 import './login.css'
-import { withRouter } from 'react-router-dom'
+
+import { Modal, Button } from 'antd';
+
+import Project from '@/components/projectPage/projectHome';
+import {register,login} from '@/server/requestData'
+import {CustomeLink} from '@/commonfunc/index'
+import routes from '@/router/router'
+import { withCookies} from 'react-cookie';
+
+//注册登录弹框提醒
+function success(content) {
+    const modal = Modal.success({
+      title: '提醒',
+      content: content,
+    });
+    console.log(11);
+    setTimeout(() => modal.destroy(), 1000);
+  }
+
+
 class Login  extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = { 
+            username:'',
+            password:'',
+            stateTip:'',
+            id:''
+         }
+    }
+    changeUsernameValue=(ev)=>{
+        let val = this.refs.username.value
+        if(val.trim()==='') return
+        this.setState({
+            username:val
+        })
+    }
+    changePasswordValue=(ev)=>{
+        let pw = this.refs.pw.value
+        if(pw.trim()==='') return
+        // console.log(pw)
+        this.setState({
+            password:pw
+        })
+    }
+    registerClick=()=>{
+        let o = this.state
+        register({...o}).then(({data})=>{
+            this.setState({
+                stateTip:data.message
+            })
+            success(this.state.stateTip)
+            if(this.state.stateTip!=='注册成功'){
+                this.refs.username.value = ''
+                this.refs.pw.value = ''
+            }else{
+                if(this.state.stateTip==='注册成功'){
+                    this.setState({
+                        id:data.userInfo._id
+                    })
+                    this.setUserCookie()
+                    console.log('6666',this.props)
+                    this.props.history.replace('/project')
+                }
+            }
+            
+        })
+    }
+    loginClick=()=>{
+        let o = this.state;
+        console.log('8888',this.props)
+        login({...o}).then(({data})=>{
+            this.setState({
+                stateTip:data.message
+            })
+            
+            success(this.state.stateTip)
+            if(this.state.stateTip=='登录成功'){
+                if(this.state.stateTip==='登录成功'){
+                    this.setState({
+                        id:data.userInfo._id
+                    })
+                    this.setUserCookie()
+                    this.props.history.replace('/project')
+                }
+            }else{
+                this.refs.username.value = ''
+                this.refs.pw.value = ''
+            }
+        })
+    }
+    setUserCookie(){
+        // console.log('componentDidUpdate')
+        let {cookies}=this.props;
+        let username = this.state.username;
+        // console.log(username)
+        if(username){
+            cookies.set('UserName',username)
+        }
+        
     }
     render() { 
-        return ( 
+        let {cookies}=this.props;
+        if(cookies.get('UserName')){
+            return <Route path="/project" component={Project}/>
+        }
+        return (
         <section className="loginPage">
             <form>
                 <h1 className="logo">Teambition</h1>
-                <input type="text" className="username" placeholder="用户名"/>
-                <input type="password" className="pw" placeholder="密码"/>
-                <span className="register">注册</span>
-                <span className="login">登录</span>
+                <input 
+                    type="text" 
+                    className="username" 
+                    ref="username"
+                    placeholder="用户名"
+                    onKeyUp = {this.changeUsernameValue}
+                />
+                <input 
+                    type="password" 
+                    className="pw" 
+                    ref="pw"
+                    placeholder="密码"
+                    onKeyUp = {this.changePasswordValue}
+                />
+                <span 
+                    className="register"
+                    onClick= {this.registerClick}
+                >注册</span>
+                <span 
+                    className="login"
+                    onClick= {this.loginClick}
+                >登录</span>
             </form>
         </section>
         )
     }
 }
  
-export default withRouter(Login);
+export default withCookies(withRouter(Login));

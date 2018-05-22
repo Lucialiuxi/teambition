@@ -4,6 +4,11 @@ body{
 input{
     padding:0;
 }
+.LoginOrProject{
+    height: 100%;
+    width: 100%;
+
+}
 .loginPage{
     height: 100%;
     width: 100%;
@@ -37,6 +42,7 @@ input{
     border-radius: 5px;
     font-size: 16px;
     line-height: 46px;
+    cursor: pointer;
 }
 .logo{
     text-indent: -9999px;
@@ -46,4 +52,12 @@ input{
     background-size: 202px 30px;
     margin-left: 77px;
     margin-bottom: 15px;
+}
+
+.ant-modal-wrap .ant-confirm-success .ant-modal-content{
+    width: 500px;
+    height: 150px;
+}
+.ant-modal-content .ant-modal-body{
+    height: 140px;
 }
