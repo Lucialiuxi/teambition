@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import 'antd/dist/antd.css'
 
-import {BrowserRouter as Router ,Route , Redirect , withRouter } from 'react-router-dom'
-import { withCookies} from 'react-cookie';
+import {BrowserRouter as Router , withRouter } from 'react-router-dom'
 
 import LoginOrProject from '@/router/index';
-import { CookiesProvider } from 'react-cookie';
+import cookie from 'react-cookies';
 
 class App extends Component {
   constructor(props) {
@@ -14,8 +13,8 @@ class App extends Component {
     this.state = {  }
   }
   componentDidMount(){
-    const { cookies,history } = this.props;
-    if(cookies.get('UserName')){
+    const {history } = this.props;
+    if(cookie.load('UserName')){
       history.push('/project')
     }else{
       history.push('/login')
@@ -30,4 +29,4 @@ class App extends Component {
   }
 }
 
-export default withCookies(withRouter(App));
+export default withRouter(App);

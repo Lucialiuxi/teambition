@@ -33,7 +33,6 @@ class FileCover extends Component {
         this.state = {  }
     }
     render() { 
-        console.log(FileCoverData)
         return ( 
             <div>
                 <div className="starFlies">

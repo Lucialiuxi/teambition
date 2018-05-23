@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import './project.css'
-import { BrowserRouter as Router, Route , withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
+import './project.css';
+import { withRouter } from 'react-router-dom';
 
 import { Layout } from 'antd';
 import CommonNav  from '../commons/commonNav';
-import { withCookies} from 'react-cookie';
+import cookie from 'react-cookies';
 //文件夹图片区
 import FileCover from '../fileSurface/fileCover'
 //点击一个文件夹，内部显示
-import FileInside from './fileInside'
+import FileInside from './fileInside';
 const { Header, Content } = Layout;
 
 
@@ -18,8 +19,7 @@ class Project  extends Component {
         this.state = {  }
     }
     componentWillMount(){
-        let {cookies} = this.props;
-        let user = cookies.get('UserName');
+        let user = cookie.load('UserName');
     }
     render() { 
         return ( 
@@ -40,4 +40,4 @@ class Project  extends Component {
     }
 }
  
-export default withCookies(withRouter(Project));
+export default withRouter(connect()(Project));

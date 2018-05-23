@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import {BrowserRouter as Router ,Route , Redirect , Link , withRouter } from 'react-router-dom'
+import {Route , withRouter } from 'react-router-dom'
 import './login.css'
 
 import { Modal, Button } from 'antd';
 
 import Project from '@/components/projectPage/projectHome';
-import {register,login} from '@/server/requestData'
-import {CustomeLink} from '@/commonfunc/index'
-import routes from '@/router/router'
-import { withCookies} from 'react-cookie';
+import {register,login} from '@/server/requestData';
+import {CustomeLink} from '@/commonfunc/index';
+import routes from '@/router/router';
+import cookie from 'react-cookies'
 
-//注册登录弹框提醒
+//注册登录的提醒弹框
 function success(content) {
     const modal = Modal.success({
       title: '提醒',
       content: content,
     });
-    console.log(11);
     setTimeout(() => modal.destroy(), 1000);
   }
 
@@ -43,7 +42,6 @@ class Login  extends Component {
     changePasswordValue=(ev)=>{
         let pw = this.refs.pw.value
         if(pw.trim()==='') return
-        // console.log(pw)
         this.setState({
             password:pw
         })
@@ -64,7 +62,6 @@ class Login  extends Component {
                         id:data.userInfo._id
                     })
                     this.setUserCookie()
-                    console.log('6666',this.props)
                     this.props.history.replace('/project')
                 }
             }
@@ -73,7 +70,6 @@ class Login  extends Component {
     }
     loginClick=()=>{
         let o = this.state;
-        console.log('8888',this.props)
         login({...o}).then(({data})=>{
             this.setState({
                 stateTip:data.message
@@ -95,18 +91,14 @@ class Login  extends Component {
         })
     }
     setUserCookie(){
-        // console.log('componentDidUpdate')
-        let {cookies}=this.props;
         let username = this.state.username;
-        // console.log(username)
         if(username){
-            cookies.set('UserName',username)
+            cookie.save('UserName',username)
         }
         
     }
     render() { 
-        let {cookies}=this.props;
-        if(cookies.get('UserName')){
+        if(cookie.load('UserName')){
             return <Route path="/project" component={Project}/>
         }
         return (
@@ -141,4 +133,4 @@ class Login  extends Component {
     }
 }
  
-export default withCookies(withRouter(Login));
+export default withRouter(Login);
