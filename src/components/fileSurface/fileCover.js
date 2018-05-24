@@ -1,31 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route , withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
 
 import FileItem from './fileItem'
-import NewFile from './newFile'
+import CreateFile from './CreateFile'
 import './file.css'
-const FileCoverData = [
-    {
-      title: 'Title 1',
-      subTitle:'subTitle',
-      fileId:1
-    },
-    {
-      title: 'Title 2',
-      subTitle:'subTitle',
-      fileId:2
-    },
-    {
-      title: 'Title 3',
-      subTitle:'subTitle',
-      fileId:3
-    },
-    {
-      title: 'Title 4',
-      subTitle:'subTitle',
-      fileId:4
-    },
-  ];
+
   
 class FileCover extends Component {
     constructor(props) {
@@ -33,18 +13,16 @@ class FileCover extends Component {
         this.state = {  }
     }
     render() { 
+        let {fileInfoData} = this.props;
+        // console.log(fileInfoData)
         return ( 
-            <div>
+            <div  className="fileCover">
                 <div className="starFlies">
                     <h2>
                         <span className="title">星标项目</span>
                     </h2>
                     <ul className="myOwnfiles">
-                        {
-                            FileCoverData.map(val=>{
-                                return <FileItem key={val.fileId}  {...val}/>
-                            })
-                        }
+                       
                     </ul>
                 </div>
                 <div className="myOwnFlies">
@@ -53,11 +31,11 @@ class FileCover extends Component {
                     </h2>
                     <ul className="myOwnfiles">
                     {
-                        FileCoverData.map(val=>{
-                            return <FileItem  key={val.fileId} {...val}/>
+                        fileInfoData.map((val,i)=>{
+                            return <FileItem  key={val.fileId+i} {...val}/>
                         })
                     }
-                    <NewFile />
+                    <CreateFile />
                     </ul>
                 </div>
                 <div className="recycledFlies">
@@ -72,5 +50,5 @@ class FileCover extends Component {
          )
     }
 }
- 
+
 export default FileCover;

@@ -8,13 +8,14 @@ import {BrowserRouter as Router} from 'react-router-dom'
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import * as reducer  from './reducers/reducers';
+import reducer  from './reducers/reducers';
 import thunk from 'redux-thunk';
 
-let store = createStore(reducer, applyMiddleware(thunk))
+let data = []
+let store = createStore(reducer,data ,applyMiddleware(thunk))
 
 ReactDOM.render(
-    <Provider>
+    <Provider store={store}>
         <Router>
             <App />
         </Router>

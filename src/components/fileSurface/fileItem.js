@@ -9,14 +9,17 @@ class FileItem extends Component {
         this.state = {  }
     }
     render() { 
-        let {title,subTitle} = this.props;
+        let {FileName,FileAbstract,fileId} = this.props;
+        if(!FileName){
+            return null
+        }
         return ( 
-                <li className="fileItem">
+                <li className="fileItem" data-id={fileId}>
                     {/* 编辑框 */}
                     <ModifyFileInfoMask/>
                     <Icon type="star"  className="favorite" />
-                    <h3>{title}</h3>
-                    <h4>{subTitle}</h4>
+                    <h3>{FileName}</h3>
+                    <h4>{FileAbstract}</h4>
                 </li>
          )
     }
