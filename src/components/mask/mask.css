@@ -33,6 +33,7 @@
     line-height: 55px;
     font-size: 14px;
     color: #808080;
+    cursor: pointer;
 }
 .ant-modal-body .title span{
     display: inline-block;
@@ -44,10 +45,10 @@
     height: 100%;
 }
 .ant-modal-content .ant-modal-body .projectInfo{
-    display: none;
+    /* display: none; */
 }
 .ant-modal-content .ant-modal-body .projectOption{
-    /* display: none; */
+    display: none;
 }
 .ant-modal-body .projectOption label,
 .ant-modal-body .projectInfo label{
@@ -102,4 +103,29 @@
 }
 .moveFileToRecycleBin .ant-modal-content .ant-modal-body{
     height: 155px;
+}
+.goToModifyFileInfo .ant-modal  .ant-modal-footer div button:first-child{
+    display:none;
+}
+.goToModifyFileInfo .ant-modal  .ant-modal-footer div button:last-child{
+    width: 126px;
+    height: 40px;
+    padding: 0 48px;
+    line-height: 40px;
+    cursor: default;
+}
+.goToModifyFileInfo .ant-modal .ant-modal-content{
+    height: 550px;
+}
+.goToModifyFileInfo .ant-modal  .ant-modal-footer div button:last-child{
+    /* background-color: #d9d9d9;
+    border-color: #d9d9d9; */
+}
+.goToModifyFileInfo .ant-modal  .ant-modal-footer div button:disabled{
+    background-color: #d9d9d9;
+    border-color: #d9d9d9;
+}
+.goToModifyFileInfo .ant-modal-content .ant-modal-title{
+    text-align: center;
+    font-weight: bolder;
 }

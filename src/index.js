@@ -11,8 +11,8 @@ import registerServiceWorker from './registerServiceWorker';
 import reducer  from './reducers/reducers';
 import thunk from 'redux-thunk';
 
-let data = []
-let store = createStore(reducer,data ,applyMiddleware(thunk))
+let data = {}
+let store = createStore( reducer , data ,applyMiddleware(thunk))
 
 ReactDOM.render(
     <Provider store={store}>

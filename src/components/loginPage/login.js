@@ -120,13 +120,13 @@ class Login  extends Component {
                     onKeyUp = {this.changePasswordValue}
                 />
                 <span 
-                    className="register"
-                    onClick= {this.registerClick}
-                >注册</span>
-                <span 
                     className="login"
                     onClick= {this.loginClick}
                 >登录</span>
+                <span 
+                    className="register"
+                    onClick= {this.registerClick}
+                >注册</span>
             </form>
         </section>
         )

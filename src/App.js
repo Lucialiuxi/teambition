@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+//引入action
+import * as allActions  from '@/actions/action';
 import './App.css';
 import 'antd/dist/antd.css'
 
@@ -23,10 +27,10 @@ class App extends Component {
   render() {
     return (
         <div className="App">
-            <LoginOrProject/>
+            <LoginOrProject dispatch={this.props.dispatch}/>
         </div>
     );
   }
 }
 
-export default withRouter(App);
+export default withRouter(connect()(App));

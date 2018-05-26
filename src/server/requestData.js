@@ -16,7 +16,7 @@ export const login = (param) => {
 }
 
 //新建项目文件夹
-export const createAFile = (param) => {
+export const createAFileServer = (param) => {
     console.log('createAFile',param)
     return axios.post('/createFile',param)
 }
@@ -25,4 +25,10 @@ export const createAFile = (param) => {
 export const getAllFilesInfo = (param) => {
     // console.log(param)
     return axios.post('/AllFilesInfo',param)
+}
+
+//修改大图标文件的信息
+export const postModifyFileInfo = (param) => {
+    console.log(param)
+    return axios.post('/ModifyFileInfo',param)
 }

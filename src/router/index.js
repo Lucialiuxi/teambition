@@ -8,7 +8,7 @@ class LoginOrProject extends Component {
       super(props);
       this.state = {  }
     }
-    render() { 
+    render() {
       return ( 
         <div className="LoginOrProject">
           {
@@ -18,6 +18,7 @@ class LoginOrProject extends Component {
                     exact
                     path={item.path}
                     component={item.component}
+                    dispatch={this.props.dispatch}
                   ></Route>
               )
             })

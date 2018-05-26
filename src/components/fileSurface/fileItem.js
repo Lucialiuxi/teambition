@@ -16,7 +16,7 @@ class FileItem extends Component {
         return ( 
                 <li className="fileItem" data-id={fileId}>
                     {/* 编辑框 */}
-                    <ModifyFileInfoMask/>
+                    <ModifyFileInfoMask {...this.props}/>
                     <Icon type="star"  className="favorite" />
                     <h3>{FileName}</h3>
                     <h4>{FileAbstract}</h4>

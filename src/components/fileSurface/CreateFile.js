@@ -24,6 +24,7 @@ class FileItem extends Component {
         });
     }
     handleOk = () => {
+        console.log('handleOk',this)
         let {dispatch} = this.props;
         this.setState({
             confirmLoading: true,
