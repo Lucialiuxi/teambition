@@ -14,11 +14,11 @@ class LoginOrProject extends Component {
           {
             routes.map((item) => {
               return (
-                  <Route key={item.path}
+                  <Route 
+                    key={item.path}
                     exact
                     path={item.path}
                     component={item.component}
-                    dispatch={this.props.dispatch}
                   ></Route>
               )
             })

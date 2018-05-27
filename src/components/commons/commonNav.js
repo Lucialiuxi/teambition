@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route , withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
+
+import cookie from 'react-cookies';
 
 import { Icon , List, Avatar } from 'antd';
 
@@ -31,7 +34,14 @@ const ProjectTypes = [
           super(props);
           this.state = {  }
       }
+      clickLoginOut=()=>{
+          console.log('clickLoginOut',this.props)
+          let { history } = this.props
+          history.replace('/login')
+          cookie.remove('UserName');
+      }
       render() { 
+        //   console.log(this.props)
           return ( 
             <div className="commonNav">
                 <div className="Nav-bar-left">
@@ -68,7 +78,7 @@ const ProjectTypes = [
                     <span className="msgIcon">
                         <Icon type="message" style={{ fontSize: 20, color: '#bebebe' }} />
                     </span>
-                    <span className="loginOut">登出</span>
+                    <span className="loginOut" onClick={this.clickLoginOut}>登出</span>
                     <span className="schedule">日历</span>
                     <span className="mine">我的</span>
                 </div>
@@ -77,4 +87,4 @@ const ProjectTypes = [
       }
   }
    
-  export default CommonNav;
+  export default withRouter(connect()(CommonNav));

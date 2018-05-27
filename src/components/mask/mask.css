@@ -97,7 +97,9 @@
     white-space: nowrap;
     color: #fff;
 }
-.moveFileToRecycleBin .ant-modal-content{
+.moveFileToRecycleBin .ant-modal-content,
+.GoBackwardMaskBox .ant-modal-content,
+.deleteRecycleFileBox .ant-modal-content{
     width: 600px;
     height: 175px;
 }
@@ -128,4 +130,13 @@
 .goToModifyFileInfo .ant-modal-content .ant-modal-title{
     text-align: center;
     font-weight: bolder;
+}
+.moveFileToRecycleBin .ant-modal-body .ant-confirm-btns{
+    width: 100%;
+}
+.moveFileToRecycleBin .ant-modal-body .ant-confirm-btns .ant-btn-primary{
+    background-color: red;
+    border-color: red;
+    display: block;
+    width: 100%;
 }

@@ -4,6 +4,7 @@ import { Icon , Modal } from 'antd';
 import { connect } from 'react-redux';
 import {CreateAFile}  from '@/actions/action';
 import cookie from 'react-cookies';
+import { createAFileServer} from '@/server/requestData'
 
 let FileName = '';
 let FileAbstract = '';
@@ -36,11 +37,15 @@ class FileItem extends Component {
             userLoginName:user,
             FileName,
             FileAbstract,
-            fileId:Date.now()+Math.random(),
-            star:false,
+            fileId: Date.now()+Math.random(),
+            star: false,
+            inRecycleBin: false
         }
         if (FileName) {
-            dispatch(CreateAFile(o))
+            createAFileServer(o).then(({data})=>{
+                console.log(data.lastestFileInfoData)
+                dispatch(CreateAFile(data.lastestFileInfoData))
+            })
             this.input1.value = '';
             this.input2.value = ''
             
@@ -53,6 +58,9 @@ class FileItem extends Component {
         }else{
             this.input1.focus();
         }
+
+
+
     }
     handleCancel = () => {
         this.setState({

@@ -1,3 +1,4 @@
+//修改文件信息的弹框
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Modal, Icon} from 'antd';
@@ -37,7 +38,7 @@ class ModifyFileInfoMask extends Component {
     handleOk = (e) => {
         let userLoginName = cookie.load('UserName')
         if(!this.save.getAttribute("disabled")){
-            console.log('可以点击保存')
+            // console.log('可以点击保存')
             this.setState({
                 visible: false,
             });
@@ -52,7 +53,7 @@ class ModifyFileInfoMask extends Component {
         }
     }
     handleCancel = (e) => {
-        console.log(e);
+        // console.log(e);
         this.setState({
             visible: false,
         });
@@ -113,6 +114,11 @@ class ModifyFileInfoMask extends Component {
             this.save.removeAttribute('disabled')
         }
     }
+    componentDidUpdate(){
+        console.log('componentDidUpdate')
+        let goToModifyFileInfoModal = document.getElementsByClassName('goToModifyFileInfoModal')[0];
+        console.log(goToModifyFileInfoModal)
+    }
     render() { 
         // console.log(this.props)
         let { FileName , FileAbstract } = this.state;
@@ -123,12 +129,14 @@ class ModifyFileInfoMask extends Component {
                     <Icon type="edit" className="editFileInfo"  onClick={this.showModal}/>
                 <Modal
                     wrapClassName="goToModifyFileInfo"
+                    className="goToModifyFileInfoModal"
                     title="项目设置"
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     okText="保存"
                     cancelText="取消"
+                    maskClosable="true"
                 >
                 <ul className="title"
                     onClick={this.ClickProjectInfoTitle}
@@ -171,7 +179,7 @@ class ModifyFileInfoMask extends Component {
                 <div className="projectOption">
                     <label>项目操作</label>
                     <div>您可以执行以下操作</div>
-                    <MoveFileToRecycleBin/>
+                    <MoveFileToRecycleBin {...this.props}/>
                 </div>
                 </Modal>
             </div>

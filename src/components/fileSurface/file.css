@@ -41,14 +41,16 @@ h2{
 .myOwnfiles .fileItem:hover{
     transform: translateY(-2px)
 }
-.fileItem .anticon-edit{
+.fileItem .anticon-edit,
+.fileItem .anticon-reload{
     position: absolute;
     top: 10px;
     right: 35px;
     cursor: pointer;
     color: #a6a6a6
 }
-.fileItem .anticon-star{
+.fileItem .anticon-star,
+.fileItem .anticon-delete{
     position: absolute;
     top: 10px;
     right: 10px;
@@ -56,7 +58,9 @@ h2{
     color: #a6a6a6
 }
 .fileItem .editFileInfo:hover,
-.fileItem .favorite:hover{
+.fileItem .favorite:hover,
+.fileItem .GoBackward:hover,
+.fileItem .deleteRecycleFile:hover{
     color: #fff;
 }
 
@@ -88,4 +92,7 @@ h2{
     color: gray;
     margin-left: 15px;
     cursor: pointer;
+}
+.fileItem .anticon-star.starActive{
+    color: #ffaf38;
 }

@@ -8,7 +8,6 @@ export  const CreateAFile = obj => {
 
 //刷新页面请求大图标文件数据
 export  const AllFileInfoArr = arr => {
-    // console.log(arr)
     return {
         type: 'get_All_files_Info',
         arr
@@ -17,9 +16,24 @@ export  const AllFileInfoArr = arr => {
 
 //修改大图标文件信息
 export  const ModifyAFileInfo = obj => {
-    // console.log(obj)
     return {
         type: 'Modify_file_Info',
+        obj
+    }
+}
+
+//切换标星
+export  const ToggleFileStar = obj => {
+    return {
+        type: 'Toggle_File_Star',
+        obj
+    }
+}
+
+//移动文件到回收站
+export  const MoveFileToRecycleBin = obj => {
+    return {
+        type: 'Move_File_To_RecycleBin',
         obj
     }
 }

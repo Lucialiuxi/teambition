@@ -27,10 +27,21 @@ class App extends Component {
   render() {
     return (
         <div className="App">
-            <LoginOrProject dispatch={this.props.dispatch}/>
+            <LoginOrProject/>
         </div>
     );
   }
 }
 
-export default withRouter(connect()(App));
+//要修改的数据
+const mapStateToProps = state => {
+  // console.log(state)
+  return  {
+      state
+  }
+}
+//要提交的动作
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(allActions,dispatch)
+} 
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));

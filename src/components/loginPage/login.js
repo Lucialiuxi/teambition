@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 import {Route , withRouter } from 'react-router-dom'
 import './login.css'
 
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 
 import Project from '@/components/projectPage/projectHome';
 import {register,login} from '@/server/requestData';
-import {CustomeLink} from '@/commonfunc/index';
-import routes from '@/router/router';
+// import {CustomeLink} from '@/commonfunc/index';
+// import routes from '@/router/router';
 import cookie from 'react-cookies'
 
 //注册登录的提醒弹框

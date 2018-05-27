@@ -1,20 +1,45 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route , withRouter } from 'react-router-dom'
-import { connect } from 'react-redux';
+// import { BrowserRouter as Router, Route , withRouter } from 'react-router-dom'
+// import { connect } from 'react-redux';
 
 import FileItem from './fileItem'
+import FileItemInRecyCleBin from './fileItemInRecycleBin'
 import CreateFile from './CreateFile'
 import './file.css'
+import { Toggle } from 'office-ui-fabric-react';
 
   
 class FileCover extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = {
+            RecycleFlieIsShow:null
+        }
+    }
+    ToggleRecycleFlieShow=()=>{
+        let { RecycleFlieIsShow } = this.state;
+        this.setState({
+            RecycleFlieIsShow:!RecycleFlieIsShow
+        })
     }
     render() { 
-        let {fileInfoData} = this.props;
-        // console.log(fileInfoData)
+        let { RecycleFlieIsShow } = this.state;
+        let { fileInfoData } = this.props;
+        let myOwnProjects =  fileInfoData.filter(val=>{
+            return val.inRecycleBin ? null : val;
+        });
+        let recycledProjects =   fileInfoData.filter(val=>{
+            return val.inRecycleBin ? val : null;
+        });
+        let recycled;
+        if(RecycleFlieIsShow){
+            recycled =  recycledProjects.map((val,i)=>{
+                return <FileItemInRecyCleBin  key={val.fileId+i} {...val}/>
+            })
+        }
+        let starProjects = fileInfoData.filter(val=>{
+            return val.star&&(!val.inRecycleBin) ? val : null;
+        });
         return ( 
             <div  className="fileCover">
                 <div className="starFlies">
@@ -22,7 +47,11 @@ class FileCover extends Component {
                         <span className="title">星标项目</span>
                     </h2>
                     <ul className="myOwnfiles">
-                       
+                    {
+                        starProjects.map((val,i)=>{
+                            return <FileItem  key={val.fileId+i} {...val}/>
+                        })
+                    }
                     </ul>
                 </div>
                 <div className="myOwnFlies">
@@ -31,7 +60,7 @@ class FileCover extends Component {
                     </h2>
                     <ul className="myOwnfiles">
                     {
-                        fileInfoData.map((val,i)=>{
+                        myOwnProjects.map((val,i)=>{
                             return <FileItem  key={val.fileId+i} {...val}/>
                         })
                     }
@@ -41,10 +70,9 @@ class FileCover extends Component {
                 <div className="recycledFlies">
                     <h2>
                         <span className="title">项目回收站</span>
-                        <span className="switchIsShow">显示</span>
+                        <span className="switchIsShow" onClick={this.ToggleRecycleFlieShow}>{RecycleFlieIsShow?'隐藏':'显示'}</span>
                     </h2>
-                    <ul className="myOwnfiles">
-                    </ul>
+                    <ul className="myOwnfiles">{recycled}</ul>
                 </div>
             </div>
          )
