@@ -24,10 +24,13 @@ class FileCover extends Component {
     }
     render() { 
         let { RecycleFlieIsShow } = this.state;
-        let { fileInfoData } = this.props;
+        let { fileInfoData ,clickInToTheFile} = this.props;
         let myOwnProjects =  fileInfoData.filter(val=>{
             return val.inRecycleBin ? null : val;
         });
+        myOwnProjects.forEach(val=>{
+            val['clickInToTheFile'] = clickInToTheFile;
+        })
         let recycledProjects =   fileInfoData.filter(val=>{
             return val.inRecycleBin ? val : null;
         });
@@ -49,7 +52,7 @@ class FileCover extends Component {
                     <ul className="myOwnfiles">
                     {
                         starProjects.map((val,i)=>{
-                            return <FileItem  key={val.fileId+i} {...val}/>
+                            return <FileItem key={val.fileId+i} {...val}/>
                         })
                     }
                     </ul>

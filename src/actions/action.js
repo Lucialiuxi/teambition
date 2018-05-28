@@ -37,3 +37,11 @@ export  const MoveFileToRecycleBin = obj => {
         obj
     }
 }
+
+//删除一个项目文件夹
+export  const DeleteAFlieAction = obj => {
+    return {
+        type: 'Delete_A_Flie_Action',
+        obj
+    }
+}

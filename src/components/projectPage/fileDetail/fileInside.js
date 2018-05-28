@@ -1,5 +1,6 @@
 //点击一个文件夹，内部显示
 import React, { Component } from 'react';
+import SubNav from '@/components/commons/subNav/subNav';
 
 class FileInside extends Component {
     constructor(props) {
@@ -8,7 +9,9 @@ class FileInside extends Component {
     }
     render() { 
         return ( 
-            <div>constructor</div>
+            <div id="fileInsideWrap">
+                <SubNav/>
+            </div>
          )
     }
 }

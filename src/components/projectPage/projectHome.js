@@ -10,11 +10,12 @@ import CommonNav  from '../commons/commonNav';
 //文件夹图片区
 import FileCover from '../fileSurface/fileCover'
 //点击一个文件夹，内部显示
-import FileInside from './fileInside';
+import FileInside from './fileDetail/fileInside';
 
 //引入action
 import * as allActions  from '@/actions/action';
 import { getAllFilesInfo } from '@/server/requestData'
+import routes from '@/router/router';
 
 
 const { Header, Content } = Layout;
@@ -31,11 +32,17 @@ class Project  extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:[]
+            data:{
+                pathName:'',
+            }
         }
     }
     componentWillMount(){
-        // console.log( 'componentWillMount')
+        let { location } = this.props;
+        this.setState({
+            pathName:location.pathname
+        })
+        console.log( 'componentWillMount',this.props)
         let { dispatch} = this.props
         //请求数据
         let user = cookie.load('UserName');
@@ -45,8 +52,26 @@ class Project  extends Component {
             }
         })
     }
-    render() { 
+    //点击大图标文件，进入到文件内部
+    clickInToTheFile=(fileId,userLoginName)=>{
+        let { history , location} = this.props;
+        console.log('clickInToTheFile',fileId,userLoginName,this.props)
+        history.push(`/project/${fileId}`)
+        this.setState({
+            pathName:location.pathname
+        })
+    }
+    render() {
         let getFileInfo = this.props.state.getFileInfo;
+        // console.log(this.props)
+        let {pathName} = this.state ;
+        console.log(pathName)
+        let pageShow;
+        if(pathName==='/project'){
+            pageShow = <FileCover fileInfoData={getFileInfo} clickInToTheFile={this.clickInToTheFile}/> 
+        }else if(pathName!=='/project'&&pathName.split(0,9)==='/project/'){
+            pageShow = <FileInside/>;
+        }
         return ( 
            <div className="projectPageWrap">
                 <Layout  className="projectPage">
@@ -56,8 +81,7 @@ class Project  extends Component {
                     </Header>
                     <Content  className="projectPageContent">
                         {/* 首页文件图标区 */}
-                        <FileCover fileInfoData={getFileInfo}/>
-                        {/* <FileInside/> */}
+                        {pageShow}
                     </Content>
                 </Layout>
            </div>

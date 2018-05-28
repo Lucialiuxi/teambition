@@ -37,7 +37,7 @@ class FileItem extends Component {
             userLoginName:user,
             FileName,
             FileAbstract,
-            fileId: Date.now()+Math.random(),
+            fileId: parseInt(Date.now()+Math.random()),
             star: false,
             inRecycleBin: false
         }

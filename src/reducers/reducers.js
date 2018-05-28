@@ -30,6 +30,11 @@ const getFileInfo = (state = [], action) => {
         return item.fileId === action.obj.fileId ? {...item,inRecycleBin:!item.inRecycleBin} : item
        })
    
+       //删除一个项目文件夹
+       case 'Delete_A_Flie_Action':
+       return state.filter(item=>{
+        return item.fileId === action.obj.fileId ? null : item
+       })
      default:
           return state
     }

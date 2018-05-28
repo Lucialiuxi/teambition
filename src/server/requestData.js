@@ -37,3 +37,8 @@ export const ToggleFileStarServer = (param) => {
 export const MoveFileToRecycleBinServer = (param) => {
     return axios.post('/MoveFileToRecycleBin',param)
 }
+
+//删除一个项目文件夹
+export const DeleteAFlieServer = (param) => {
+    return axios.post('/deleteAFlie',param)
+}

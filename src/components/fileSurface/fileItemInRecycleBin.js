@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Modal } from 'antd';
 
-import { MoveFileToRecycleBin }  from '@/actions/action';
-import { MoveFileToRecycleBinServer } from '@/server/requestData';
+import { MoveFileToRecycleBin , DeleteAFlieAction }  from '@/actions/action';
+import { MoveFileToRecycleBinServer , DeleteAFlieServer } from '@/server/requestData';
 
 
 const confirm = Modal.confirm;
@@ -23,9 +23,7 @@ class FileItemInRecyCleBin extends Component {
             className:'GoBackwardMaskBox',
             maskClosable:true,
             onOk:()=>{
-                // console.log('ok',this.props)
                 MoveFileToRecycleBinServer({...this.props,inRecycleBin:false}).then(({data})=>{
-                    // console.log(data)
                     this.props.dispatch(MoveFileToRecycleBin(data.afterModifyData))                    
                 })
             }
@@ -40,10 +38,13 @@ class FileItemInRecyCleBin extends Component {
           okType: 'danger',
           cancelText: 'No',
           maskClosable:true,
-          onOk() {
-            console.log('OK');
+          onOk:()=>{
+            DeleteAFlieServer(this.props).then(({data})=>{
+                this.props.dispatch(DeleteAFlieAction(data.deletedFileInfo))
+            })
+
           }
-        });
+        })
     }
     render() { 
         let { FileName , FileAbstract , fileId ,star } = this.props;

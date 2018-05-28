@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import Login from '@/components/loginPage/login';
 import Project from '@/components/projectPage/projectHome';
+import FileInside from '@/components/projectPage/fileDetail/fileInside';
 
 export let routes = [
     {
@@ -12,6 +13,12 @@ export let routes = [
     {
         path:'/project',
         title:'项目',
-        component:Project
+        component:Project,
+
+    },
+    {
+        path:'/project/:fId',
+        title:'项目',
+        component:FileInside,
     }
 ]

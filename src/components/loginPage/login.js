@@ -9,7 +9,6 @@ import { Modal } from 'antd';
 import Project from '@/components/projectPage/projectHome';
 import {register,login} from '@/server/requestData';
 // import {CustomeLink} from '@/commonfunc/index';
-// import routes from '@/router/router';
 import cookie from 'react-cookies'
 
 //注册登录的提醒弹框
