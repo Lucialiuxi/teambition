@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 import './project.css';
-import { withRouter } from 'react-router-dom';
 import cookie from 'react-cookies';
+import Login from '../loginPage/login';import LoginOrProject from '@/router/index';
+
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    withRouter
+  } from 'react-router-dom';
 
 import { Layout } from 'antd';
 import CommonNav  from '../commons/commonNav';
@@ -33,20 +40,21 @@ class Project  extends Component {
         super(props);
         this.state = {
             data:{
-                pathName:'',
+                currentFileId:'',
             }
         }
     }
     componentWillMount(){
-        let { location } = this.props;
-        this.setState({
-            pathName:location.pathname
-        })
-        console.log( 'componentWillMount',this.props)
-        let { dispatch} = this.props
+        // console.log('componentWillMount')
+        let { dispatch , history } = this.props
+        dispatch(allActions.ClearStateAction());
         //请求数据
         let user = cookie.load('UserName');
+        if(!user){
+            history.push('login')
+        }
         getAllFilesInfo({userLoginName:user}).then(({data})=>{
+            // console.log(data.AllFilesInfoData)
             if(data.AllFilesInfoData.length>0){
                 dispatch(allActions.AllFileInfoArr(data.AllFilesInfoData))
             }
@@ -55,23 +63,15 @@ class Project  extends Component {
     //点击大图标文件，进入到文件内部
     clickInToTheFile=(fileId,userLoginName)=>{
         let { history , location} = this.props;
-        console.log('clickInToTheFile',fileId,userLoginName,this.props)
-        history.push(`/project/${fileId}`)
         this.setState({
-            pathName:location.pathname
+            currentFileId:fileId
         })
+    }
+    componentDidUpdate(){
+        // console.log('componentDidUpdate',this.props)
     }
     render() {
         let getFileInfo = this.props.state.getFileInfo;
-        // console.log(this.props)
-        let {pathName} = this.state ;
-        console.log(pathName)
-        let pageShow;
-        if(pathName==='/project'){
-            pageShow = <FileCover fileInfoData={getFileInfo} clickInToTheFile={this.clickInToTheFile}/> 
-        }else if(pathName!=='/project'&&pathName.split(0,9)==='/project/'){
-            pageShow = <FileInside/>;
-        }
         return ( 
            <div className="projectPageWrap">
                 <Layout  className="projectPage">
@@ -80,8 +80,27 @@ class Project  extends Component {
                         <CommonNav {...this.props}/>
                     </Header>
                     <Content  className="projectPageContent">
-                        {/* 首页文件图标区 */}
-                        {pageShow}
+                        <Router>
+                            <div>
+                                {/* 首页文件图标区 */}
+                                <Route 
+                                    path="/projects" 
+                                    exact 
+                                    render={()=><FileCover 
+                                                    fileInfoData={getFileInfo}  
+                                                    clickInToTheFile={this.clickInToTheFile} 
+                                                    goToFileCoverPage={this.goToFileCoverPage}
+                                                />
+                                    }
+                                />
+                                {/* 项目文件详情 */}
+                                <Route 
+                                    exact 
+                                    path={`/project/:${this.state.currentFileId}/tasks`} 
+                                    component={FileInside}
+                                />
+                            </div>
+                        </Router>
                     </Content>
                 </Layout>
            </div>
@@ -95,9 +114,5 @@ const mapStateToProps = state => {
         state
     }
   }
-
-// //要提交的动作
-// const mapDispatchToProps = dispatch => {
-//     return bindActionCreators(allActions,dispatch)
-// }  
+ 
 export default withRouter(connect(mapStateToProps,null)(Project));

@@ -24,10 +24,11 @@ class FileCover extends Component {
     }
     render() { 
         let { RecycleFlieIsShow } = this.state;
-        let { fileInfoData ,clickInToTheFile} = this.props;
+        let { fileInfoData , clickInToTheFile , goToFileCoverPage } = this.props;
         let myOwnProjects =  fileInfoData.filter(val=>{
             return val.inRecycleBin ? null : val;
         });
+        //把点击进入文件夹的函数加入每一条数据我拥有的项目的数据
         myOwnProjects.forEach(val=>{
             val['clickInToTheFile'] = clickInToTheFile;
         })

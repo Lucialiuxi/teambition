@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Route , withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import cookie from 'react-cookies';
 
+//引入action
+import * as allActions  from '@/actions/action';
+
 import { Icon , List, Avatar } from 'antd';
 
 const ProjectTypes = [
@@ -34,8 +37,8 @@ const ProjectTypes = [
           this.state = {  }
       }
       clickLoginOut=()=>{
-          console.log('clickLoginOut',this.props)
-          let { history } = this.props
+          console.log('clickLoginOut')
+          let { history } = this.props;
           history.replace('/login')
           cookie.remove('UserName');
       }

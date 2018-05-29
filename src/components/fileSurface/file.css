@@ -20,7 +20,7 @@ h2{
     margin: 0;
     color: #383838;
 }
-.myOwnfiles .fileItem{
+.myOwnfiles li{
     width: 270px;
     height: 140px;
     padding: 5px 10px;
@@ -34,6 +34,14 @@ h2{
     margin: 0 10px;
     margin-bottom: 10px; 
     transition: transform .218s ease,-webkit-transform .218s ease;
+}
+.myOwnfiles a{
+    display: block;
+    width: 270px;
+    height: 140px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .fileItem h3, .fileItem h4{
     color: #fff;
@@ -95,4 +103,7 @@ h2{
 }
 .fileItem .anticon-star.starActive{
     color: #ffaf38;
+}
+#subNavWrap{
+    height: 1000px;
 }

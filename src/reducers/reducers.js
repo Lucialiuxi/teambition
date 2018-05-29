@@ -2,7 +2,9 @@ import { combineReducers } from 'redux';
 
 const getFileInfo = (state = [], action) => {
     switch (action.type) {
-
+      //每次登录的时候先清空state里面的数据
+      case 'Clear_State_Action':
+      return state=[]
       //新建文件夹
       case 'Create_A_File':
       // console.log('Create_A_File',state,action.obj)

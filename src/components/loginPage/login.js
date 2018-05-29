@@ -61,7 +61,7 @@ class Login  extends Component {
                         id:data.userInfo._id
                     })
                     this.setUserCookie()
-                    this.props.history.replace('/project')
+                    this.props.history.replace('/projects')
                 }
             }
             
@@ -81,7 +81,7 @@ class Login  extends Component {
                         id:data.userInfo._id
                     })
                     this.setUserCookie()
-                    this.props.history.replace('/project')
+                    this.props.history.replace('/projects')
                 }
             }else{
                 this.refs.username.value = ''
@@ -97,9 +97,6 @@ class Login  extends Component {
         
     }
     render() { 
-        if(cookie.load('UserName')){
-            return <Route path="/project" component={Project}/>
-        }
         return (
         <section className="loginPage">
             <form>

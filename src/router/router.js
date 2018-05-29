@@ -11,14 +11,15 @@ export let routes = [
         component:Login
     },
     {
-        path:'/project',
+        path:'/projects',
         title:'项目',
-        component:Project,
-
+        component:Project
     },
     {
-        path:'/project/:fId',
+        path:'/project/:fileId/tasks',
         title:'项目',
-        component:FileInside,
-    }
+        component:Project  
+    }        
+    
+    
 ]

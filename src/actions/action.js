@@ -1,3 +1,10 @@
+//每次登录的时候先清空state里面的数据
+export  const ClearStateAction = () => {
+    return {
+        type: 'Clear_State_Action'
+    }
+}
+
 //新建项目
 export  const CreateAFile = obj => {
     return {

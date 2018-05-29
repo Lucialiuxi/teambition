@@ -17,11 +17,15 @@ class App extends Component {
     this.state = {  }
   }
   componentDidMount(){
-    const {history } = this.props;
-    if(cookie.load('UserName')){
-      history.push('/project')
-    }else{
-      history.push('/login')
+    // console.log('componentDidMount',this.props.location.pathname.slice(0,9))
+    const { history , location } = this.props;
+    if(location.pathname.slice(0,9)!=='/project/'){
+      // console.log('2222')
+      if(cookie.load('UserName')){
+        history.push('/projects')
+      }else{
+        history.push('/login')
+      }
     }
   }
   render() {

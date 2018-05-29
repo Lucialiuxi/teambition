@@ -5,6 +5,10 @@ import classnames from 'classnames';
 import ModifyFileInfoMask from '@/components/mask/modifyFileInfoMask';
 import { ToggleFileStar } from '@/actions/action';
 import { ToggleFileStarServer } from '@/server/requestData'
+//点击一个文件夹，内部显示
+import FileInside from '@/components/projectPage/fileDetail/fileInside';
+import {CustomeLink} from '@/commonfunc/'
+
 class FileItem extends Component {
     constructor(props) {
         super(props);
@@ -27,28 +31,31 @@ class FileItem extends Component {
             ToggleFileStarServer({...this.props,star:isStar}).then(({data})=>{
                 dispatch(ToggleFileStar(data.afterModifyData))
             })
-        }
-        //进入文件夹内部
-        if(target.nodeName==="I") return;
-        if(target.nodeName==="LI"){
+        }else if(target.nodeName==="LI"){//进入文件夹内部
+            console.log('wooo')
             let { clickInToTheFile , fileId , userLoginName } = this.props;
             clickInToTheFile(fileId,userLoginName)
         }
     }
     render() { 
-        // console.log(this.props)
-        let { FileName , FileAbstract , fileId ,star } = this.props;
+        let { FileName , FileAbstract , fileId , star , goToFileCoverPage } = this.props;
         if(!FileName){
             return null
         }
         let starClass = classnames('favorite',{'starActive':star})
         return ( 
                 <li 
-                    className="fileItem" 
-                    data-id={fileId} 
+                    className="fileItem"
                     onClick={this.ClickFileItem}
                 >
-                    {/* 编辑框 */}
+                <CustomeLink 
+                    path='/projects'
+                    data-id={fileId} 
+                    to={`/project/${fileId}/tasks`}
+                    event={goToFileCoverPage}
+                >
+                </CustomeLink>
+                <div>
                     <ModifyFileInfoMask {...this.props}/>
                     <Icon 
                         type="star"
@@ -56,6 +63,7 @@ class FileItem extends Component {
                     />
                     <h3>{FileName}</h3>
                     <h4>{FileAbstract}</h4>
+                </div>
                 </li>
          )
     }
