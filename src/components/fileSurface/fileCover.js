@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 // import { BrowserRouter as Router, Route , withRouter } from 'react-router-dom'
 // import { connect } from 'react-redux';
 
-import FileItem from './fileItem'
-import FileItemInRecyCleBin from './fileItemInRecycleBin'
-import CreateFile from './CreateFile'
-import './file.css'
-import { Toggle } from 'office-ui-fabric-react';
+import FileItem from './fileItem';
+import FileItemInRecyCleBin from './fileItemInRecycleBin';
+import CreateFile from './CreateFile';
+import './file.css';
 
   
 class FileCover extends Component {

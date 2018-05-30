@@ -37,6 +37,7 @@ const getFileInfo = (state = [], action) => {
        return state.filter(item=>{
         return item.fileId === action.obj.fileId ? null : item
        })
+
      default:
           return state
     }

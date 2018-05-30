@@ -15,13 +15,13 @@ import {
 import { Layout } from 'antd';
 import CommonNav  from '../commons/commonNav';
 //文件夹图片区
-import FileCover from '../fileSurface/fileCover'
+import FileCover from '../fileSurface/fileCover';
 //点击一个文件夹，内部显示
-import FileInside from './fileDetail/fileInside';
+import FileInside from '@/components/fileDetail/fileInside';
 
 //引入action
 import * as allActions  from '@/actions/action';
-import { getAllFilesInfo } from '@/server/requestData'
+import { getAllFilesInfo } from '@/server/requestData';
 import routes from '@/router/router';
 
 
@@ -41,12 +41,42 @@ class Project  extends Component {
         this.state = {
             data:{
                 currentFileId:'',
+                activeBar:''
             }
         }
     }
     componentWillMount(){
-        // console.log('componentWillMount')
-        let { dispatch , history } = this.props
+        let { dispatch , history , location } = this.props;
+        if(location.pathname==='/projects'){
+            this.setState({
+                currentFileId:'',
+                activeBar:''
+            })
+        }else{
+            let {t} = this.props.match.params
+            if( t === 'tasks'){
+                this.setState({
+                    activeBar:'1'
+                })
+            }else if(t === 'posts'){
+                this.setState({
+                    activeBar:'2'
+                })
+            }else if(t === 'works'){
+                this.setState({
+                    activeBar:'3'
+                })
+            }else if(t === 'schedules'){
+                this.setState({
+                    activeBar:'4'
+                })
+            }else if(t === 'groupchat'){
+                this.setState({
+                    activeBar:'5'
+                })
+            }
+
+        }
         dispatch(allActions.ClearStateAction());
         //请求数据
         let user = cookie.load('UserName');
@@ -54,7 +84,6 @@ class Project  extends Component {
             history.push('login')
         }
         getAllFilesInfo({userLoginName:user}).then(({data})=>{
-            // console.log(data.AllFilesInfoData)
             if(data.AllFilesInfoData.length>0){
                 dispatch(allActions.AllFileInfoArr(data.AllFilesInfoData))
             }
@@ -62,16 +91,31 @@ class Project  extends Component {
     }
     //点击大图标文件，进入到文件内部
     clickInToTheFile=(fileId,userLoginName)=>{
-        let { history , location} = this.props;
+        let { history } = this.props;
         this.setState({
             currentFileId:fileId
         })
+        history.push(`/project/${fileId}/tasks`);
     }
-    componentDidUpdate(){
-        // console.log('componentDidUpdate',this.props)
+    clickTabBar=(t,k,fId)=>{
+        let { history } = this.props;
+        // console.log('tabBar',t,k,fId)
+        this.setState({
+            activeBar:k,
+            currentFileId:fId
+        })
+        history.push(`/project/${fId}/${t}`)
+    }
+    componentDidMount(){
+        let fileDetailAreaWrap = document.getElementById('ct');
+        let contentBox = fileDetailAreaWrap.parentNode;
+        let h = contentBox.offsetHeight;
+        fileDetailAreaWrap.style.height = h + 'px';
     }
     render() {
         let getFileInfo = this.props.state.getFileInfo;
+        let t = this.state.activeBar ? this.state.activeBar : '1';
+        console.log(t,this.state.activeBar)
         return ( 
            <div className="projectPageWrap">
                 <Layout  className="projectPage">
@@ -81,23 +125,27 @@ class Project  extends Component {
                     </Header>
                     <Content  className="projectPageContent">
                         <Router>
-                            <div>
+                            <div id="ct">
                                 {/* 首页文件图标区 */}
                                 <Route 
                                     path="/projects" 
                                     exact 
                                     render={()=><FileCover 
                                                     fileInfoData={getFileInfo}  
-                                                    clickInToTheFile={this.clickInToTheFile} 
-                                                    goToFileCoverPage={this.goToFileCoverPage}
+                                                    clickInToTheFile={this.clickInToTheFile}
                                                 />
                                     }
                                 />
                                 {/* 项目文件详情 */}
                                 <Route 
                                     exact 
-                                    path={`/project/:${this.state.currentFileId}/tasks`} 
-                                    component={FileInside}
+                                    path={`/project/:${this.state.currentFileId}/:${t}`}
+                                    render={()=><FileInside 
+                                                    fileInfoData={getFileInfo}
+                                                    tabBar={this.clickTabBar}
+                                                    activeBar={t}
+                                                />
+                                    }
                                 />
                             </div>
                         </Router>

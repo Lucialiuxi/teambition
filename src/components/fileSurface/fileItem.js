@@ -5,9 +5,8 @@ import classnames from 'classnames';
 import ModifyFileInfoMask from '@/components/mask/modifyFileInfoMask';
 import { ToggleFileStar } from '@/actions/action';
 import { ToggleFileStarServer } from '@/server/requestData'
-//点击一个文件夹，内部显示
-import FileInside from '@/components/projectPage/fileDetail/fileInside';
-import {CustomeLink} from '@/commonfunc/'
+
+import {CustomeLink} from '@/commonfunc/';
 
 class FileItem extends Component {
     constructor(props) {
@@ -32,7 +31,6 @@ class FileItem extends Component {
                 dispatch(ToggleFileStar(data.afterModifyData))
             })
         }else if(target.nodeName==="LI"){//进入文件夹内部
-            console.log('wooo')
             let { clickInToTheFile , fileId , userLoginName } = this.props;
             clickInToTheFile(fileId,userLoginName)
         }
