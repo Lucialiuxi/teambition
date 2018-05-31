@@ -7,7 +7,7 @@ import Posts from '@/components/fileDetail/posts/posts';
 import Schedules from '@/components/fileDetail/schedules/schedules';
 import Tasks from '@/components/fileDetail/tasks/tasks'
 import Works  from '@/components/fileDetail/works/works';
-import routes from '@/router/router';
+// import routes from '@/router/router';
 
 const TabPane = Tabs.TabPane;
 
@@ -29,7 +29,7 @@ class SubNav extends Component {
         // console.log(activeKey,this.props)
         //点击项目详情分类名字的时候传 【点击的项目详情分类名字、数字  文件id】 --到Project组件中
         let { match , tabBar } = this.props;
-        let fileId = match.params.undefined;
+        // let fileId = match.params.undefined;
         let t = '';
         if( activeKey==='1' || activeKey==='' ){
             t = 'tasks';

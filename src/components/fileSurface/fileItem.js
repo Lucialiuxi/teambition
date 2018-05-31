@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import ModifyFileInfoMask from '@/components/mask/modifyFileInfoMask';
 import { ToggleFileStar } from '@/actions/action';
 import { ToggleFileStarServer } from '@/server/requestData'
-
+import routes from '@/router/router';
 import {CustomeLink} from '@/commonfunc/';
 
 class FileItem extends Component {
