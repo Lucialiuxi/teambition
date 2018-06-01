@@ -47,7 +47,7 @@ class FileItem extends Component {
                     onClick={this.ClickFileItem}
                 >
                 <CustomeLink 
-                    path='/projects'
+                    to={`/project/${fileId}/tasks`}
                     data-id={fileId} 
                     to={`/project/${fileId}/tasks`}
                     event={goToFileCoverPage}

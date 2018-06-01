@@ -429,36 +429,61 @@ body{
 }
 #dropdown-container{
     min-width: 252px;
-    height: 395px;
+    /* height: 380px; */
     position: absolute;
     top: 35px;
     left: 50%;
-    background-color: azure;
+    background-color: #fff;
     z-index: 50;
     border-radius: 10px;
     overflow: hidden;
+    /* display: none; */
 }
 #dropdown-container header{
     text-align: center;
     padding: 12px 20px;
     margin: 0 20px;
     position: relative;
-    /* background: red; */
 }
 #dropdown-container header{
     position: relative;
+}
+#dropdown-container hr{
+    width: 100%;
+    height: 1px;
+    background-color: #d9d9d9;
+    border: none;
+    margin: 0;
 }
 #dropdown-container header .dropdown_title{
     font-weight: 600;
     font-size: 16px;
     display: inline-block;
 }
-#dropdown-container header .anticon-close{
+#dropdown-container header .anticon-close,
+#dropdown-container header .anticon-left{
     font-size: 22px;
     position: absolute;
+    color: #a6a6a6;
+}
+#dropdown-container header .anticon-left{
+    display: none;
+}
+#dropdown-container .M_TaskItem .anticon-left,
+#dropdown-container .Add_TaskItem .anticon-left{
+    display: block;
+}
+#dropdown-container header .anticon-left{
+    left: 0;
+    top: 14px;
+}
+#dropdown-container header .anticon-close{
     right: 0;
     top: 14px;
-    color: #a6a6a6;
+}
+#dropdown-container .modifyDetailList{
+    padding-bottom: 10px;
+    display: none;
 }
 #dropdown-container .modifyDetailList .modifyItem{
     width: 100%;
@@ -466,8 +491,100 @@ body{
     color: gray;
     text-align: start;
     font-size: 14px;
+    cursor: pointer;
+}
+#dropdown-container .modifyItem:hover{
+    background-color: #eeeeee;
 }
 #dropdown-container .modifyDetailList i{
     font-size: 16px;
     margin-right: 5px;
+}
+#dropdown-container .MOrAddListTaskItem{
+    width: 252px;
+    margin: 0;
+    padding: 16px;
+    display: none;
+}
+#dropdown-container .MOrAddListTaskItem .MTaskItemInput{
+    width: 100%;
+    height: 40px;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    border: 1px solid #e5e5e5;
+    background-color: transparent;
+    border-radius: 4px;
+    box-shadow: none;
+    outline: 0;
+    display: block;
+}
+#dropdown-container .MOrAddListTaskItem .saveModifyInputValueBtn,
+#dropdown-container .MOrAddListTaskItem .createATaskItemBtn{
+    display: block;
+    width: 100%;
+    height: 40px;
+    min-width: 76px;
+    padding: 12px;
+    margin: 0;
+    font-size: 14px;
+    line-height: 14px;
+    color: #fff;
+    vertical-align: top;
+    background-color: transparent;
+    border: 0;
+    border-radius: 4px;
+    outline: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease,border 0.3s ease,color 0.3s;
+    background-color: #3da8f5;
+}
+#dropdown-container .MOrAddListTaskItem .createATaskItemBtn{
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #383838;
+}
+#dropdown-container .createATaskItemBtn.add{
+    cursor: not-allowed;
+    background-color: #ccc;
+}
+.choiceDeadline{
+    display: none;
+}
+.choiceDeadline .ant-fullcalendar-header{
+    padding: 10px 9px 11px 0;
+} 
+.ant-fullcalendar-calendar-body{
+    padding: 4px 12px;
+}
+.choiceDeadline button{
+    height: 40px;
+    min-width: 90px;
+    margin: 0;
+    font-size: 14px;
+    line-height: 14px;
+    color: #fff;
+    vertical-align: top;
+    background-color: transparent;
+    border: 0;
+    border-radius: 4px;
+    outline: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease,border 0.3s ease,color 0.3s ease;
+    user-select: none;
+    color: gray;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-top: 8px;
+}
+.choiceDeadline .confirm{
+    background-color: #3da8f5;
+    color: #fff;
+    border-color:#3da8f5;
+    margin-left: 10px; 
+}
+.ant-alert-info {
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #ccc;
+    background-color: #fff;
 }
