@@ -32,6 +32,7 @@ body{
     vertical-align: top;
     background-color: #eee;
     border-radius: 3px;
+    overflow: hidden;
 }
 #TasksWrap .taskItem .taskItem-head{
     cursor: move;
@@ -42,13 +43,11 @@ body{
     font-weight: 700;
     z-index: 1;
     transition: box-shadow 100ms ease;
-    background-color: pink;
 }
 #TasksWrap .taskItem .subTasksContent{
     overflow: auto;
     overflow-x: visible;
     transform: translateZ(0);
-    background-color: skyblue;
 }
 
 #TasksWrap .taskItem .taskItem-head h4{
@@ -161,7 +160,6 @@ body{
     flex: 1 1 auto;
     flex-direction: column;
     align-items: stretch;
-    /* background-color: plum; */
 }
 .subTask-Item-Title{
     min-height: 24px;
@@ -264,7 +262,7 @@ body{
     background-color: #ff4f3e;
 }
 .subTask-checked-wrap .subTask-card-mode{
-    opacity: 0.5;
+    opacity: 0.9;
 }
 .subTask-checked-wrap .subTask-Item-Title{
     color: #a6a6a6;
@@ -276,8 +274,7 @@ body{
     border: 0 none;
     background-color: #fff;
     border-radius: 2px;
-    background-color: gold;
-    /* display: none; */
+    display: none;
     padding-bottom: 20px;
 }
 .subTask-creator-wrap .task-creator{
@@ -427,9 +424,11 @@ body{
     right: 20px;
     bottom: 0;
 }
+#confirmCreacteBtn:hover{
+    opacity: .9;
+}
 #dropdown-container{
-    min-width: 252px;
-    /* height: 380px; */
+    max-width: 252px;
     position: absolute;
     top: 35px;
     left: 50%;
@@ -437,7 +436,7 @@ body{
     z-index: 50;
     border-radius: 10px;
     overflow: hidden;
-    /* display: none; */
+    display: none;
 }
 #dropdown-container header{
     text-align: center;
@@ -519,7 +518,9 @@ body{
     display: block;
 }
 #dropdown-container .MOrAddListTaskItem .saveModifyInputValueBtn,
-#dropdown-container .MOrAddListTaskItem .createATaskItemBtn{
+#dropdown-container .MOrAddListTaskItem .createATaskItemBtn,
+.MoveOrCopySubTaskWrap button,
+.DeleteSubTaskOrDeleteTaskItemWrap button{
     display: block;
     width: 100%;
     height: 40px;
@@ -537,6 +538,7 @@ body{
     box-sizing: border-box;
     transition: background-color 0.3s ease,border 0.3s ease,color 0.3s;
     background-color: #3da8f5;
+    cursor: pointer;
 }
 #dropdown-container .MOrAddListTaskItem .createATaskItemBtn{
     margin-bottom: 16px;
@@ -587,4 +589,126 @@ body{
     border-radius: 0;
     border-bottom: 1px solid #ccc;
     background-color: #fff;
+}
+.MoveOrCopySubTaskWrap{
+    width: 252px;
+    margin: 0;
+    padding: 16px;
+    color: #383838;
+    display: none;
+}
+.MoveOrCopySubTaskWrap li{
+    padding-bottom: 33px;
+    margin-bottom: 10px;
+    height: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.MoveOrCopySubTaskWrap li span{
+    float: right;
+}
+.MoveOrCopySubTaskWrap li .MoveOrCopySubTaskTitle{
+    float: left;
+    font-size: 14px;
+    font-weight: bolder;
+}
+.MoveOrCopySubTaskWrap li span i{
+    margin-left: 8px;
+}
+.MoveOrCopySubTaskWrap li span i,
+.MoveOrCopySubTaskWrap li span em{
+    font-size: 14px;
+    color: gray;
+}
+.MoveOrCopySubTaskWrap li span em{
+    font-style: normal;
+}
+#dropdown-container .DeleteSubTaskOrDeleteTaskItemWrap{
+    width: 252px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 16px;
+    display: none;
+}
+#dropdown-container .DeleteSubTaskOrDeleteTaskItemWrap div.tips{
+    line-height: 20px;
+    white-space: pre-wrap;
+    text-align: start;
+    margin-bottom: 16px;
+}
+#dropdown-container .DeleteSubTaskOrDeleteTaskItemWrap button{
+    background-color: #ff4f3e;
+}
+#TasksWrap li.createWrap{
+    background-color: #fff;
+}
+#TasksWrap .createTaskItem{
+    height: 48px;
+    background-color: #eee;
+    border-radius: 3px;
+    overflow: hidden;
+    /* display: none; */
+}
+#TasksWrap .createTaskItem a{
+    color: #a6a6a6;
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+}
+#TasksWrap .createTaskItem a i{
+    margin-right: 5px;
+}
+#TasksWrap .createWrap .creator-form-wrap{
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 3px;
+    overflow: hidden;
+    padding-top: 15px;
+    display: none;
+}
+#TasksWrap .creator-form-wrap .stage-name{
+    margin-bottom: 10px;
+    border-color: rgba(56,56,56,.1);
+    height: 40px;
+    line-height: 26px;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    width: 100%;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    padding: 8px 12px;
+    color: #383838;
+    box-shadow: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+#TasksWrap .creator-form-wrap .btns{
+    height: 38px;
+}
+#TasksWrap .creator-form-wrap .btns a{
+    float: right;
+    padding: 8px 21px;
+    background-color: transparent;
+    box-shadow: none;
+    color: gray;
+    font-weight: 400;
+    cursor: pointer;
+    border-radius: 0;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: nowrap;
+    user-select: none;
+}
+#TasksWrap .creator-form-wrap .btns .submit{
+    color: #fff;
+    background-color: #3da8f5;
+    border-color: #3da8f5;
+    border-radius: 3px;
+}
+#TasksWrap .creator-form-wrap .btns .cancel:hover{
+    color: #3da8f5;
+}
+#TasksWrap .creator-form-wrap .btns .submit:hover{
+    opacity: .5;
 }

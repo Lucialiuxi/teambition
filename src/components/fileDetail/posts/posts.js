@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 class Posts extends Component {
     constructor(props) {
@@ -6,7 +6,9 @@ class Posts extends Component {
         this.state = {  }
     }
     render() { 
-        return ( 'Posts' )
+        return ( 
+            111111111111
+        )
     }
 }
  

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
-import DropDown from './dropdown';
+import DropDown from './dropdown/dropdown';
 import SubTask from './subTasks';
 import CheckedSubTasks from './checkedSubTasks';
 import SubTaskCreator from './subTaskCreator'
@@ -50,6 +50,22 @@ class Tasks extends Component {
                             添加任务
                         </a>
                     </div> 
+                </li>
+                {/* 新建任务列表 */}
+                <li className="taskItem createWrap">
+                    <div className="createTaskItem">
+                        <a>
+                            <Icon type="plus" />
+                            新建任务列表
+                        </a>
+                    </div>
+                    <div className="creator-form-wrap">
+                        <input type="text" placeholder="新建任务列表..." className="stage-name"/>
+                        <div className="btns">  
+                            <a className="btn submit" >保存</a> 
+                            <a className="btn cancel">取消</a>
+                        </div>
+                    </div>
                 </li>
             </ul> 
         )
