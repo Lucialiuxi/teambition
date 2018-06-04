@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 //引入action
 import * as allActions  from '@/actions/action';
 import './App.css';
-import 'antd/dist/antd.css'
+import 'antd/dist/antd.css';
 
 import {BrowserRouter as Router , withRouter } from 'react-router-dom'
 
@@ -14,17 +14,16 @@ import cookie from 'react-cookies';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = {}
   }
   componentDidMount(){
-    // console.log('componentDidMount',this.props.location.pathname.slice(0,9))
     const { history , location } = this.props;
+
     if(location.pathname.slice(0,9)!=='/project/'){
-      // console.log('2222')
       if(cookie.load('UserName')){
         history.push('/projects')
       }else{
-        history.push('/login')
+        history.replace('/login')
       }
     }
   }
@@ -39,7 +38,6 @@ class App extends Component {
 
 //要修改的数据
 const mapStateToProps = state => {
-  // console.log(state)
   return  {
       state
   }

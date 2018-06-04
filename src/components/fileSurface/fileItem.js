@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import ModifyFileInfoMask from '@/components/mask/modifyFileInfoMask';
 import { ToggleFileStar } from '@/actions/action';
 import { ToggleFileStarServer } from '@/server/requestData'
-import routes from '@/router/router';
+import routes from '@/router/index';
 import {CustomeLink} from '@/commonfunc/';
 
 class FileItem extends Component {
@@ -30,12 +30,12 @@ class FileItem extends Component {
             ToggleFileStarServer({...this.props,star:isStar}).then(({data})=>{
                 dispatch(ToggleFileStar(data.afterModifyData))
             })
-        }else if(target.nodeName==="LI"){//进入文件夹内部
-            let { clickInToTheFile , fileId , userLoginName } = this.props;
-            clickInToTheFile(fileId,userLoginName)
+        }else if(target.nodeName==="A"){//进入文件夹内部
+            let { clickInToTheFile , fileId , userLoginName , FileName} = this.props;
+            clickInToTheFile(fileId,userLoginName,FileName)
         }
     }
-    render() { 
+    render() {
         let { FileName , FileAbstract , fileId , star , goToFileCoverPage } = this.props;
         if(!FileName){
             return null
@@ -47,7 +47,7 @@ class FileItem extends Component {
                     onClick={this.ClickFileItem}
                 >
                 <CustomeLink 
-                    to={`/project/${fileId}/tasks`}
+                    path={`/project/${fileId}/tasks`}
                     data-id={fileId} 
                     to={`/project/${fileId}/tasks`}
                     event={goToFileCoverPage}

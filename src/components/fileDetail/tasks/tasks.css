@@ -1,5 +1,6 @@
 body{  
     font-size: 16px;
+    margin: 0;
     font-family: Helvetica Neue,PingFang SC,Microsoft Yahei,\\5FAE\8F6F\96C5\9ED1,STXihei,\\534E\6587\7EC6\9ED1,sans-serif;
 }
 /* 任务 */
@@ -18,11 +19,11 @@ body{
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     background-color: #fff;
+    box-sizing: border-box;
 }
 #TasksWrap .taskItem{
     position: relative;
-    height: 92%;
-    min-width: 288px;
+    min-width: 280px;
     display: inline-flex;
     -webkit-flex-direction: column;
     flex-direction: column;
@@ -711,4 +712,10 @@ body{
 }
 #TasksWrap .creator-form-wrap .btns .submit:hover{
     opacity: .5;
+}
+#ct{
+    height: 100%;
+}
+#ct .ant-tabs-content{
+    height: 98%;
 }

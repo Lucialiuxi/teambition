@@ -22,7 +22,7 @@ ul{
     font-size: 14px;
     line-height: 20px;
     font-family: Helvetica Neue,PingFang SC,Microsoft Yahei,\\5FAE\8F6F\96C5\9ED1,STXihei,\\534E\6587\7EC6\9ED1,sans-serif;
-
+    user-select: none;
 }
 .projectPageHead{
     position: relative;
@@ -35,7 +35,7 @@ ul{
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.15)
 }
 .projectPageHead .Nav-bar-left{
-    position: relative;
+    position: absolute;
     top: 0;
     left: 15px;
     height: 48px;
@@ -259,9 +259,6 @@ ul{
     margin-bottom: 0;
 }
 #fileInsideWrap .ant-tabs-line .ant-tabs-bar  .ant-tabs-nav-container{
-    height: 100%;
-}
-#fileInsideWrap .ant-tabs-line .ant-tabs-content{
     height: 100%;
 }
 #subNavWrap{

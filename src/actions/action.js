@@ -53,3 +53,13 @@ export  const DeleteAFlieAction = obj => {
     }
 }
 
+// -------------------------------
+//生成默认的项目列表 未完成 已完成 进行中
+export  const CreateDefaultTaskItemsAction = arr => {
+    console.log(arr)
+    return {
+        type: 'Create_Default_TaskItems',
+        arr
+    }
+}
+

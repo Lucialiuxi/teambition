@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { POINT_CONVERSION_COMPRESSED } from 'constants';
 
 axios.defaults.baseURL = 'http://localhost:8080/';
 
@@ -40,5 +41,22 @@ export const MoveFileToRecycleBinServer = (param) => {
 
 //删除一个项目文件夹
 export const DeleteAFlieServer = (param) => {
-    return axios.post('/deleteAFlie',param)
+    return axios.post('/DeleteAFlie',param)
+}
+
+//查询和新建任务列表【没有就新建，有就查询】
+export const CreateTaskItemServer = (param) => {
+    let arr = []
+    for (let i = 0; i < 3; i++) {
+        arr.push({
+            ...param,
+            taskItemId:Math.ceil((Math.random()-.5)*10000000+ Date.now()),
+            subTaskCount:0
+        })  
+    }
+    arr[0].taskItemName='待处理';
+    arr[1].taskItemName='已完成';
+    arr[2].taskItemName='进行中';
+    console.log(arr)
+    return axios.post('/CreateTaskItem', {param,arr})
 }

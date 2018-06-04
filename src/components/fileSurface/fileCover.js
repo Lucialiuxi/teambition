@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import { BrowserRouter as Router, Route , withRouter } from 'react-router-dom'
-// import { connect } from 'react-redux';
+import {  withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import FileItem from './fileItem';
 import FileItemInRecyCleBin from './fileItemInRecycleBin';
@@ -15,6 +15,7 @@ class FileCover extends Component {
             RecycleFlieIsShow:null
         }
     }
+    //控制回收站的显示
     ToggleRecycleFlieShow=()=>{
         let { RecycleFlieIsShow } = this.state;
         this.setState({
@@ -23,15 +24,15 @@ class FileCover extends Component {
     }
     render() { 
         let { RecycleFlieIsShow } = this.state;
-        let { fileInfoData , clickInToTheFile , goToFileCoverPage } = this.props;
-        let myOwnProjects =  fileInfoData.filter(val=>{
+        let { state , clickInToTheFile , goToFileCoverPage } = this.props;
+        let myOwnProjects =  state.getFileInfo.filter(val=>{
             return val.inRecycleBin ? null : val;
         });
         //把点击进入文件夹的函数加入每一条数据我拥有的项目的数据
         myOwnProjects.forEach(val=>{
             val['clickInToTheFile'] = clickInToTheFile;
         })
-        let recycledProjects =   fileInfoData.filter(val=>{
+        let recycledProjects =   state.getFileInfo.filter(val=>{
             return val.inRecycleBin ? val : null;
         });
         let recycled;
@@ -40,7 +41,7 @@ class FileCover extends Component {
                 return <FileItemInRecyCleBin  key={val.fileId+i} {...val}/>
             })
         }
-        let starProjects = fileInfoData.filter(val=>{
+        let starProjects = state.getFileInfo.filter(val=>{
             return val.star&&(!val.inRecycleBin) ? val : null;
         });
         return ( 
@@ -81,5 +82,11 @@ class FileCover extends Component {
          )
     }
 }
-
-export default FileCover;
+ //要修改的数据
+ const mapStateToProps = state => {
+    return  {
+        state
+    }
+  }
+ 
+export default withRouter(connect(mapStateToProps,null)(FileCover));

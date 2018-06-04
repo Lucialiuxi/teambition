@@ -20,7 +20,10 @@ ReactDOM.render(
             <App />
         </Router>
     </Provider>,
-     document.getElementById('root')
+     document.getElementById('root'),
+     ()=>{
+         console.log('完成挂载')
+     }
 );
 
 registerServiceWorker();

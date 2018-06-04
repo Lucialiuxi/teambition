@@ -4,7 +4,7 @@ import { Icon , Modal } from 'antd';
 import { connect } from 'react-redux';
 import {CreateAFile}  from '@/actions/action';
 import cookie from 'react-cookies';
-import { createAFileServer} from '@/server/requestData'
+import { createAFileServer} from '@/server/requestData';
 
 let FileName = '';
 let FileAbstract = '';
@@ -19,11 +19,13 @@ class FileItem extends Component {
             visible: false
          }
     }
+    //点击加号，弹出新建遮罩
     showModal = () => {
         this.setState({
           visible: true,
         });
     }
+    //点击 完成并创建
     handleOk = () => {
         console.log('handleOk',this)
         let {dispatch} = this.props;
@@ -37,7 +39,7 @@ class FileItem extends Component {
             userLoginName:user,
             FileName,
             FileAbstract,
-            fileId: parseInt(Date.now()+Math.random()),
+            fileId: parseInt(Date.now()+Math.random()*10000000),
             star: false,
             inRecycleBin: false
         }
@@ -59,9 +61,8 @@ class FileItem extends Component {
             this.input1.focus();
         }
 
-
-
     }
+    //点击关闭遮罩
     handleCancel = () => {
         this.setState({
             visible: false,
@@ -83,6 +84,7 @@ class FileItem extends Component {
                             onOk={this.handleOk}
                             onCancel={this.handleCancel}
                             okText="完成并创建"
+                            maskClosable="true"
                         >
                         <div className="illustration">插图</div>
                         <p className="intro">为不同的事务建立各自的项目</p>

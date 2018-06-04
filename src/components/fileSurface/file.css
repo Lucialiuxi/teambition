@@ -101,6 +101,7 @@ h2{
     margin-left: 15px;
     cursor: pointer;
 }
-.fileItem .anticon-star.starActive{
+.fileItem .anticon-star.starActive,
+.anticon-star.starActive{
     color: #ffaf38;
 }

@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 import './project.css';
 import cookie from 'react-cookies';
-import Login from '../loginPage/login';import LoginOrProject from '@/router/index';
-
+import Login from '@/components/loginPage/login';
 import {
     BrowserRouter as Router,
     Route,
@@ -47,13 +46,13 @@ class Project  extends Component {
     }
     componentWillMount(){
         let { dispatch , history , location } = this.props;
-        if(location.pathname==='/projects'){
+        if(location.pathname==='/projects'){//如果是大图标文件页面，就清空当前文件id和所在的项目文件区
             this.setState({
                 currentFileId:'',
                 activeBar:''
             })
         }else{
-            let {t} = this.props.match.params
+            let {t} = this.props.match.params;
             if( t === 'tasks'){
                 this.setState({
                     activeBar:'1'
@@ -77,29 +76,33 @@ class Project  extends Component {
             }
 
         }
+        //每次登录的时候先清空state里面的数据
         dispatch(allActions.ClearStateAction());
-        //请求数据
         let user = cookie.load('UserName');
         if(!user){
-            history.push('login')
+            history.push('/login');
         }
+        //请求项目文件信息数据
         getAllFilesInfo({userLoginName:user}).then(({data})=>{
             if(data.AllFilesInfoData.length>0){
                 dispatch(allActions.AllFileInfoArr(data.AllFilesInfoData))
             }
         })
     }
-    //点击大图标文件，进入到文件内部
-    clickInToTheFile=(fileId,userLoginName)=>{
-        let { history } = this.props;
+    //点击大图标文件，进入到文件内部 跳转路由 
+    clickInToTheFile=(fileId,userLoginName,FileName)=>{
+        let { history , dispatch } = this.props;
         this.setState({
             currentFileId:fileId
         })
-        history.push(`/project/${fileId}/tasks`);
+        let o = {pathname:`/project/${fileId}/tasks`,state: FileName};
+        history.push(o);
     }
+
+    //点击文件内部切换 到任务/文件/群聊
     clickTabBar=(t,k,fId)=>{
         let { history } = this.props;
-        // console.log('tabBar',t,k,fId)
+        console.log('tabBar',t,k,fId)
         this.setState({
             activeBar:k,
             currentFileId:fId
@@ -107,15 +110,26 @@ class Project  extends Component {
         history.push(`/project/${fId}/${t}`)
     }
     componentDidMount(){
+        if(this.state.activeBar && cookie.load('UserName')){//在项目文件详情页，自适应变化高度
+            this.resizeDetailPage();
+            window.onresize=()=>{
+                this.resizeDetailPage();
+            }
+        }
+    }
+    resizeDetailPage=()=>{//在项目文件详情页，自适应变化高度
         let fileDetailAreaWrap = document.getElementById('ct');
-        let contentBox = fileDetailAreaWrap.parentNode;
-        let h = contentBox.offsetHeight;
-        fileDetailAreaWrap.style.height = h + 'px';
+        let subNavWrap = document.getElementById('subNavWrap');
+        let cth=fileDetailAreaWrap.parentNode.offsetHeight
+        fileDetailAreaWrap.style.height = cth + 'px';
+        let H1 = subNavWrap.lastElementChild.offsetHeight;
+        let H2 = subNavWrap.lastElementChild.firstElementChild.offsetHeight;
+        subNavWrap.lastElementChild.lastElementChild.style.height = H1 - H2 + 'px';
     }
     render() {
-        let getFileInfo = this.props.state.getFileInfo;
+        let { taskItemInfo } = this.props.state;
         let t = this.state.activeBar ? this.state.activeBar : '1';
-        console.log(t,this.state.activeBar)
+        // console.log(t,this.state.activeBar,cookie.load('UserName'))
         return ( 
            <div className="projectPageWrap">
                 <Layout  className="projectPage">
@@ -131,7 +145,6 @@ class Project  extends Component {
                                     path="/projects" 
                                     exact 
                                     render={()=><FileCover 
-                                                    fileInfoData={getFileInfo}  
                                                     clickInToTheFile={this.clickInToTheFile}
                                                 />
                                     }
@@ -141,7 +154,6 @@ class Project  extends Component {
                                     exact 
                                     path={`/project/:${this.state.currentFileId}/:${t}`}
                                     render={()=><FileInside 
-                                                    fileInfoData={getFileInfo}
                                                     tabBar={this.clickTabBar}
                                                     activeBar={t}
                                                 />
@@ -157,7 +169,7 @@ class Project  extends Component {
 }
 //要修改的数据
 const mapStateToProps = state => {
-    // console.log(state)
+    console.log(state)
     return  {
         state
     }

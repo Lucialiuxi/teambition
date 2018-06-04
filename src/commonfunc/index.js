@@ -7,9 +7,10 @@ export function CustomeLink({ tag,to,event,className,label}) {
         path={to}
         children={
           ({match}) => {
-              let l = <Link 
-                className={className}
-                to={to}>{label}
+              let l = <Link
+                        className={className}
+                        to={to}
+                      >{label}
               </Link>;
             
             l = (tag && tag !== "a") ? React.createElement(tag, null, l) : l;

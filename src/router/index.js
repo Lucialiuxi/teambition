@@ -9,7 +9,6 @@ class LoginOrProject extends Component {
       this.state = {  }
     }
     render() {
-      console.log(111)
       return ( 
         <div className="LoginOrProject">
           {
