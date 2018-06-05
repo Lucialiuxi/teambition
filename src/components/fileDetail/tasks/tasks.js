@@ -8,10 +8,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 /**
- * 在点击进入文件夹：
- *      进入的时候请求查找，找到就直接渲染，找不到就创建    
- *      删除的时候先找到项目文件删除   然后根据项目文件loginName fileId 对应的项目列表 Id  对象的子项目  去进行删除
- *      
+ *在新建项目文件夹的时候就创建好默认的任务列表  
+  删除项目文件夹的时候要删除对应的任务列表
  */
 
 import './tasks.css';
@@ -45,9 +43,11 @@ class Tasks extends Component {
     }
     render() { 
         let { hasTaskList } = this.state;
-
         let { state } = this.props;
-        console.log(this.props)
+        //把项目文件数据按照待处理/已完成/进行中 排序
+        state.taskItemInfo.sort(function(a,b){
+            return a.index-b.index
+        })
         return (
             <ul id="TasksWrap">
                 {state.taskItemInfo.map(val=>{

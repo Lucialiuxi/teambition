@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import { Icon , Modal } from 'antd';
 import { connect } from 'react-redux';
-import {CreateAFile}  from '@/actions/action';
+import { CreateAFile , CreateDefaultTaskItemsAction }  from '@/actions/action';
 import cookie from 'react-cookies';
-import { createAFileServer} from '@/server/requestData';
+import { createAFileServer , CreateTaskItemServer } from '@/server/requestData';
 
 let FileName = '';
 let FileAbstract = '';
@@ -44,13 +44,19 @@ class FileItem extends Component {
             inRecycleBin: false
         }
         if (FileName) {
+            let newFileInfo = {};
             createAFileServer(o).then(({data})=>{
                 console.log(data.lastestFileInfoData)
+                newFileInfo = data.lastestFileInfoData;
                 dispatch(CreateAFile(data.lastestFileInfoData))
+                console.log(newFileInfo)
+                CreateTaskItemServer({fileId:newFileInfo.fileId,userLoginName:newFileInfo.userLoginName}).then(({data})=>{
+                    console.log('cccccccjjjj',data)
+                    this.props.dispatch(CreateDefaultTaskItemsAction(data.CurrentTaskItemInfo))
+                })
             })
             this.input1.value = '';
             this.input2.value = ''
-            
             // 关闭新建遮罩
             setTimeout(() => {
                 this.setState({

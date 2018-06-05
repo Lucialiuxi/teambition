@@ -42,8 +42,13 @@ const getFileInfo = (state = [], action) => {
 
 const taskItemInfo = (state = [], action) =>{
   switch (action.type){
+    //新建项目文件的时候创建默认的项目列表，开发自己看数据
     case 'Create_Default_TaskItems':
-      return action.arr
+      return action.arr;
+
+    //进入项目文件夹的时候项目列表只请求一次，存在state中，刷新不用多次请求
+    case 'TaskItems_In_CurrentFile_Action':
+      return action.arr;
   default:
         return state
   }

@@ -76,9 +76,10 @@ class Project  extends Component {
             }
 
         }
-        //每次登录的时候先清空state里面的数据
-        dispatch(allActions.ClearStateAction());
         let user = cookie.load('UserName');
+        //每次登录的时候先清空state里面的大图标文件数据
+        dispatch(allActions.ClearStateAction());
+
         if(!user){
             history.push('/login');
         }
@@ -127,9 +128,7 @@ class Project  extends Component {
         subNavWrap.lastElementChild.lastElementChild.style.height = H1 - H2 + 'px';
     }
     render() {
-        let { taskItemInfo } = this.props.state;
         let t = this.state.activeBar ? this.state.activeBar : '1';
-        // console.log(t,this.state.activeBar,cookie.load('UserName'))
         return ( 
            <div className="projectPageWrap">
                 <Layout  className="projectPage">
@@ -156,6 +155,7 @@ class Project  extends Component {
                                     render={()=><FileInside 
                                                     tabBar={this.clickTabBar}
                                                     activeBar={t}
+                                                    currentFileId={this.state.currentFileId}
                                                 />
                                     }
                                 />
@@ -169,7 +169,7 @@ class Project  extends Component {
 }
 //要修改的数据
 const mapStateToProps = state => {
-    console.log(state)
+    // console.log(state)
     return  {
         state
     }

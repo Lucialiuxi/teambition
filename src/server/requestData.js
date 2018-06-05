@@ -44,19 +44,30 @@ export const DeleteAFlieServer = (param) => {
     return axios.post('/DeleteAFlie',param)
 }
 
-//查询和新建任务列表【没有就新建，有就查询】
+//新建默认的任务列表
 export const CreateTaskItemServer = (param) => {
     let arr = []
     for (let i = 0; i < 3; i++) {
         arr.push({
             ...param,
             taskItemId:Math.ceil((Math.random()-.5)*10000000+ Date.now()),
-            subTaskCount:0
-        })  
+            subTaskCount:0,
+            index:i
+        }) 
     }
     arr[0].taskItemName='待处理';
     arr[1].taskItemName='已完成';
     arr[2].taskItemName='进行中';
-    console.log(arr)
     return axios.post('/CreateTaskItem', {param,arr})
+}
+
+//查询一个项目文件下的任务列表 和任务列表下 子任务
+export const GetTaskItemAndSubTaskServer = (param) => {
+    return axios.post('/GetTaskItemAndSubTask', param)
+}
+
+//删除一个项目问价下所有的任务列表  和 任务列表下的子任务
+export const DeleteAllTaskItemAndSubTaskInAFileServer = (param) => {
+    console.log(param)
+    return axios.post('/DeleteAllTaskItemAndSubTaskInAFile', param)
 }

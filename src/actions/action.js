@@ -54,11 +54,19 @@ export  const DeleteAFlieAction = obj => {
 }
 
 // -------------------------------
-//生成默认的项目列表 未完成 已完成 进行中
+//生成默认的项目列表 未完成 已完成 进行中 --开发显示自己看返回的数据
 export  const CreateDefaultTaskItemsAction = arr => {
     console.log(arr)
     return {
         type: 'Create_Default_TaskItems',
+        arr
+    }
+}
+//进入文件的时候把当前的项目列表信息存进state中
+export  const TaskItemsInCurrentFileAction = arr => {
+    console.log(arr)
+    return {
+        type: 'TaskItems_In_CurrentFile_Action',
         arr
     }
 }

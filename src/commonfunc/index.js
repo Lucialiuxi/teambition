@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Link  } from "react-router-dom";
 
 export function CustomeLink({ tag,to,event,className,label}) {

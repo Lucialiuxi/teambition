@@ -7,10 +7,8 @@ import Posts from '@/components/fileDetail/posts/posts';
 import Schedules from '@/components/fileDetail/schedules/schedules';
 import Tasks from '@/components/fileDetail/tasks/tasks';
 import Works  from '@/components/fileDetail/works/works';
-import routes from '@/router/index';
-import classnames from 'classnames';
-import { CreateTaskItemServer } from '@/server/requestData';
-import {CreateDefaultTaskItemsAction}  from '@/actions/action';
+import { GetTaskItemAndSubTaskServer } from '@/server/requestData';
+import { TaskItemsInCurrentFileAction } from '@/actions/action';
 
 const TabPane = Tabs.TabPane;
 
@@ -29,7 +27,7 @@ class SubNav extends Component {
     //点击切换 任务  分享 文件 日程 群聊
     tabToOther=(activeKey)=>{
         //点击项目详情分类名字的时候传 【点击的项目详情分类名字、数字  文件id】 --到Project组件中
-        let { match , tabBar } = this.props;
+        let { tabBar } = this.props;
         let t = '';
         if( activeKey==='1' || activeKey==='' ){
             t = 'tasks';
@@ -60,24 +58,16 @@ class SubNav extends Component {
         tabBar(t,activeKey,this.state.fId);
     }
     componentWillMount(){
-        let CurrentFileId = this.props.location.pathname.match(/\d+/g)[0];
-        console.log(CurrentFileId)
+        let { location , dispatch , state} = this.props;
+        let CurrentFileId = location.pathname.match(/\d+/g)[0];
         if(CurrentFileId){
-            //找到当前项目文件夹的数据
-            let currentFile = this.props.state.getFileInfo.filter(val=>val.fileId==CurrentFileId)[0];
-            console.log(currentFile)
-            //点击进入文件的时候,没有点击进入过就创建默认的三个任务列表，创建过就直接获取
-            if(currentFile){
-                console.log('currentFile')
-                CreateTaskItemServer({fileId:CurrentFileId,loginName:currentFile.userLoginName}).then(({data})=>{
-                    console.log('cccccccjjjj',data)
-                    this.props.dispatch(CreateDefaultTaskItemsAction(data.CurrentTaskItemInfo))
-                })
-                this.setState({
-                    fId:CurrentFileId,
-                    CurrentFileData:currentFile
-                })
-            }
+            //请求项目文件对应的任务列表 和 子任务
+            GetTaskItemAndSubTaskServer({fileId:CurrentFileId}).then(({data})=>{
+                dispatch(TaskItemsInCurrentFileAction(data.CurrentTaskItemInfo))
+            })
+            this.setState({
+                fId:CurrentFileId,
+            })
         }
     }
     render() {
