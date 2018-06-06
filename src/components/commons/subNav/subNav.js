@@ -16,7 +16,7 @@ class SubNav extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeKey:this.props.activeBar
+            activeKey:'1'
         }
     }
     //点击回到首页

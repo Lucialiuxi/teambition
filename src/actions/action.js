@@ -56,7 +56,6 @@ export  const DeleteAFlieAction = obj => {
 // -------------------------------
 //生成默认的项目列表 未完成 已完成 进行中 --开发显示自己看返回的数据
 export  const CreateDefaultTaskItemsAction = arr => {
-    console.log(arr)
     return {
         type: 'Create_Default_TaskItems',
         arr
@@ -64,10 +63,23 @@ export  const CreateDefaultTaskItemsAction = arr => {
 }
 //进入文件的时候把当前的项目列表信息存进state中
 export  const TaskItemsInCurrentFileAction = arr => {
-    console.log(arr)
     return {
         type: 'TaskItems_In_CurrentFile_Action',
         arr
     }
 }
 
+ //控制新建任务列表的  子任务  的显示隐藏 被点击的那个新建框才显示
+export  const SubTaskCreatorIsShowAction = taskItemId => {
+    return {
+        type: 'SubTask_Creator_Is_Show_Action',
+        taskItemId
+    }
+}
+//隐藏所有的新建任务列表的子任务编辑框
+export  const HideAllSubTaskCreatorsAction = (close) => {
+    return {
+        type: 'Hide_All_SubTaskCreators_Action',
+        close
+    }
+}

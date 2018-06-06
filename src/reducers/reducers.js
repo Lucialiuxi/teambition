@@ -46,9 +46,29 @@ const taskItemInfo = (state = [], action) =>{
     case 'Create_Default_TaskItems':
       return action.arr;
 
-    //进入项目文件夹的时候项目列表只请求一次，存在state中，刷新不用多次请求
+    //【进入】 项目文件夹和 【刷新】 的时候请求项目列表
     case 'TaskItems_In_CurrentFile_Action':
-      return action.arr;
+      state =  action.arr.map((val)=>{
+        val.IsCreating = false;
+        return val
+      })
+      return state;
+
+     //控制新建任务列表的  子任务  的显示隐藏 被点击的那个新建框才显示
+    case 'SubTask_Creator_Is_Show_Action':
+      return state.map((val)=>{
+          (action.taskItemId===val.taskItemId) ? (val.IsCreating=true) : (val.IsCreating=false)
+          return val;
+        })
+
+     //隐藏所有的新建任务列表的子任务编辑框
+     case 'Hide_All_SubTaskCreators_Action':
+     let newArr = state.map((val)=>{
+      action.close==='close' ? val.IsCreating=false : null
+      return val;
+    })
+     return newArr
+
   default:
         return state
   }
