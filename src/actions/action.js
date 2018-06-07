@@ -88,7 +88,7 @@ export  const HideAllSubTaskCreatorsAction = (close) => {
 
 
 
-//控制 【子任务编辑框的日历】 显示隐藏
+//控制 【子任务编辑框的日历】 显示
 export  const TaskItemCalenderIsShowAction = taskItemId => {
     return {
         type: 'TaskItem_Calender_IsShow_Action',
@@ -96,7 +96,7 @@ export  const TaskItemCalenderIsShowAction = taskItemId => {
     }
 }
 
-//隐藏所有的【子任务编辑框的日历】
+//所有的【子任务编辑框的日历】 隐藏
 export  const HideAllTaskItemCalenderAction = (close) => {
     return {
         type: 'Hide_All_TaskItem_Calender_Action',
@@ -106,7 +106,21 @@ export  const HideAllTaskItemCalenderAction = (close) => {
 
 
 
+//控制 【紧急选择框】 显示
+export  const ShowChoiceUrgencyLevelAction = taskItemId => {
+    return {
+        type: 'Show_Choice_UrgencyLevel_Action',
+        taskItemId
+    }
+}
 
+//【紧急选择框】 隐藏
+export  const HideChoiceUrgencyLevelAction = (close) => {
+    return {
+        type: 'Hide_Choice_UrgencyLevel_Action',
+        close
+    }
+}
 
 
 

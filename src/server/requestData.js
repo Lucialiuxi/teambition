@@ -42,6 +42,9 @@ export const DeleteAFlieServer = (param) => {
     return axios.post('/DeleteAFlie',param)
 }
 
+
+
+//--------------------------任务列表------------------------------
 //新建默认的任务列表
 export const CreateTaskItemServer = (param) => {
     let arr = []
@@ -59,6 +62,8 @@ export const CreateTaskItemServer = (param) => {
     return axios.post('/CreateTaskItem', {param,arr})
 }
 
+
+//---------------子任务-----------------------------------------------
 //查询一个项目文件下的任务列表 和任务列表下 子任务
 export const GetTaskItemAndSubTaskServer = (param) => {
     return axios.post('/GetTaskItemAndSubTask', param)
@@ -68,4 +73,10 @@ export const GetTaskItemAndSubTaskServer = (param) => {
 export const DeleteAllTaskItemAndSubTaskInAFileServer = (param) => {
     console.log(param)
     return axios.post('/DeleteAllTaskItemAndSubTaskInAFile', param)
+}
+
+//新建一个子任务
+export const CreateASubTaskServer = (param) => {
+    console.log(param)
+    return axios.post('CreateASubTask',param)
 }

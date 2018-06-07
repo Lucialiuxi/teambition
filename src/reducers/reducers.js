@@ -87,7 +87,6 @@ const taskItemInfo = (state = [], action) =>{
 
      //项目列表的 子任务编辑框的日历 显示
      case 'TaskItem_Calender_IsShow_Action':
-     console.log(8888)
      return state.map((val)=>{
          (action.taskItemId===val.taskItemId) ? (val.IsChoiceDeadline=true) : (val.IsChoiceDeadline=false)
          return val;
@@ -100,10 +99,28 @@ const taskItemInfo = (state = [], action) =>{
         return val;
       })
 
+     //项目列表的   紧急选择框 显示
+     case 'Show_Choice_UrgencyLevel_Action':
+     return state.map((val)=>{
+         (action.taskItemId===val.taskItemId) ? (val.IsChoiceUrgencyLevel=true) : (val.IsChoiceUrgencyLevel=false)
+         return val;
+       })
+
+     //项目列表的   紧急选择框  隐藏
+     case 'Hide_Choice_UrgencyLevel_Action':
+      return state.map((val)=>{
+        action.close==='close' ? val.IsChoiceUrgencyLevel=false : null
+        return val;
+      })
+
   default:
         return state
   }
 }
+
+
+
+
 
 const allReduers = combineReducers({
     getFileInfo,

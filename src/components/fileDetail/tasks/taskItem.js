@@ -34,8 +34,13 @@ class TaskItem extends Component {
         GoToShowDropDownContainer(taskItemInfo.taskItemId)
     }
     render() { 
-        let { taskItemInfo , GoToCreateSubTask , GoToChoiceSubTaskDeadline } = this.props;
+        let { taskItemInfo , 
+            GoToCreateSubTask , 
+            GoToChoiceSubTaskDeadline ,
+            deadline
+        } = this.props;
         let { hasTaskList } = this.state;
+        console.log(deadline)
         return ( 
             <div className="underTaskItemDiv">
                 {/* 下拉编辑框 */}
@@ -62,6 +67,7 @@ class TaskItem extends Component {
 
                     {/* 新建子任务编辑框 */}
                     {taskItemInfo.IsCreating ? <SubTaskCreator 
+                        deadline={deadline ? deadline : null}
                         id={taskItemInfo.taskItemId}
                         GoToChoiceSubTaskDeadline={GoToChoiceSubTaskDeadline}
                     /> : null }

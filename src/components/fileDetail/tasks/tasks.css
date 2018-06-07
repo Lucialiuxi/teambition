@@ -396,6 +396,10 @@ body{
     outline: none;
     margin-left: 25px;
 }
+.priority-aside{
+    position: relative;
+    z-index: 50;
+}
 .priority-aside .btn:active{
     border-color: #3da8f5;
     color: #3da8f5;
@@ -764,12 +768,12 @@ body{
 /* 新建任务框里面的日历 */
 .taskItem .CommonCanlender{
     position: absolute;
-    top: 100px;
-    left: 60%;
+    top: 145px;
+    left: 13px;
     z-index: 500;
-    border: 1px solid #ccc;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0,0,0,.1);
 }
 .taskItem .choiceDeadline  .CommonCanlender{
     display: block;
@@ -780,3 +784,76 @@ body{
     margin: 0;
     cursor: pointer;
 } 
+.taskItem .CommonCanlender .ant-alert-no-icon{
+    padding: 3px 15px;
+    border-bottom: none;
+}
+.taskItem .CommonCanlender .ant-fullcalendar-header{
+    padding-bottom: 5px;
+    margin-top: -1px;
+}
+.taskItem .CommonCanlender .ant-fullcalendar-header .ant-radio-button-wrapper{
+    margin-right: 2px;
+}
+.taskItem .CommonCanlender .ant-fullcalendar-header .ant-select-selection.ant-select-selection--single{
+    margin-top: -1px;
+}
+.taskItem .CommonCanlender .ant-fullcalendar.ant-fullcalendar-full{
+    margin-top: -1px;
+    border-top: none;
+}
+.CommonCanlender .ant-fullcalendar table {
+    height: 205px;
+}
+#taskUrgency{
+    position: absolute;
+    top: -115px;
+    left: 0;
+    border-radius: 4px;
+    list-style: none;
+    overflow: auto;
+    margin: 0;
+    padding: 4px 0;
+    max-height: 400px;
+    min-width: 200px;
+    background: #fff;
+    box-shadow: 0 2px 20px rgba(0,0,0,.1);
+}
+#taskUrgency li{
+    border-radius: 4px;
+    background: #fff;
+    list-style: none;
+    overflow: auto;
+    margin: 0;
+    padding: 4px 0;
+    max-height: 400px;
+    min-width: 200px;
+    margin-right: 8px;
+}
+#taskUrgency li span{
+    float: left;
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 16px;
+    user-select: none;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    background-color: #fff;
+    white-space: nowrap;
+    margin-left: 8px;
+}
+#taskUrgency li span.urgencyBtn{
+    border-color: #ffaf38;
+    color: #ffaf38;
+}
+#taskUrgency li span.emtremeUrgencyBtn{
+    border-color: #ff4f3e;
+    color: #ff4f3e;
+}
+#taskUrgency li i{
+    float: right;
+    font-size: 16px;
+}
