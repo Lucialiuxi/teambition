@@ -28,19 +28,30 @@ class TaskItem extends Component {
             SubTaskContent.focus();
         } 
     }
+    toShowDropDownContainer=()=>{
+        // console.log('toShowDropDownContainer',this.props)
+        let { GoToShowDropDownContainer , taskItemInfo } = this.props;
+        GoToShowDropDownContainer(taskItemInfo.taskItemId)
+    }
     render() { 
-        let { taskItemInfo , GoToCreateSubTask } = this.props;
+        let { taskItemInfo , GoToCreateSubTask , GoToChoiceSubTaskDeadline } = this.props;
         let { hasTaskList } = this.state;
         return ( 
             <div className="underTaskItemDiv">
                 {/* 下拉编辑框 */}
-                <DropDown/>
+                {taskItemInfo.IsShowDropDownContainer ? <DropDown/> : null}
                 <header className="taskItem-head">
                     <h4>
                         <span className="task-title">{taskItemInfo.taskItemName}</span>
                         <span className="task-count">{ hasTaskList ? '.'+ hasTaskList : null }</span>
                     </h4>
-                    <Icon type="down-circle-o" size="large"/>
+                    {/* 下拉菜单Icon */}
+                    <Icon 
+                        type="down-circle-o" 
+                        size="large" 
+                        onClick={this.toShowDropDownContainer}
+                        className="ToDropDownIcon"
+                    />
                 </header>
                 <div className="subTasksContent dls-thin-scroll">
                     {/* 没有被选中的子任务 */}
@@ -50,11 +61,16 @@ class TaskItem extends Component {
                     {/* <CheckedSubTasks/> */}
 
                     {/* 新建子任务编辑框 */}
-                    {taskItemInfo.IsCreating ? <SubTaskCreator id={taskItemInfo.taskItemId}/> : null }
-                    <div className="invisible-wrapper"></div>
+                    {taskItemInfo.IsCreating ? <SubTaskCreator 
+                        id={taskItemInfo.taskItemId}
+                        GoToChoiceSubTaskDeadline={GoToChoiceSubTaskDeadline}
+                    /> : null }
                 </div>
                 {/*【添加任务的显示】 点击 显示新建子任务编辑框*/}
-                {!taskItemInfo.IsCreating ? <ToShowSubTaskCreator  id={taskItemInfo.taskItemId} GoToCreateSubTask={GoToCreateSubTask}/> : null }
+                {!taskItemInfo.IsCreating ? <ToShowSubTaskCreator  
+                    id={taskItemInfo.taskItemId} 
+                    GoToCreateSubTask={GoToCreateSubTask}
+                /> : null }
             </div>
          )
     }

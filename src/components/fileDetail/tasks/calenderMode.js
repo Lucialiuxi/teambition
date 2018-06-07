@@ -22,7 +22,10 @@ class CanlenderMode extends Component {
     render() { 
         const { value, selectedValue } = this.state;
         return ( 
-            <div style={{ width: 252, borderRadius: 4 }}>
+            <div 
+                style={{ width: 252, borderRadius: 4 }}
+                className="CommonCanlender"
+            >
                 <Alert message={`${selectedValue && selectedValue.format('YYYY-MM-DD')}`} />
                 <Calendar 
                     value={value} 

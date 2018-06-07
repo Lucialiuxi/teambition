@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Tabs ,Icon} from 'antd';
-import { withRouter } from 'react-router-dom';
+import { withRouter , Link } from 'react-router-dom';
 import Groupchat from '@/components/fileDetail/groupchat/groupchat';
 import Posts from '@/components/fileDetail/posts/posts';
 import Schedules from '@/components/fileDetail/schedules/schedules';
@@ -18,11 +18,6 @@ class SubNav extends Component {
         this.state = {
             activeKey:'1'
         }
-    }
-    //点击回到首页
-    goToFileCoverPage=(ev)=>{
-        let { history } = this.props;
-        history.push('/projects');
     }
     //点击切换 任务  分享 文件 日程 群聊
     tabToOther=(activeKey)=>{
@@ -81,7 +76,10 @@ class SubNav extends Component {
         return (
             <div id="subNavWrap">
                 <div id="subNavLeftTool">
-                    <span onClick={this.goToFileCoverPage}>首页</span>
+                    {/* <span onClick={this.goToFileCoverPage}>首页</span> */}
+                    <span>
+                        <Link to="/projects">首页</Link>
+                    </span>
                     <Icon type="right" />
                     <span>
                         {currentFile?currentFile.FileName:''}

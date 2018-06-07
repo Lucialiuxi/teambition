@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { Icon} from 'antd';
 import { connect } from 'react-redux';
 
-import CanlenderMode from './dropdown/calenderMode';
  
 // 新建--项目列表子任务
 class SubTaskCreator extends Component {
     constructor(props) {
         super(props);
         this.state = {}
+    }
+    setDeadline=()=>{
+        console.log('setDeadline',this.props)
+        let { id , GoToChoiceSubTaskDeadline } = this.props;
+        GoToChoiceSubTaskDeadline(id)
     }
     render() {
         return (
@@ -21,8 +25,7 @@ class SubTaskCreator extends Component {
                 placeholder="任务内容"
             ></textarea>
             <div className="createUser">Lucia</div>
-            <div className="date-wrap">
-                {/* <CanlenderMode/> */}
+            <div className="date-wrap" onClick={this.setDeadline}>
                 <Icon type="calendar" />
                 <span className="date-text">设置截止时间</span>
             </div>

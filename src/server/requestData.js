@@ -1,6 +1,4 @@
-
 import axios from 'axios';
-import { POINT_CONVERSION_COMPRESSED } from 'constants';
 
 axios.defaults.baseURL = 'http://localhost:8080/';
 

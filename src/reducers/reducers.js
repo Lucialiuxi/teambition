@@ -49,8 +49,11 @@ const taskItemInfo = (state = [], action) =>{
     //【进入】 项目文件夹和 【刷新】 的时候请求项目列表
     case 'TaskItems_In_CurrentFile_Action':
       state =  action.arr.map((val)=>{
-        val.IsCreating = false;
-        return val
+        val.IsCreating = false;//显示创建子任务框
+        val.IsChoiceDeadline = false; //显示创建子任务框的截止时间日历
+        val.IsChoiceUrgencyLevel = false;//显示任务紧急程度的框
+        val.IsShowDropDownContainer = false;//显示下拉框
+        return val;
       })
       return state;
 
@@ -63,11 +66,39 @@ const taskItemInfo = (state = [], action) =>{
 
      //隐藏所有的新建任务列表的子任务编辑框
      case 'Hide_All_SubTaskCreators_Action':
-     let newArr = state.map((val)=>{
-      action.close==='close' ? val.IsCreating=false : null
-      return val;
-    })
-     return newArr
+      return state.map((val)=>{
+          action.close==='close' ? val.IsCreating=false : null
+          return val;
+      })
+
+     //项目列表的 下拉菜单 显示
+     case 'TaskItem_DropDownContainer_Show_Action':
+     return state.map((val)=>{
+         (action.taskItemId===val.taskItemId) ? (val.IsShowDropDownContainer=true) : (val.IsShowDropDownContainer=false)
+         return val;
+       })
+
+     //项目列表的 下拉菜单 隐藏
+     case 'Hide_TaskItem_DropDownContainer':
+      return state.map((val)=>{
+        action.close==='close' ? val.IsShowDropDownContainer=false : null
+        return val;
+      })
+
+     //项目列表的 子任务编辑框的日历 显示
+     case 'TaskItem_Calender_IsShow_Action':
+     console.log(8888)
+     return state.map((val)=>{
+         (action.taskItemId===val.taskItemId) ? (val.IsChoiceDeadline=true) : (val.IsChoiceDeadline=false)
+         return val;
+       })
+
+     //项目列表的 子任务编辑框的日历  隐藏
+     case 'Hide_All_TaskItem_Calender_Action':
+      return state.map((val)=>{
+        action.close==='close' ? val.IsChoiceDeadline=false : null
+        return val;
+      })
 
   default:
         return state

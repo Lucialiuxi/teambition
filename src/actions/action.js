@@ -69,17 +69,60 @@ export  const TaskItemsInCurrentFileAction = arr => {
     }
 }
 
- //控制新建任务列表的  子任务  的显示隐藏 被点击的那个新建框才显示
+
+
+ //控制【子任务编辑框】  的显示隐藏 被点击的那个【添加任务】才显示
 export  const SubTaskCreatorIsShowAction = taskItemId => {
     return {
         type: 'SubTask_Creator_Is_Show_Action',
         taskItemId
     }
 }
-//隐藏所有的新建任务列表的子任务编辑框
+//隐藏所有的新建任务列表的【子任务编辑框】
 export  const HideAllSubTaskCreatorsAction = (close) => {
     return {
         type: 'Hide_All_SubTaskCreators_Action',
+        close
+    }
+}
+
+
+
+//控制 【子任务编辑框的日历】 显示隐藏
+export  const TaskItemCalenderIsShowAction = taskItemId => {
+    return {
+        type: 'TaskItem_Calender_IsShow_Action',
+        taskItemId
+    }
+}
+
+//隐藏所有的【子任务编辑框的日历】
+export  const HideAllTaskItemCalenderAction = (close) => {
+    return {
+        type: 'Hide_All_TaskItem_Calender_Action',
+        close
+    }
+}
+
+
+
+
+
+
+
+
+
+//控制任务列表的【下拉列表菜单】的显示 
+export  const TaskItemDropDownContainerShowAction = taskItemId => {
+    return {
+        type: 'TaskItem_DropDownContainer_Show_Action',
+        taskItemId
+    }
+}
+//隐藏【下拉列表菜单】
+export  const HideTaskItemDropDownContainerAction = (close) => {
+    return {
+        type: 'Hide_TaskItem_DropDownContainer',
         close
     }
 }

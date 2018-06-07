@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
-//日历
-import CanlenderMode from './calenderMode';
 import MoveOrCopySubTask from './moveOrCopySubTask'
 import DeleteSubTaskOrDeleteTaskItem from './deleteSubTaskOrDeleteTaskItem'
 
@@ -17,7 +15,7 @@ class DropDown extends Component {
                 {/* 列表菜单没有className  编辑列表M_TaskItem 添加列表Add_TaskItem setDeadline*/}
                 <header className="Add_TaskItem">
                     <Icon type="left" />
-                    <h4 className="dropdown_title">移到回收站</h4>
+                    <h4 className="dropdown_title">列表菜单</h4>
                     <Icon type="close"/>
                 </header>
                 <hr/>
@@ -29,10 +27,6 @@ class DropDown extends Component {
                     <li className="modifyItem">
                         <Icon type="plus" />
                         在此后添加新列表
-                    </li>
-                    <li className="modifyItem">
-                        <Icon type="calendar" />
-                        设置本列表所有任务截止时间
                     </li>
                     <li className="modifyItem">
                         <Icon type="edit" />
@@ -57,10 +51,6 @@ class DropDown extends Component {
                     <input type="text" className="MTaskItemInput add" placeholder="列表名称"/>
                     {/* saveModifyInputValue-->保存按钮 createATaskItemBtn-->创建按钮 */}
                     <button className="createATaskItemBtn disable">创建</button>
-                </div>
-                {/* 选择截止时间 */}
-                <div className="choiceDeadline">
-                    <CanlenderMode/>
                 </div>
                 {/* 移动 或 复制 任务 */}
                 <MoveOrCopySubTask/>

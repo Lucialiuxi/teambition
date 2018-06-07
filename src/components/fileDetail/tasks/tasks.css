@@ -20,6 +20,7 @@ body{
     z-index: 1;
 }
 #TasksWrap .taskItem{
+    position: relative;
     min-width: 280px;
     height: 98%;
     display: inline-block;
@@ -265,6 +266,12 @@ body{
     color: #a6a6a6;
 }
 /* 新建任务编辑框 */
+.subTasksContent {
+    position: absolute;
+    z-index: 1;
+    width:100%;
+
+}
 .subTasksContent .subTask-creator-wrap{
     margin: 0 8px 8px;
     box-shadow: 0 0.5px 2px rgba(0,0,0,.1);
@@ -318,19 +325,13 @@ body{
     height: 25px;
     overflow: hidden;
     position: relative;
-    z-index:1
+    z-index:1;
+    cursor: pointer;
 }
 .task-creator .date-wrap .anticon-calendar{
     color: #a6a6a6;
 }
-.date-wrap .CommonCanlender{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    background: red;
-    
-}
+
 .task-creator .date-wrap .date-text{
     margin-left: 10px;
     color: #a6a6a6;
@@ -446,9 +447,8 @@ body{
     left: 50%;
     background-color: #fff;
     z-index: 999;
-    border-radius: 10px;
+    border-radius: 5px;
     overflow: hidden;
-    /* display: none; */
 }
 #dropdown-container header{
     text-align: center;
@@ -494,7 +494,6 @@ body{
 }
 #dropdown-container .modifyDetailList{
     padding-bottom: 10px;
-    display: none;
 }
 #dropdown-container .modifyDetailList .modifyItem{
     width: 100%;
@@ -732,7 +731,9 @@ body{
 }
 .CommonCanlender{
     padding-bottom: 10px;
+    background:#fff;
 }
+
 .CommonCanlender .clear ,
 .CommonCanlender .confirm{
     flex-grow: 1;
@@ -760,7 +761,22 @@ body{
     border: 1px solid #ccc;
     margin-left: 25px;
 }
-.underTaskItemDiv{
-    position: relative;
-    z-index:1;
+/* 新建任务框里面的日历 */
+.taskItem .CommonCanlender{
+    position: absolute;
+    top: 100px;
+    left: 60%;
+    z-index: 500;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
 }
+.taskItem .choiceDeadline  .CommonCanlender{
+    display: block;
+
+}
+#TasksWrap .taskItem-head .anticon.anticon-down-circle-o{
+    padding: 16px;
+    margin: 0;
+    cursor: pointer;
+} 
