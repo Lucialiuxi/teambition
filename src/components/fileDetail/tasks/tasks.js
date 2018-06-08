@@ -59,42 +59,56 @@ class Tasks extends Component {
              */
             //日历所有标签
             let CanlenderCondition = (target.classList.contains('CommonCanlender')||
-                    target.classList.contains('ant-alert')||
-                    target.classList.contains('ant-alert-message') ||
-                    target.classList.contains('ant-alert-description') ||
-                    target.classList.contains('ant-fullcalendar-header') ||
-                    target.classList.contains('ant-select-sm') ||
-                    target.classList.contains('ant-select-selection') ||
-                    target.classList.contains('ant-select-selection__rendered') ||
-                    target.classList.contains('ant-select-selection-selected-value') ||
-                    target.classList.contains('ant-select-arrow') ||
-                    target.classList.contains('ant-radio-group') ||
-                    target.classList.contains('ant-radio-button-wrapper')||
-                    target.classList.contains('ant-radio-button') ||
-                    target.classList.contains('ant-radio-button-input') ||   
-                    target.classList.contains('ant-radio-button-inner') ||   
-                    target.classList.contains('ant-fullcalendar') ||   
-                    target.classList.contains('ant-fullcalendar-calendar-body') ||   
-                    target.nodeName==="TABLE" ||  
-                    target.nodeName==="THEEAD" ||
-                    target.nodeName==="TBODY" ||  
-                    target.nodeName==="TR" ||
-                    target.nodeName==="TD" || 
-                    target.nodeName==="TT" ||
-                    target.classList.contains('ant-fullcalendar-date') ||   
-                    target.classList.contains('ant-fullcalendar-value') ||   
-                    target.classList.contains('ant-fullcalendar-content'))
+                target.classList.contains('ant-alert')||
+                target.classList.contains('ant-alert-message') ||
+                target.classList.contains('ant-alert-description') ||
+                target.classList.contains('ant-fullcalendar-header') ||
+                target.classList.contains('ant-select-sm') ||
+                target.classList.contains('ant-select-selection') ||
+                target.classList.contains('ant-select-selection__rendered') ||
+                target.classList.contains('ant-select-selection-selected-value') ||
+                target.classList.contains('ant-select-arrow') ||
+                target.classList.contains('ant-radio-group') ||
+                target.classList.contains('ant-radio-button-wrapper')||
+                target.classList.contains('ant-radio-button') ||
+                target.classList.contains('ant-radio-button-input') ||   
+                target.classList.contains('ant-radio-button-inner') ||   
+                target.classList.contains('ant-fullcalendar') ||   
+                target.classList.contains('ant-fullcalendar-calendar-body') ||   
+                target.nodeName==="TABLE" ||  
+                target.nodeName==="THEEAD" ||
+                target.nodeName==="TBODY" ||  
+                target.nodeName==="TR" ||
+                target.nodeName==="TD" || 
+                target.nodeName==="TT" ||
+                target.classList.contains('ant-fullcalendar-date') ||   
+                target.classList.contains('ant-fullcalendar-value') ||   
+                target.classList.contains('ant-fullcalendar-content'))
 
-                    
             //紧急选择框
             let urgencyBox = (target.classList.contains('ant-fullcalendar-content') ||
-                                target.getAttribute('id')==='taskUrgency' ||
-                                target.classList.contains('taskUrgencyLi') ||
-                                target.classList.contains('normalBtn') ||
-                                target.classList.contains('urgencyBtn') ||
-                                target.classList.contains('emtremeUrgencyBtn') ||
-                                target.classList.contains('anticon-check') ||
-                                target.classList.contains('taskUrgencyIcon')  )
+                target.getAttribute('id')==='taskUrgency' ||
+                target.classList.contains('taskUrgencyLi') ||
+                target.classList.contains('normalBtn') ||
+                target.classList.contains('urgencyBtn') ||
+                target.classList.contains('emtremeUrgencyBtn') ||
+                target.classList.contains('normal') ||
+                target.classList.contains('urgency') ||
+                target.classList.contains('emtremeUrgency') ||
+                target.classList.contains('anticon-check') ||
+                target.classList.contains('taskUrgencyIcon')  ||
+                target.classList.contains('showUrgencyLevel') )
+
+            //设置子任务的标签
+            let aboutTags = (target.classList.contains('editableTagGroupWrap') || 
+                target.classList.contains('goToAddTagIcon') || 
+                target.classList.contains('ant-tag') ||
+                target.classList.contains('setTagBox') ||
+                target.classList.contains('tag-text')||
+                target.classList.contains('anticon-tags-o') ||
+                target.classList.contains('anticon-cross') ||
+                target.classList.contains('setSubTaskTagInput'))
+
 
             if(target.classList.contains('task-creator-handler-wrap') ||
                 target.classList.contains('task-creator-handler') ||
@@ -117,10 +131,13 @@ class Tasks extends Component {
                 urgencyBox
             ){
                 // console.log('不作用')
-                if(!CanlenderCondition){
+                if(!CanlenderCondition){//关闭日历
                     dispatch(HideAllTaskItemCalenderAction('close'));
                 }
-                if(!urgencyBox){
+                if(!(target.classList.contains('showUrgencyLevel') ||
+                target.classList.contains('normal') ||
+                target.classList.contains('urgency') ||
+                target.classList.contains('emtremeUrgency'))){//关闭任务紧急情况选择框
                     dispatch(HideChoiceUrgencyLevelAction('close'));
                 }
             }else if(target.classList.contains('task-content-input')){
@@ -134,23 +151,27 @@ class Tasks extends Component {
             ){//设置时间
                 console.log('设置时间')
             }else if(target.classList.contains('priority-container')||
-                     target.classList.contains('icon-circle') ||
-                     target.classList.contains('urgencyBtn') 
+                     target.classList.contains('icon-circle') && 
+                     (!target.classList.contains('showUrgencyLevel'))
             ){//设置紧急程度
-                console.log('设置紧急程度')
-            }else if(target.classList.contains('setTagBox') ||
-                    target.classList.contains('tag-text')||
-                    target.classList.contains('anticon-tags-o')
-            ){//设置标签
+                console.log('关闭设置紧急程度')
+                dispatch(HideChoiceUrgencyLevelAction('close'));
+            }else if(aboutTags){//设置标签
                 console.log('设置标签')
+                ////关闭任务紧急情况选择框
+                dispatch(HideChoiceUrgencyLevelAction('close'));
             }else if(target.classList.contains('confirmCreacteBtn')){
                 //创建子任务
                 console.log('创建子任务')
             }else{
+                    dispatch(HideChoiceUrgencyLevelAction('close'));
                 // 关闭 新建子任务框
                 dispatch(HideAllSubTaskCreatorsAction('close'));
                 //关闭日历
                 dispatch(HideAllTaskItemCalenderAction('close'));
+                this.setState({
+                    deadlineData:{}
+                })
             }
 //----------------------------控制下拉菜单--------------------------------------------
             if(target.classList.contains('dropdown-container') || 

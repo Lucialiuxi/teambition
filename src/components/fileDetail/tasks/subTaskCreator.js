@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { Icon} from 'antd';
+import { Icon } from 'antd';
 import { connect } from 'react-redux';
 import { CreateASubTaskServer } from '@/server/requestData'
 import { ShowChoiceUrgencyLevelAction  }  from '@/actions/action';
+import EditableTagGroup from './editableTagGroup';
+
 // 新建--项目列表子任务
 class SubTaskCreator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:{}
+            data:{},
+            currentShowUrgencyLevel:'普通'
         }
     }
     setDeadline=()=>{
@@ -25,7 +28,8 @@ class SubTaskCreator extends Component {
             CreateASubTaskServer({id,subTaskName:val},deadline)
         }
     }
-    goToChoiceUrgencyLevel=()=>{
+    goToChoiceUrgencyLevel=(e)=>{
+        console.log(this.showUrgencyLevel)
         let { id, dispatch , state:{taskItemInfo} } = this.props;
         dispatch(ShowChoiceUrgencyLevelAction(id))
         let obj = taskItemInfo.filter(val=>val.taskItemId===id)[0]
@@ -33,10 +37,43 @@ class SubTaskCreator extends Component {
             data:obj
         })
     }
+    GoToChoiceUrgencyLevel=(e)=>{
+        let t = e.target;
+        let c = t.getAttribute('class');
+        if(c==='taskUrgencyLi'){
+            t = t.firstElementChild;
+        }else if(c.indexOf('taskUrgencyIcon') > 0){
+            t = t.parentNode.firstElementChild;
+        }
+        let v = t.getAttribute('class');
+        switch(v){
+            case 'normalBtn':
+            this.setState({
+                currentShowUrgencyLevel:'普通'
+            })
+            this.showUrgencyLevel.setAttribute('class','btn normal')
+            break;
+            case 'urgencyBtn':
+            this.setState({
+                currentShowUrgencyLevel:'紧急'
+            })
+            this.showUrgencyLevel.setAttribute('class','btn urgency')
+            break;
+            case 'emtremeUrgencyBtn':
+            this.setState({
+                currentShowUrgencyLevel:'非常紧急'
+            })
+            this.showUrgencyLevel.setAttribute('class','btn emtremeUrgency')
+            break;
+            default:
+            this.setState({
+                currentShowUrgencyLevel:'普通'
+            }) 
+        }
+    }
     render() {
         let {deadline } = this.props;
-        let { IsChoiceUrgencyLevel } = this.state.data;
-        console.log(IsChoiceUrgencyLevel)
+        let { data:{IsChoiceUrgencyLevel}, currentShowUrgencyLevel } = this.state;
         return (
         <div 
             className="subTask-creator-wrap"
@@ -58,31 +95,32 @@ class SubTaskCreator extends Component {
                         <div className="priority-container">
                             <div className="UrgencyLevelWrap priority-aside detail-infos-aside short-version">
                             {/* 任务紧急情况 */}
-                                {IsChoiceUrgencyLevel ? <ul id="taskUrgency">
+                                {IsChoiceUrgencyLevel ? <ul id="taskUrgency" onClick={this.GoToChoiceUrgencyLevel}>
                                     <li className="taskUrgencyLi">
                                         <span className="normalBtn">普通</span>
-                                        <Icon type="check" className="taskUrgencyIcon"/>
+                                        {currentShowUrgencyLevel==='普通' ? <Icon type="check" className="taskUrgencyIcon"/> : ''}
                                     </li>
                                     <li className="taskUrgencyLi">
                                         <span className="urgencyBtn">紧急</span>
-                                        <Icon type="check"  className="taskUrgencyIcon"/>
+                                        {currentShowUrgencyLevel==='紧急' ? <Icon type="check" className="taskUrgencyIcon"/> : ''}
                                     </li>
                                     <li className="taskUrgencyLi">
                                         <span className="emtremeUrgencyBtn">非常紧急</span>
-                                        <Icon type="check"  className="taskUrgencyIcon"/>
+                                        {currentShowUrgencyLevel==='非常紧急' ? <Icon type="check" className="taskUrgencyIcon"/> : ''}
                                     </li>
                                 </ul> : null }
                                 <div className="icon-circle"></div>
                                 <button 
-                                    className="btn urgencyBtn" 
+                                    ref={node=>this.showUrgencyLevel=node}
+                                    className="btn showUrgencyLevel" 
                                     onClick={this.goToChoiceUrgencyLevel}
-                                >普通</button>
+                                >{currentShowUrgencyLevel}</button>
                             </div>
                         </div>
                     </section>
                     <div className="setTagBox">
                         <Icon type="tags-o"/>
-                        <div className="tag-text">添加标签</div>
+                        <EditableTagGroup/>
                     </div>
                 </div>
             </div>

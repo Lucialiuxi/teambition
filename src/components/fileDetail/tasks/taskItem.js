@@ -21,12 +21,12 @@ class TaskItem extends Component {
          }
     }
     componentDidUpdate(){
-        //子任务编辑框
-        let SubTaskCreatorBox = document.getElementsByClassName('subTask-creator-wrap').item(0);
-        if(SubTaskCreatorBox){
-            let SubTaskContent = SubTaskCreatorBox.getElementsByClassName('task-content-input form-control').item(0);
-            SubTaskContent.focus();
-        } 
+        //子任务编辑框获取焦点
+        // let SubTaskCreatorBox = document.getElementsByClassName('subTask-creator-wrap').item(0);
+        // if(SubTaskCreatorBox){
+        //     let SubTaskContent = SubTaskCreatorBox.getElementsByClassName('task-content-input form-control').item(0);
+        //     SubTaskContent.focus();
+        // } 
     }
     toShowDropDownContainer=()=>{
         // console.log('toShowDropDownContainer',this.props)
@@ -40,7 +40,7 @@ class TaskItem extends Component {
             deadline
         } = this.props;
         let { hasTaskList } = this.state;
-        console.log(deadline)
+        // console.log(deadline)
         return ( 
             <div className="underTaskItemDiv">
                 {/* 下拉编辑框 */}

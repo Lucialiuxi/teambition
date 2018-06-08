@@ -97,11 +97,14 @@ h2{
 }
 .recycledFlies .switchIsShow{
     font-size: 14px;
-    color: gray;
+    color: gray;    
     margin-left: 15px;
     cursor: pointer;
 }
 .fileItem .anticon-star.starActive,
 .anticon-star.starActive{
     color: #ffaf38;
+}
+.fileItem:hover{
+    box-shadow: 0 2px 20px rgba(0,0,0,.1);
 }

@@ -378,7 +378,9 @@ body{
    top: 4px;
    left: 0;
 }
-.priority-aside .btn{
+.priority-aside .btn.showUrgencyLevel,
+.btn.normal,.btn.urgency,
+.btn.emtremeUrgency{
     display: inline-block;
     border-color: #a6a6a6;
     color: #a6a6a6;
@@ -408,14 +410,43 @@ body{
     position: relative;
     padding: 3px 0;
     height: 40px;
+    z-index: 10;
 }
 .setTagBox .anticon-tags-o{
-    font-size: 18px;
-    float: left;
+    font-size: 20px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px 0 0 0;
 }
 .setTagBox .tag-text{
-    float: left;    
-    margin-left: 10px;
+    line-height: 16px;
+    display: inline-block;
+    white-space: pre-line;
+}
+.setTagBox .tag-text .anticon-cross{
+    color: #3da8f5;
+}
+.tag-text  div.ant-tag{
+    border-color: transparent;
+    margin: 5px 2px;
+}
+.tag-text  div.ant-tag:nth-child(1){
+    background-color:#fff;
+    color: #a6a6a6;
+    font-size: 14px;
+    line-height: 25px;
+    vertical-align: top;
+}
+.tag-text  div.ant-tag:nth-child(2){
+    margin-left: 8px;
+}
+.tag-text .ant-tag .goToAddTagIcon{
+    color: #3da8f5;
+    font-size: 14px;
+    line-height: 25px;
+} 
+.tag-text .setSubTaskTagInput{
+    margin-left: 5px;
 }
 .confirmCreacteBtn-wrap{
     height: 38px;
@@ -807,28 +838,28 @@ body{
 }
 #taskUrgency{
     position: absolute;
-    top: -115px;
+    top: -130px;
     left: 0;
     border-radius: 4px;
     list-style: none;
     overflow: auto;
     margin: 0;
-    padding: 4px 0;
     max-height: 400px;
-    min-width: 200px;
+    min-width: 240px;
     background: #fff;
     box-shadow: 0 2px 20px rgba(0,0,0,.1);
 }
 #taskUrgency li{
-    border-radius: 4px;
     background: #fff;
     list-style: none;
     overflow: auto;
     margin: 0;
-    padding: 4px 0;
+    padding: 8px 5px;
     max-height: 400px;
     min-width: 200px;
-    margin-right: 8px;
+}
+#taskUrgency li:hover{
+    background-color: #f8f7f7;
 }
 #taskUrgency li span{
     float: left;
@@ -845,15 +876,16 @@ body{
     white-space: nowrap;
     margin-left: 8px;
 }
-#taskUrgency li span.urgencyBtn{
+#taskUrgency li span.urgencyBtn,.btn.urgency{
     border-color: #ffaf38;
     color: #ffaf38;
 }
-#taskUrgency li span.emtremeUrgencyBtn{
+#taskUrgency li span.emtremeUrgencyBtn,.btn.emtremeUrgency{
     border-color: #ff4f3e;
     color: #ff4f3e;
 }
 #taskUrgency li i{
     float: right;
     font-size: 16px;
+    margin: 5px 10px 0 0;
 }
