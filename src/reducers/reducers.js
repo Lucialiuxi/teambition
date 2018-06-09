@@ -53,7 +53,7 @@ const taskItemInfo = (state = [], action) =>{
         val.IsChoiceDeadline = false; //显示创建子任务框的截止时间日历
         val.IsChoiceUrgencyLevel = false;//显示任务紧急程度的框
         val.IsShowDropDownContainer = false;//显示下拉框
-        //下拉列表的显示控制标识
+        //下拉列表下级的显示框 控制标识
         val.isModifyTaskItem = false; //编辑列表
         val.addATaskItemAfterThis = false;//在此后添加新列表
         val.moveAllSubTasksFromThisToOther = false;//移动本列表所有任务
@@ -76,20 +76,6 @@ const taskItemInfo = (state = [], action) =>{
       return state.map((val)=>{
           action.close==='close' ? val.IsCreating=false : null
           return val;
-      })
-
-     //项目列表的 下拉菜单 显示
-     case 'TaskItem_DropDownContainer_Show_Action':
-     return state.map((val)=>{
-         (action.taskItemId===val.taskItemId) ? (val.IsShowDropDownContainer=true) : (val.IsShowDropDownContainer=false)
-         return val;
-       })
-
-     //项目列表的 下拉菜单 隐藏
-     case 'Hide_TaskItem_DropDownContainer':
-      return state.map((val)=>{
-        action.close==='close' ? val.IsShowDropDownContainer=false : null
-        return val;
       })
 
      //项目列表的 子任务编辑框的日历 显示
@@ -119,6 +105,84 @@ const taskItemInfo = (state = [], action) =>{
         action.close==='close' ? val.IsChoiceUrgencyLevel=false : null
         return val;
       })
+
+     //项目列表的 下拉列表框 显示
+     case 'TaskItem_DropDownContainer_Show_Action':
+     return state.map((val)=>{
+         (action.taskItemId===val.taskItemId) ? (val.IsShowDropDownContainer=true) : (val.IsShowDropDownContainer=false)
+         return val;
+       })
+
+     //项目列表的 下拉列表框 隐藏
+     case 'Hide_TaskItem_DropDownContainer':
+      return state.map((val)=>{
+        if(action.close==='close'){
+          val.IsShowDropDownContainer = false;
+          val.isModifyTaskItem = false; 
+          val.addATaskItemAfterThis = false;
+          val.moveAllSubTasksFromThisToOther = false;
+          val.copyAllSubTasksInsideThis = false;
+          val.deleteAllSubTasksInsideThis = false;
+          val.deleteThisTaskItem = false;
+        }
+        return val;
+      })
+
+      //编辑任务列表 显示
+      case 'Modify_TaskItem_Action':
+      return state.map((val)=>{
+          (action.taskItemId===val.taskItemId) ? (val.isModifyTaskItem=true) : (val.isModifyTaskItem=false)
+          return val;
+      })
+
+      //在此后添加新任务列表 显示
+      case 'add_A_TaskItem_After_This_Action':
+      return state.map((val)=>{
+          (action.taskItemId===val.taskItemId) ? (val.addATaskItemAfterThis=true) : (val.addATaskItemAfterThis=false)
+          return val;
+      })
+
+      //移动本任务列表所有子任务 显示
+      case 'move_All_SubTasks_From_This_To_Other_Action':
+      return state.map((val)=>{
+          (action.taskItemId===val.taskItemId) ? (val.moveAllSubTasksFromThisToOther=true) : (val.moveAllSubTasksFromThisToOther=false)
+          return val;
+      })
+
+      //复制本任务列表所有子任务 显示
+      case 'copy_All_SubTasks_Inside_This_Action':
+      return state.map((val)=>{
+          (action.taskItemId===val.taskItemId) ? (val.copyAllSubTasksInsideThis=true) : (val.copyAllSubTasksInsideThis=false)
+          return val;
+      })
+
+      //清空本任务列表所有子任务 显示
+      case 'delete_All_SubTasks_Inside_This_Action':
+      return state.map((val)=>{
+          (action.taskItemId===val.taskItemId) ? (val.deleteAllSubTasksInsideThis=true) : (val.deleteAllSubTasksInsideThis=false)
+          return val;
+      })
+
+      //删除任务列表 显示
+      case 'delete_This_TaskItem_Action':
+      return state.map((val)=>{
+          (action.taskItemId===val.taskItemId) ? (val.deleteThisTaskItem=true) : (val.deleteThisTaskItem=false)
+          return val;
+      }) 
+ 
+      //显示下拉列表框主页
+      case 'show_DropDownContainer_MainList_Action':
+      return state.map((val)=>{
+          if(action.taskItemId===val.taskItemId){
+            val.isModifyTaskItem = false; 
+            val.addATaskItemAfterThis = false;
+            val.moveAllSubTasksFromThisToOther = false;
+            val.copyAllSubTasksInsideThis = false;
+            val.deleteAllSubTasksInsideThis = false;
+            val.deleteThisTaskItem = false;
+          }
+          return val;
+      })  
 
   default:
         return state

@@ -104,8 +104,6 @@ export  const HideAllTaskItemCalenderAction = (close) => {
     }
 }
 
-
-
 //控制 【紧急选择框】 显示
 export  const ShowChoiceUrgencyLevelAction = taskItemId => {
     return {
@@ -122,21 +120,67 @@ export  const HideChoiceUrgencyLevelAction = (close) => {
     }
 }
 
-
-
-
-
-//控制任务列表的【下拉列表菜单】的显示 
+//------------------------下拉列表-----------------------------
+//控制任务列表的【下拉列表框】的显示 
 export  const TaskItemDropDownContainerShowAction = taskItemId => {
     return {
         type: 'TaskItem_DropDownContainer_Show_Action',
         taskItemId
     }
 }
-//隐藏【下拉列表菜单】
+//隐藏【下拉列表框】
 export  const HideTaskItemDropDownContainerAction = (close) => {
     return {
         type: 'Hide_TaskItem_DropDownContainer',
         close
+    }
+}
+//编辑任务列表
+export  const ModifyTaskItemAction = (taskItemId) => {
+    return {
+        type: 'Modify_TaskItem_Action',
+        taskItemId
+    }
+}
+//在此后添加新任务列表
+export  const addATaskItemAfterThisAction = (taskItemId) => {
+    return {
+        type: 'add_A_TaskItem_After_This_Action',
+        taskItemId
+    }
+}
+//移动本任务列表所有子任务
+export  const moveAllSubTasksFromThisToOtherAction = (taskItemId) => {
+    return {
+        type: 'move_All_SubTasks_From_This_To_Other_Action',
+        taskItemId
+    }
+}
+//复制本任务列表所有子任务
+export  const copyAllSubTasksInsideThisAction = (taskItemId) => {
+    return {
+        type: 'copy_All_SubTasks_Inside_This_Action',
+        taskItemId
+    }
+}
+//清空本任务列表所有子任务
+export  const deleteAllSubTasksInsideThisAction = (taskItemId) => {
+    return {
+        type: 'delete_All_SubTasks_Inside_This_Action',
+        taskItemId
+    }
+}
+//删除任务列表
+export  const deleteThisTaskItemAction = (taskItemId) => {
+    return {
+        type: 'delete_This_TaskItem_Action',
+        taskItemId
+    }
+}
+//显示下拉列表框主页
+export  const showDropDownContainerMainListAction = (taskItemId) => {
+    return {
+        type: 'show_DropDownContainer_MainList_Action',
+        taskItemId
     }
 }

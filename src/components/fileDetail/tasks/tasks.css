@@ -549,7 +549,6 @@ body{
     width: 252px;
     margin: 0;
     padding: 16px;
-    display: none;
 }
 #dropdown-container .MOrAddListTaskItem .MTaskItemInput{
     width: 100%;

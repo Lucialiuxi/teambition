@@ -128,14 +128,19 @@ class Tasks extends Component {
                 target.classList.contains('Add_TaskItem')  ||
                 target.classList.contains('anticon-left')  ||
                 target.classList.contains('dropdown_title')  ||
-                target.classList.contains('anticon-close')  ||
                 target.classList.contains('modifyDetailList')  ||
                 target.classList.contains('modifyItem')  ||
                 target.classList.contains('anticon-edit')  ||
                 target.classList.contains('anticon-plus')  ||
                 target.classList.contains('anticon-copy') ||
                 target.classList.contains('anticon-delete') ||
-                target.classList.contains('anticon-down-circle-o'))
+                target.classList.contains('anticon-down-circle-o')||
+                target.classList.contains('MOrAddListTaskItem')||
+                target.classList.contains('createATaskItemText')||
+                target.classList.contains('MTaskItemInput')||
+                target.classList.contains('createATaskItemBtn')||
+                target.classList.contains('saveModifyInputValueBtn')||
+                target.classList.contains('createATaskItemBtn'))
 
             if(target.classList.contains('task-creator-handler-wrap') ||
                 target.classList.contains('task-creator-handler') ||
@@ -271,7 +276,6 @@ class Tasks extends Component {
 }
 
 const mapStateToProps = state => {
-    //  console.log(state)
     return  {
         state
     }
