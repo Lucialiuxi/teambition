@@ -109,12 +109,45 @@ class Tasks extends Component {
                 target.classList.contains('anticon-cross') ||
                 target.classList.contains('setSubTaskTagInput'))
 
+            
+            let aboutDropDownMenu = (target.classList.contains('DeleteSubTaskOrDeleteTaskItemWrap') || 
+                target.classList.contains('tips') || 
+                target.classList.contains('confirmToDeleteSubTaskOrDeleteTaskItem') ||
+                target.classList.contains('MoveOrCopySubTaskWrap') ||
+                target.classList.contains('MoveOrCopySubTaskContent')||
+                target.classList.contains('MoveOrCopySubTaskList') ||
+                target.classList.contains('MoveOrCopySubTaskTitle') ||
+                target.classList.contains('ConfirmMoveOrCopySubTaskBtn') ||
+                target.classList.contains('selectFileTitleSpan') ||
+                target.classList.contains('FileTitleEm') ||
+                target.classList.contains('selectFileDownICon') ||
+                target.classList.contains('selectTaskItemTitleSpan') ||
+                target.classList.contains('TaskItemTitleEm') ||
+                target.classList.contains('selectTaskItemDownICon') ||
+                target.classList.contains('dropdown-container') || 
+                target.classList.contains('Add_TaskItem')  ||
+                target.classList.contains('anticon-left')  ||
+                target.classList.contains('dropdown_title')  ||
+                target.classList.contains('anticon-close')  ||
+                target.classList.contains('modifyDetailList')  ||
+                target.classList.contains('modifyItem')  ||
+                target.classList.contains('anticon-edit')  ||
+                target.classList.contains('anticon-plus')  ||
+                target.classList.contains('anticon-copy') ||
+                target.classList.contains('anticon-delete') ||
+                target.classList.contains('anticon-down-circle-o'))
 
             if(target.classList.contains('task-creator-handler-wrap') ||
                 target.classList.contains('task-creator-handler') ||
                 target.classList.contains('AddSubTaskIcon')
             ){
-                console.log('点击弹出新建框')
+                // console.log('点击弹出新建框')
+                
+                this.setState({
+                    deadlineData:{
+                        time:''
+                    }
+                })
             }else if(target.classList.contains('subTask-creator-wrap') ||
                target.classList.contains('createUser') ||
                target.classList.contains('confirmCreacteBtn-wrap') ||
@@ -149,20 +182,20 @@ class Tasks extends Component {
                      target.classList.contains('anticon-calendar') ||
                      target.classList.contains('date-text')
             ){//设置时间
-                console.log('设置时间')
+                // console.log('设置时间')
             }else if(target.classList.contains('priority-container')||
                      target.classList.contains('icon-circle') && 
                      (!target.classList.contains('showUrgencyLevel'))
             ){//设置紧急程度
-                console.log('关闭设置紧急程度')
+                // console.log('关闭设置紧急程度')
                 dispatch(HideChoiceUrgencyLevelAction('close'));
             }else if(aboutTags){//设置标签
-                console.log('设置标签')
+                // console.log('设置标签')
                 ////关闭任务紧急情况选择框
                 dispatch(HideChoiceUrgencyLevelAction('close'));
             }else if(target.classList.contains('confirmCreacteBtn')){
                 //创建子任务
-                console.log('创建子任务')
+                // console.log('创建子任务')
             }else{
                     dispatch(HideChoiceUrgencyLevelAction('close'));
                 // 关闭 新建子任务框
@@ -174,20 +207,8 @@ class Tasks extends Component {
                 })
             }
 //----------------------------控制下拉菜单--------------------------------------------
-            if(target.classList.contains('dropdown-container') || 
-                target.classList.contains('Add_TaskItem')  ||
-                target.classList.contains('anticon-left')  ||
-                target.classList.contains('dropdown_title')  ||
-                target.classList.contains('anticon-close')  ||
-                target.classList.contains('modifyDetailList')  ||
-                target.classList.contains('modifyItem')  ||
-                target.classList.contains('anticon-edit')  ||
-                target.classList.contains('anticon-plus')  ||
-                target.classList.contains('anticon-copy') ||
-                target.classList.contains('anticon-delete') ||
-                target.classList.contains('anticon-down-circle-o')
-            ){
-                console.log('下拉菜单')
+            if(aboutDropDownMenu){
+                // console.log('下拉菜单')
             }else{//隐藏下拉菜单
                 dispatch(HideTaskItemDropDownContainerAction('close'));
             }
@@ -207,7 +228,6 @@ class Tasks extends Component {
     }
     GoToChoiceSubTaskDeadline=(id)=>{//显示选择被创建的子任务 的截止时间日历
         let { dispatch } = this.props;
-        console.log(id,'显示选择被创建的子任务 的截止时间日历')
         dispatch(TaskItemCalenderIsShowAction(id))
         //子任务编辑框失去焦点
         let SubTaskCreatorBox = document.getElementsByClassName('subTask-creator-wrap').item(0);
@@ -217,7 +237,6 @@ class Tasks extends Component {
         } 
     }
     getDeadline=(id,time)=>{//拿到日历选中的时间
-        // console.log(id,time)
         this.setState({
             deadlineData:{id,time}
         })
@@ -229,8 +248,6 @@ class Tasks extends Component {
         state.taskItemInfo.sort(function(a,b){
             return a.index-b.index
         })
-        // console.log(state.taskItemInfo)
-        console.log(deadlineData)
         return (
             <ul id="TasksWrap">
                 {state.taskItemInfo.map(val=>{

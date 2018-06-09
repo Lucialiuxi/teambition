@@ -14,22 +14,19 @@ class SubTaskCreator extends Component {
             currentShowUrgencyLevel:'普通'
         }
     }
-    setDeadline=()=>{
-        // console.log('setDeadline',this.props)
+    setDeadline=()=>{//设置任务截止时间
         let { id , GoToChoiceSubTaskDeadline } = this.props;
         GoToChoiceSubTaskDeadline(id)
     }
     CreateASubTask=()=>{//创建子任务
-        // console.log(this.subTaskValue.value ,this.props)
         let { id , dispatch , deadline} = this.props;
         let val = this.subTaskValue.value.trim();
         if(val){
             this.subTaskValue.value=''
-            CreateASubTaskServer({id,subTaskName:val},deadline)
+            // CreateASubTaskServer({id,subTaskName:val},deadline)//发送要创建子任务的数据到后端
         }
     }
-    goToChoiceUrgencyLevel=(e)=>{
-        console.log(this.showUrgencyLevel)
+    goToChoiceUrgencyLevel=(e)=>{//点击显示  选择任务紧急程度框
         let { id, dispatch , state:{taskItemInfo} } = this.props;
         dispatch(ShowChoiceUrgencyLevelAction(id))
         let obj = taskItemInfo.filter(val=>val.taskItemId===id)[0]
@@ -37,7 +34,7 @@ class SubTaskCreator extends Component {
             data:obj
         })
     }
-    GoToChoiceUrgencyLevel=(e)=>{
+    ChoiceWhichUrgencyLevel=(e)=>{//点击选择显示的紧急程度按钮是哪个
         let t = e.target;
         let c = t.getAttribute('class');
         if(c==='taskUrgencyLi'){
@@ -48,27 +45,27 @@ class SubTaskCreator extends Component {
         let v = t.getAttribute('class');
         switch(v){
             case 'normalBtn':
-            this.setState({
-                currentShowUrgencyLevel:'普通'
-            })
-            this.showUrgencyLevel.setAttribute('class','btn normal')
+                this.setState({
+                    currentShowUrgencyLevel:'普通'
+                })
+                this.showUrgencyLevel.setAttribute('class','btn normal')
             break;
             case 'urgencyBtn':
-            this.setState({
-                currentShowUrgencyLevel:'紧急'
-            })
-            this.showUrgencyLevel.setAttribute('class','btn urgency')
+                this.setState({
+                    currentShowUrgencyLevel:'紧急'
+                })
+                this.showUrgencyLevel.setAttribute('class','btn urgency')
             break;
             case 'emtremeUrgencyBtn':
-            this.setState({
-                currentShowUrgencyLevel:'非常紧急'
-            })
-            this.showUrgencyLevel.setAttribute('class','btn emtremeUrgency')
+                this.setState({
+                    currentShowUrgencyLevel:'非常紧急'
+                })
+                this.showUrgencyLevel.setAttribute('class','btn emtremeUrgency')
             break;
             default:
-            this.setState({
-                currentShowUrgencyLevel:'普通'
-            }) 
+                this.setState({
+                    currentShowUrgencyLevel:'普通'
+                }) 
         }
     }
     render() {
@@ -95,7 +92,7 @@ class SubTaskCreator extends Component {
                         <div className="priority-container">
                             <div className="UrgencyLevelWrap priority-aside detail-infos-aside short-version">
                             {/* 任务紧急情况 */}
-                                {IsChoiceUrgencyLevel ? <ul id="taskUrgency" onClick={this.GoToChoiceUrgencyLevel}>
+                                {IsChoiceUrgencyLevel ? <ul id="taskUrgency" onClick={this.ChoiceWhichUrgencyLevel}>
                                     <li className="taskUrgencyLi">
                                         <span className="normalBtn">普通</span>
                                         {currentShowUrgencyLevel==='普通' ? <Icon type="check" className="taskUrgencyIcon"/> : ''}

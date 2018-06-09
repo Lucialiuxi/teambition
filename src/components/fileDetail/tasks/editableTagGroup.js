@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tag, Input, Tooltip, Icon } from 'antd';
 
+//--------编辑子任务标签--------
 class EditableTagGroup extends Component {
   state = {
     tags: ['添加标签'],

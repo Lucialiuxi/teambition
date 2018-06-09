@@ -40,11 +40,10 @@ class TaskItem extends Component {
             deadline
         } = this.props;
         let { hasTaskList } = this.state;
-        // console.log(deadline)
         return ( 
             <div className="underTaskItemDiv">
                 {/* 下拉编辑框 */}
-                {taskItemInfo.IsShowDropDownContainer ? <DropDown/> : null}
+                {taskItemInfo.IsShowDropDownContainer ? <DropDown taskItemInfo={taskItemInfo}/> : null}
                 <header className="taskItem-head">
                     <h4>
                         <span className="task-title">{taskItemInfo.taskItemName}</span>

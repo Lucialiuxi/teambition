@@ -53,6 +53,13 @@ const taskItemInfo = (state = [], action) =>{
         val.IsChoiceDeadline = false; //显示创建子任务框的截止时间日历
         val.IsChoiceUrgencyLevel = false;//显示任务紧急程度的框
         val.IsShowDropDownContainer = false;//显示下拉框
+        //下拉列表的显示控制标识
+        val.isModifyTaskItem = false; //编辑列表
+        val.addATaskItemAfterThis = false;//在此后添加新列表
+        val.moveAllSubTasksFromThisToOther = false;//移动本列表所有任务
+        val.copyAllSubTasksInsideThis = false;//复制本列表所有任务
+        val.deleteAllSubTasksInsideThis = false;//清空本列表所有任务
+        val.deleteThisTaskItem = false;//清空本列表所有任务
         return val;
       })
       return state;

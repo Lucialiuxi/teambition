@@ -123,9 +123,11 @@ class Project  extends Component {
         let subNavWrap = document.getElementById('subNavWrap');
         let cth=fileDetailAreaWrap.parentNode.offsetHeight
         fileDetailAreaWrap.style.height = cth + 'px';
-        let H1 = subNavWrap.lastElementChild.offsetHeight;
-        let H2 = subNavWrap.lastElementChild.firstElementChild.offsetHeight;
-        subNavWrap.lastElementChild.lastElementChild.style.height = H1 - H2 + 'px';
+        if(subNavWrap){
+            let H1 = subNavWrap.lastElementChild.offsetHeight;
+            let H2 = subNavWrap.lastElementChild.firstElementChild.offsetHeight;
+            subNavWrap.lastElementChild.lastElementChild.style.height = H1 - H2 + 'px';
+        }
     }
     render() {
         let t = this.state.activeBar ? this.state.activeBar : '1';
