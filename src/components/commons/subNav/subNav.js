@@ -66,7 +66,7 @@ class SubNav extends Component {
         }
     }
     render() {
-        let {location,match,state} = this.props;
+        let { location , match , state } = this.props;
         //拿到当前项目文件的id
         let fileId = location.pathname.match(/\d+/g)[0];
         let currentFile;

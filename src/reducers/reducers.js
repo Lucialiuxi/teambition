@@ -11,7 +11,10 @@ const getFileInfo = (state = [], action) => {
 
       //刷新页面请求大图标文件数据
       case 'get_All_files_Info':
-        return action.arr
+        return action.arr.map(val=>{
+          val.isShowTaskItemCreator = false;
+          return val
+        })
 
       //修改大图标文件信息
       case 'Modify_file_Info':
@@ -34,6 +37,12 @@ const getFileInfo = (state = [], action) => {
           return state.filter(item=>{
             return item.fileId === action.obj.fileId ? null : item
           })
+
+      //新建项目列表框 显示
+      case 'Delete_A_Flie_Action':
+        return state.map(item=>{
+          return item.fileId === action.obj.fileId ? item.isShowTaskItemCreator = true : item.isShowTaskItemCreator = false;
+        })
 
      default:
           return state
@@ -137,6 +146,10 @@ const taskItemInfo = (state = [], action) =>{
 
       //在此后添加新任务列表 显示
       case 'add_A_TaskItem_After_This_Action':
+      console.log(state.map((val)=>{
+        (action.taskItemId===val.taskItemId) ? (val.addATaskItemAfterThis=true) : (val.addATaskItemAfterThis=false)
+        return val;
+    }))
       return state.map((val)=>{
           (action.taskItemId===val.taskItemId) ? (val.addATaskItemAfterThis=true) : (val.addATaskItemAfterThis=false)
           return val;

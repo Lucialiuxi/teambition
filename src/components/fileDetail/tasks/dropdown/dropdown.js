@@ -63,7 +63,6 @@ class DropDown extends Component {
         let w = t.innerText;
         if(w==='编辑列表'){
             dispatch(allActions.ModifyTaskItemAction(taskItemId))
-            // console.log(this.props)
         }else if(w==='在此后添加新列表'){
             dispatch(allActions.addATaskItemAfterThisAction(taskItemId))
         }else if(w==='移动本列表所有任务'){
@@ -103,14 +102,30 @@ class DropDown extends Component {
                 deleteThisTaskItem ||
                 isModifyTaskItem ||
                 moveAllSubTasksFromThisToOther)
-
-            
+         
+        let btnName = '';
+        let menuTitile = '列表菜单';
+        if(isModifyTaskItem){
+            btnName = '保存'
+            menuTitile = '编辑列表'
+        }else if(addATaskItemAfterThis){
+            btnName = '创建'
+            menuTitile = '添加列表'
+        }else if(moveAllSubTasksFromThisToOther){
+            menuTitile = '移动本列表所有任务'
+        }else if(copyAllSubTasksInsideThis){
+            menuTitile = '复制本列表所有任务'
+        }else if(deleteAllSubTasksInsideThis){
+            menuTitile = '清空任务'
+        }else if(deleteThisTaskItem){
+            menuTitile = '删除列表'
+        }
         return ( 
             <div id="dropdown-container">
-                {/* 列表菜单没有className  编辑列表M_TaskItem 添加列表Add_TaskItem setDeadline*/}
-                <header className="Add_TaskItem">
+                {/* 列表菜单没有className  编辑列表M_TaskItem 添加列表Add_TaskItem*/}
+                <header className="M_TaskItem">
                     <Icon type="left"  onClick={this.goToshowDropDownContainerMainList}/>
-                    <h4 className="dropdown_title">列表菜单</h4>
+                    <h4 className="dropdown_title">{menuTitile}</h4>
                     <Icon type="close"  onClick={this.goToCloseDropDownContainer}/>
                 </header>
                 <hr/>
@@ -127,12 +142,12 @@ class DropDown extends Component {
                 { (isModifyTaskItem || addATaskItemAfterThis) ? <div className="MOrAddListTaskItem">
                     <p className="createATaskItemText">新列表将被添加在当前列表之后</p>
                     <input type="text" className="MTaskItemInput add" placeholder="列表名称"/>
-                    <button className="createATaskItemBtn disable">创建</button>
+                    <button className="createATaskItemBtn disable">{btnName}</button>
                 </div> : null}
                 {/* 移动 或 复制 任务 */}
-                {/* <MoveOrCopySubTask/> */}
+                {(copyAllSubTasksInsideThis || moveAllSubTasksFromThisToOther) ? <MoveOrCopySubTask/> : null}
                  {/* 删除列表所有任务 或者 删除列表 */}
-                {/* <DeleteSubTaskOrDeleteTaskItem/> */}
+                { (deleteAllSubTasksInsideThis ||deleteThisTaskItem) ? <DeleteSubTaskOrDeleteTaskItem/> : null }
             </div>
          )
     }

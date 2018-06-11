@@ -12,6 +12,7 @@ import {
     HideAllTaskItemCalenderAction,
     HideChoiceUrgencyLevelAction
 }  from '@/actions/action';
+import { getAllFilesInfo } from '@/server/requestData';
 
 import CanlenderMode from './calenderMode';
 
@@ -49,7 +50,10 @@ class Tasks extends Component {
             deadlineData:{}
         }
     }
+    componentWillMount(){
+    }
     componentDidMount(){
+        this._isMounted = true
         //  点击新建子任务编辑框 之外的地方  隐藏编辑框
         let { dispatch } = this.props;
         document.onclick=(e)=>{
@@ -147,12 +151,13 @@ class Tasks extends Component {
                 target.classList.contains('AddSubTaskIcon')
             ){
                 // console.log('点击弹出新建框')
-                
-                this.setState({
-                    deadlineData:{
-                        time:''
-                    }
-                })
+                if(this._isMounted){
+                    this.setState({
+                        deadlineData:{
+                            time:''
+                        }
+                    })
+                }
             }else if(target.classList.contains('subTask-creator-wrap') ||
                target.classList.contains('createUser') ||
                target.classList.contains('confirmCreacteBtn-wrap') ||
@@ -207,9 +212,11 @@ class Tasks extends Component {
                 dispatch(HideAllSubTaskCreatorsAction('close'));
                 //关闭日历
                 dispatch(HideAllTaskItemCalenderAction('close'));
-                this.setState({
-                    deadlineData:{}
-                })
+                if(this._isMounted){
+                    this.setState({
+                        deadlineData:{}
+                    })
+                }
             }
 //----------------------------控制下拉菜单--------------------------------------------
             if(aboutDropDownMenu){
@@ -242,20 +249,30 @@ class Tasks extends Component {
         } 
     }
     getDeadline=(id,time)=>{//拿到日历选中的时间
-        this.setState({
-            deadlineData:{id,time}
-        })
+        if(this._isMounted){
+            this.setState({
+                deadlineData:{id,time}
+            })
+        }
+    }
+    componentWillUnmount(){
+        this._isMounted = false;
     }
     render() { 
         let { hasTaskList , deadlineData } = this.state;
-        let { state } = this.props;
+        let { state:{taskItemInfo} , location:{pathname} } = this.props;
+        let userLoginName='';
+        if(taskItemInfo[0]){
+            userLoginName = taskItemInfo[0].userLoginName;
+        }
         //把项目文件数据按照待处理/已完成/进行中 排序
-        state.taskItemInfo.sort(function(a,b){
+        taskItemInfo.sort(function(a,b){
             return a.index-b.index
         })
+        let fileId = pathname.match(/\d+/g)[0];
         return (
             <ul id="TasksWrap">
-                {state.taskItemInfo.map(val=>{
+                {taskItemInfo.map(val=>{
                     return <li className="taskItem"  key={val.taskItemId}>
                                 {val.IsChoiceDeadline ? <CanlenderMode {...{taskItemId:val.taskItemId,getDeadline:this.getDeadline}}/> : null}
                             
@@ -269,7 +286,7 @@ class Tasks extends Component {
                            </li>
                 })}
                 {/* 新建任务列表 */}
-                <TaskItemCreator/>
+                <TaskItemCreator {...{ fileId}}/>
             </ul> 
         )
     }

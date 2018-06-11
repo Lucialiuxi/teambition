@@ -16,10 +16,18 @@ body{
     background-color: #fff;
     box-sizing: border-box;
     z-index: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+#TasksWrap::-webkit-scrollbar-thumb{
+    width: 2%;
+    color: #eee;
+    cursor: pointer;
 }
 #TasksWrap .taskItem{
     position: relative;
     min-width: 280px;
+    min-height: 280px;
     height: 98%;
     display: inline-block;
     margin-right: 10px;
@@ -474,7 +482,7 @@ body{
     opacity: .9;
 }
 #dropdown-container{
-    max-width: 252px;
+    width: 252px;
     position: absolute;
     top: 35px;
     left: 50%;
@@ -707,7 +715,6 @@ body{
     border-radius: 3px;
     overflow: hidden;
     padding-top: 15px;
-    display: none;
 }
 #TasksWrap .creator-form-wrap .stage-name{
     margin-bottom: 10px;
@@ -723,6 +730,7 @@ body{
     color: #383838;
     box-shadow: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    outline: none;
 }
 #TasksWrap .creator-form-wrap .btns{
     height: 38px;

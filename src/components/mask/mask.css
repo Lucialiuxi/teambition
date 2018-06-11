@@ -7,10 +7,13 @@
 }
 .ant-modal .ant-modal-content{
     height: 535px;
-    width: 800px;
+    width: 670px;
+    position: relative;
 }
 .ant-modal .ant-modal-content .ant-modal-body{
-    height: 430px;
+    /* height: 430px; */
+    height: 310px;
+    padding: 24px 0 0 24px;
 }
 .ant-modal-content .ant-modal-body .title,
 .ant-modal-content .ant-modal-body .projectInfo,
@@ -18,9 +21,12 @@
     float: left;
 }
 .ant-modal-content .ant-modal-body .title{
-    width: 180px;
+    /* width: 180px;
     height: 100%;
-    margin-right: 30px;
+    margin-right: 30px; */
+    width: 100px;
+    height: 100%;
+    margin-right: 20px;
 }
 .ant-modal-content .ant-modal-body .title .active{
     color: #3da8f5;
@@ -117,7 +123,7 @@
     cursor: default;
 }
 .goToModifyFileInfo .ant-modal .ant-modal-content{
-    height: 550px;
+    height: 445px;
 }
 .goToModifyFileInfo .ant-modal  .ant-modal-footer div button:last-child{
     /* background-color: #d9d9d9;
@@ -133,10 +139,18 @@
 }
 .moveFileToRecycleBin .ant-modal-body .ant-confirm-btns{
     width: 100%;
+    margin-right: 15px;
 }
 .moveFileToRecycleBin .ant-modal-body .ant-confirm-btns .ant-btn-primary{
     background-color: red;
     border-color: red;
     display: block;
     width: 100%;
+}
+.moveFileToRecycleBin .ant-modal-body .ant-confirm .ant-confirm-btns {
+    margin-right: 20px;
+}
+.ant-confirm-body-wrapper{
+    padding: 15px;
+    box-sizing: border-box;
 }

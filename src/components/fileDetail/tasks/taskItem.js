@@ -29,7 +29,6 @@ class TaskItem extends Component {
         // } 
     }
     toShowDropDownContainer=()=>{
-        // console.log('toShowDropDownContainer',this.props)
         let { GoToShowDropDownContainer , taskItemInfo } = this.props;
         GoToShowDropDownContainer(taskItemInfo.taskItemId)
     }

@@ -51,6 +51,8 @@ class Project  extends Component {
                 currentFileId:'',
                 activeBar:''
             })
+        //每次登录的时候先清空state里面的大图标文件数据
+        dispatch(allActions.ClearStateAction());
         }else{
             let {t} = this.props.match.params;
             if( t === 'tasks'){
@@ -74,12 +76,8 @@ class Project  extends Component {
                     activeBar:'5'
                 })
             }
-
         }
         let user = cookie.load('UserName');
-        //每次登录的时候先清空state里面的大图标文件数据
-        dispatch(allActions.ClearStateAction());
-
         if(!user){
             history.push('/login');
         }
@@ -96,7 +94,7 @@ class Project  extends Component {
         this.setState({
             currentFileId:fileId
         })
-        let o = {pathname:`/project/${fileId}/tasks`,state: FileName};
+        let o = {pathname:`/project/${fileId}/tasks`,state: {FileName}};
         history.push(o);
     }
 
@@ -171,10 +169,9 @@ class Project  extends Component {
 }
 //要修改的数据
 const mapStateToProps = state => {
-    // console.log(state)
     return  {
         state
     }
-  }
+}
  
 export default withRouter(connect(mapStateToProps,null)(Project));

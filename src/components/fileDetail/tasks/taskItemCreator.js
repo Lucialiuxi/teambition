@@ -1,11 +1,16 @@
 //新建--项目列表
 import React, { Component } from 'react';
 import { Icon } from 'antd';
+import { connect } from 'react-redux';
 
 class TaskItemCreator extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
+    }
+    componentWillMount(){
+        let { dispatch , fileId , state } = this.props;
+        console.log( state )
     }
     render() { 
         return ( 
@@ -28,5 +33,9 @@ class TaskItemCreator extends Component {
          )
     }
 }
- 
-export default TaskItemCreator;
+const mapStateToProps = state => {
+    return  {
+        state
+    }
+}
+export default connect(mapStateToProps,null)(TaskItemCreator);

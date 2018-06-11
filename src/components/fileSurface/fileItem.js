@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+    import React, { Component } from 'react';
 import { Icon } from 'antd';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
@@ -36,7 +36,8 @@ class FileItem extends Component {
         }
     }
     render() {
-        let { FileName , FileAbstract , fileId , star , goToFileCoverPage } = this.props;
+        let { FileName , FileAbstract , fileId , star , goToFileCoverPage , userLoginName } = this.props;
+  
         if(!FileName){
             return null
         }
