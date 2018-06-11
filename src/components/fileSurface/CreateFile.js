@@ -27,11 +27,7 @@ class FileItem extends Component {
     }
     //点击 完成并创建
     handleOk = () => {
-        console.log('handleOk',this)
         let {dispatch} = this.props;
-        this.setState({
-            confirmLoading: true,
-        });
         FileName = this.input1.value;
         FileAbstract = this.input2.value;
         let user = cookie.load('UserName');
@@ -39,19 +35,16 @@ class FileItem extends Component {
             userLoginName:user,
             FileName,
             FileAbstract,
-            fileId: parseInt(Date.now()+Math.random()*10000000),
+            fileId: parseInt(Date.now()+Math.random()*10000000,13),
             star: false,
             inRecycleBin: false
         }
         if (FileName) {
             let newFileInfo = {};
             createAFileServer(o).then(({data})=>{
-                console.log(data.lastestFileInfoData)
                 newFileInfo = data.lastestFileInfoData;
                 dispatch(CreateAFile(data.lastestFileInfoData))
-                console.log(newFileInfo)
-                CreateTaskItemServer({fileId:newFileInfo.fileId,userLoginName:newFileInfo.userLoginName}).then(({data})=>{
-                    console.log('cccccccjjjj',data)
+                CreateTaskItemServer({fileId:newFileInfo.fileId}).then(({data})=>{
                     this.props.dispatch(CreateDefaultTaskItemsAction(data.CurrentTaskItemInfo))
                 })
             })
@@ -75,7 +68,7 @@ class FileItem extends Component {
         });
     }
     render() {
-        let { visible, confirmLoading, ModalText} = this.state;
+        let { visible } = this.state;
         return ( 
                 <li className="fileItem newAfile">
                     <Icon 

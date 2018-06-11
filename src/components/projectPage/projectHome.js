@@ -3,11 +3,9 @@ import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 import './project.css';
 import cookie from 'react-cookies';
-import Login from '@/components/loginPage/login';
 import {
     BrowserRouter as Router,
     Route,
-    Link,
     withRouter
   } from 'react-router-dom';
 
@@ -21,7 +19,6 @@ import FileInside from '@/components/fileDetail/fileInside';
 //引入action
 import * as allActions  from '@/actions/action';
 import { getAllFilesInfo } from '@/server/requestData';
-import routes from '@/router/router';
 
 
 const { Header, Content } = Layout;
@@ -90,7 +87,7 @@ class Project  extends Component {
     }
     //点击大图标文件，进入到文件内部 跳转路由 
     clickInToTheFile=(fileId,userLoginName,FileName)=>{
-        let { history , dispatch } = this.props;
+        let { history } = this.props;
         this.setState({
             currentFileId:fileId
         })

@@ -1,13 +1,12 @@
 //-----------项目列表
 import React, { Component } from 'react';
 import { Icon } from 'antd';
-import { connect } from 'react-redux';
 //列表菜单
 import DropDown from './dropdown/dropdown';
 //没有被选中的子任务
-import SubTask from './subTasks';
+// import SubTask from './subTasks';
 //被选中的子任务
-import CheckedSubTasks from './checkedSubTasks';
+// import CheckedSubTasks from './checkedSubTasks';
 // 新建子任务编辑框 
 import SubTaskCreator from './subTaskCreator';
 //【添加任务的显示】 点击去 显示新建子任务编辑框

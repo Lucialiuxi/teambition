@@ -24,7 +24,7 @@ class FileCover extends Component {
     }
     render() { 
         let { RecycleFlieIsShow } = this.state;
-        let { state , clickInToTheFile , goToFileCoverPage } = this.props;
+        let { state , clickInToTheFile } = this.props;
         let myOwnProjects =  state.getFileInfo.filter(val=>{
             return val.inRecycleBin ? null : val;
         });

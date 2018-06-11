@@ -61,6 +61,13 @@ export  const CreateDefaultTaskItemsAction = arr => {
         arr
     }
 }
+//新建一个项目列表
+export  const CreateATaskItemAction = obj => {
+    return {
+        type: 'Create_A_TaskItem',
+        obj
+    }
+}
 //进入文件的时候把当前的项目列表信息存进state中
 export  const TaskItemsInCurrentFileAction = arr => {
     return {
@@ -186,10 +193,17 @@ export  const showDropDownContainerMainListAction = (taskItemId) => {
 }
 
 //新建项目列表框 显示 -->标识写在getFileInfo的项目文件信息
-export  const ShowTaskItemCreatorAction = (taskItemId) => {
+export  const ShowTaskItemCreatorAction = (fileId) => {
     return {
         type: 'TaskItem_Creator_Is_Show_Action',
-        taskItemId
+        fileId
+    }
+}
+//新建项目列表框 隐藏
+export  const HideTaskItemCreatorAction = (close) => {
+    return {
+        type: 'Hide_TaskItem_Creator_Action',
+        close
     }
 }
 

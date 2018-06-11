@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import ModifyFileInfoMask from '@/components/mask/modifyFileInfoMask';
 import { ToggleFileStar } from '@/actions/action';
-import { ToggleFileStarServer } from '@/server/requestData'
-import routes from '@/router/index';
+import { ToggleFileStarServer } from '@/server/requestData';
 import {CustomeLink} from '@/commonfunc/';
 
 class FileItem extends Component {
@@ -36,7 +35,7 @@ class FileItem extends Component {
         }
     }
     render() {
-        let { FileName , FileAbstract , fileId , star , goToFileCoverPage , userLoginName } = this.props;
+        let { FileName , FileAbstract , fileId , star , goToFileCoverPage } = this.props;
   
         if(!FileName){
             return null

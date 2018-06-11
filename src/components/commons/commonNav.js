@@ -3,9 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import cookie from 'react-cookies';
 
-//引入action
-import * as allActions  from '@/actions/action';
-
 import { Icon , List, Avatar } from 'antd';
 
 const ProjectTypes = [

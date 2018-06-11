@@ -94,6 +94,7 @@ class DropDown extends Component {
                 deleteThisTaskItem,
                 isModifyTaskItem,
                 moveAllSubTasksFromThisToOther,
+                fileId,
                 taskItemId
             }} = this.props;
         let b = !(addATaskItemAfterThis ||
@@ -147,7 +148,13 @@ class DropDown extends Component {
                 {/* 移动 或 复制 任务 */}
                 {(copyAllSubTasksInsideThis || moveAllSubTasksFromThisToOther) ? <MoveOrCopySubTask/> : null}
                  {/* 删除列表所有任务 或者 删除列表 */}
-                { (deleteAllSubTasksInsideThis ||deleteThisTaskItem) ? <DeleteSubTaskOrDeleteTaskItem/> : null }
+                { (deleteAllSubTasksInsideThis ||deleteThisTaskItem) ? 
+                    <DeleteSubTaskOrDeleteTaskItem
+                    {...{deleteAllSubTasksInsideThis,
+                         deleteThisTaskItem,
+                         fileId,
+                         taskItemId}}
+                    /> : null }
             </div>
          )
     }

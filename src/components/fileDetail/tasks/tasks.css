@@ -732,10 +732,10 @@ body{
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     outline: none;
 }
-#TasksWrap .creator-form-wrap .btns{
+#TasksWrap .creator-form-wrap .taskItemCreator-btns{
     height: 38px;
 }
-#TasksWrap .creator-form-wrap .btns a{
+#TasksWrap .creator-form-wrap .taskItemCreator-btns a{
     float: right;
     padding: 8px 21px;
     background-color: transparent;
@@ -752,16 +752,16 @@ body{
     white-space: nowrap;
     user-select: none;
 }
-#TasksWrap .creator-form-wrap .btns .submit{
+#TasksWrap .creator-form-wrap .taskItemCreator-btns .submit{
     color: #fff;
     background-color: #3da8f5;
     border-color: #3da8f5;
     border-radius: 3px;
 }
-#TasksWrap .creator-form-wrap .btns .cancel:hover{
+#TasksWrap .creator-form-wrap .taskItemCreator-btns .cancel:hover{
     color: #3da8f5;
 }
-#TasksWrap .creator-form-wrap .btns .submit:hover{
+#TasksWrap .creator-form-wrap .taskItemCreator-btns .submit:hover{
     opacity: .5;
 }
 #ct{

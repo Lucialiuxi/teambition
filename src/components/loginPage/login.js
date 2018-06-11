@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
 
-import {Route , withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import './login.css'
 
 import { Modal } from 'antd';
 
-import Project from '@/components/projectPage/projectHome';
-import {register,login} from '@/server/requestData';
-// import {CustomeLink} from '@/commonfunc/index';
+import { register , login } from '@/server/requestData';
 import cookie from 'react-cookies'
 
 //注册登录的提醒弹框
@@ -75,7 +72,7 @@ class Login  extends Component {
             })
             
             success(this.state.stateTip)
-            if(this.state.stateTip=='登录成功'){
+            if(this.state.stateTip==='登录成功'){
                 if(this.state.stateTip==='登录成功'){
                     this.setState({
                         id:data.userInfo._id

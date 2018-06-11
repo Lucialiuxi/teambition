@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
 import { connect } from 'react-redux';
-import classnames from 'classnames';
 import { Modal } from 'antd';
 
 import { MoveFileToRecycleBin , DeleteAFlieAction }  from '@/actions/action';
@@ -47,7 +46,7 @@ class FileItemInRecyCleBin extends Component {
         })
     }
     render() { 
-        let { FileName , FileAbstract , fileId ,star } = this.props;
+        let { FileName , FileAbstract , fileId } = this.props;
         if(!FileName){
             return null
         }

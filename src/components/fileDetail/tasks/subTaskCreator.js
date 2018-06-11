@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
 import { connect } from 'react-redux';
-import { CreateASubTaskServer } from '@/server/requestData'
+// import { CreateASubTaskServer } from '@/server/requestData';
 import { ShowChoiceUrgencyLevelAction  }  from '@/actions/action';
 import EditableTagGroup from './editableTagGroup';
 
@@ -19,7 +19,7 @@ class SubTaskCreator extends Component {
         GoToChoiceSubTaskDeadline(id)
     }
     CreateASubTask=()=>{//创建子任务
-        let { id , dispatch , deadline} = this.props;
+        // let { id , dispatch , deadline} = this.props;
         let val = this.subTaskValue.value.trim();
         if(val){
             this.subTaskValue.value=''

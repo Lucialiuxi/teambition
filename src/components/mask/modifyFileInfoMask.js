@@ -38,22 +38,17 @@ class ModifyFileInfoMask extends Component {
     handleOk = (e) => {
         let userLoginName = cookie.load('UserName')
         if(!this.save.getAttribute("disabled")){
-            // console.log('可以点击保存')
             this.setState({
                 visible: false,
             });
-            console.log(this.props)
             let { fileId , dispatch , star } = this.props;
             let { FileName , FileAbstract } = this.state;
-            postModifyFileInfo({fileId,FileName,FileAbstract,userLoginName , star}).then(({data})=>{
-                // console.log(data.afterModifyData)
-                let o = data.afterModifyData;
+            postModifyFileInfo({fileId,FileName,FileAbstract,userLoginName , star }).then(({data})=>{
                 dispatch(ModifyAFileInfo(data.afterModifyData))
             })
         }
     }
     handleCancel = (e) => {
-        // console.log(e);
         this.setState({
             visible: false,
         });

@@ -53,7 +53,7 @@ class SubNav extends Component {
         tabBar(t,activeKey,this.state.fId);
     }
     componentWillMount(){
-        let { location , dispatch , state} = this.props;
+        let { location , dispatch } = this.props;
         let CurrentFileId = location.pathname.match(/\d+/g)[0];
         if(CurrentFileId){
             //请求项目文件对应的任务列表 和 子任务
@@ -66,12 +66,12 @@ class SubNav extends Component {
         }
     }
     render() {
-        let { location , match , state } = this.props;
+        let { location , state } = this.props;
         //拿到当前项目文件的id
         let fileId = location.pathname.match(/\d+/g)[0];
         let currentFile;
         if(fileId){
-            currentFile = state.getFileInfo.filter(val=>val.fileId==fileId)[0];
+            currentFile = state.getFileInfo.filter(val=>val.fileId===Number(fileId))[0];
         }
         return (
             <div id="subNavWrap">

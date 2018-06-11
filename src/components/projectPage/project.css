@@ -294,3 +294,6 @@ ul{
     color: #383838;
     font-size: 15px;
 }
+#root .App{
+    overflow-x: hidden;
+}

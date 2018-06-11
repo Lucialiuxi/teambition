@@ -6,7 +6,7 @@ import * as allActions  from '@/actions/action';
 import './App.css';
 import 'antd/dist/antd.css';
 
-import {BrowserRouter as Router , withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import LoginOrProject from '@/router/index';
 import cookie from 'react-cookies';

@@ -10,9 +10,9 @@ import {
     HideTaskItemDropDownContainerAction,
     TaskItemCalenderIsShowAction,
     HideAllTaskItemCalenderAction,
-    HideChoiceUrgencyLevelAction
+    HideChoiceUrgencyLevelAction,
+    HideTaskItemCreatorAction
 }  from '@/actions/action';
-import { getAllFilesInfo } from '@/server/requestData';
 
 import CanlenderMode from './calenderMode';
 
@@ -24,7 +24,6 @@ import CanlenderMode from './calenderMode';
 import './tasks.css';
 /** 
  任务列表 taskItem
-    loginName:String,用户的登录名
     fileId: Number,项目文件id
     taskItemId: Number,任务列表id
     taskItemName: String,任务列表名
@@ -32,7 +31,6 @@ import './tasks.css';
  */
 /** 
  子任务 subTask
-    userLoginName:String,用户的登录名
     fileId: Number,项目文件id
     taskItemId: Number,任务列表id
     subTaskId: String,子任务列表id  //从这里开始，id由后端生成
@@ -115,36 +113,37 @@ class Tasks extends Component {
 
             
             let aboutDropDownMenu = (target.classList.contains('DeleteSubTaskOrDeleteTaskItemWrap') || 
-                target.classList.contains('tips') || 
-                target.classList.contains('confirmToDeleteSubTaskOrDeleteTaskItem') ||
-                target.classList.contains('MoveOrCopySubTaskWrap') ||
-                target.classList.contains('MoveOrCopySubTaskContent')||
-                target.classList.contains('MoveOrCopySubTaskList') ||
-                target.classList.contains('MoveOrCopySubTaskTitle') ||
-                target.classList.contains('ConfirmMoveOrCopySubTaskBtn') ||
-                target.classList.contains('selectFileTitleSpan') ||
-                target.classList.contains('FileTitleEm') ||
-                target.classList.contains('selectFileDownICon') ||
-                target.classList.contains('selectTaskItemTitleSpan') ||
-                target.classList.contains('TaskItemTitleEm') ||
-                target.classList.contains('selectTaskItemDownICon') ||
-                target.classList.contains('dropdown-container') || 
-                target.classList.contains('Add_TaskItem')  ||
-                target.classList.contains('anticon-left')  ||
-                target.classList.contains('dropdown_title')  ||
-                target.classList.contains('modifyDetailList')  ||
-                target.classList.contains('modifyItem')  ||
-                target.classList.contains('anticon-edit')  ||
-                target.classList.contains('anticon-plus')  ||
-                target.classList.contains('anticon-copy') ||
-                target.classList.contains('anticon-delete') ||
-                target.classList.contains('anticon-down-circle-o')||
-                target.classList.contains('MOrAddListTaskItem')||
-                target.classList.contains('createATaskItemText')||
-                target.classList.contains('MTaskItemInput')||
-                target.classList.contains('createATaskItemBtn')||
-                target.classList.contains('saveModifyInputValueBtn')||
-                target.classList.contains('createATaskItemBtn'))
+                    target.classList.contains('tips') || 
+                    target.classList.contains('confirmToDeleteSubTaskOrDeleteTaskItem') ||
+                    target.classList.contains('MoveOrCopySubTaskWrap') ||
+                    target.classList.contains('MoveOrCopySubTaskContent')||
+                    target.classList.contains('MoveOrCopySubTaskList') ||
+                    target.classList.contains('MoveOrCopySubTaskTitle') ||
+                    target.classList.contains('ConfirmMoveOrCopySubTaskBtn') ||
+                    target.classList.contains('selectFileTitleSpan') ||
+                    target.classList.contains('FileTitleEm') ||
+                    target.classList.contains('selectFileDownICon') ||
+                    target.classList.contains('selectTaskItemTitleSpan') ||
+                    target.classList.contains('TaskItemTitleEm') ||
+                    target.classList.contains('selectTaskItemDownICon') ||
+                    target.classList.contains('dropdown-container') || 
+                    target.classList.contains('Add_TaskItem')  ||
+                    target.classList.contains('anticon-left')  ||
+                    target.classList.contains('dropdown_title')  ||
+                    target.classList.contains('modifyDetailList')  ||
+                    target.classList.contains('modifyItem')  ||
+                    target.classList.contains('anticon-edit')  ||
+                    target.classList.contains('anticon-plus')  ||
+                    target.classList.contains('anticon-copy') ||
+                    target.classList.contains('anticon-delete') ||
+                    target.classList.contains('anticon-down-circle-o')||
+                    target.classList.contains('MOrAddListTaskItem')||
+                    target.classList.contains('createATaskItemText')||
+                    target.classList.contains('MTaskItemInput')||
+                    target.classList.contains('createATaskItemBtn')||
+                    target.classList.contains('saveModifyInputValueBtn')||
+                    target.classList.contains('createATaskItemBtn'))
+
 
             if(target.classList.contains('task-creator-handler-wrap') ||
                 target.classList.contains('task-creator-handler') ||
@@ -184,7 +183,6 @@ class Tasks extends Component {
                     dispatch(HideChoiceUrgencyLevelAction('close'));
                 }
             }else if(target.classList.contains('task-content-input')){
-                //输入任务内容
                 // console.log('输入任务内容')
                 //关闭日历
                 dispatch(HideAllTaskItemCalenderAction('close'));
@@ -193,8 +191,8 @@ class Tasks extends Component {
                      target.classList.contains('date-text')
             ){//设置时间
                 // console.log('设置时间')
-            }else if(target.classList.contains('priority-container')||
-                     target.classList.contains('icon-circle') && 
+            }else if((target.classList.contains('priority-container')||
+                     target.classList.contains('icon-circle')) && 
                      (!target.classList.contains('showUrgencyLevel'))
             ){//设置紧急程度
                 // console.log('关闭设置紧急程度')
@@ -224,7 +222,22 @@ class Tasks extends Component {
             }else{//隐藏下拉菜单
                 dispatch(HideTaskItemDropDownContainerAction('close'));
             }
+//----------------------------控制新建任务列表框--------------------------------------------
+            let aboutCreateTaskItem = (target.classList.contains('createWrap') ||
+            !(target.classList.contains('createTaskItem') ||
+            target.classList.contains('taskItemCreateIcon') ||
+            target.classList.contains('taskItemCreateIconWrap') ||
+            target.classList.contains('creator-form-wrap') ||
+            target.classList.contains('stage-name') ||
+            target.classList.contains('taskItemCreateIconWrap') ||
+            target.classList.contains('taskItemCreator-btns') ||
+            target.classList.contains('submit') ||
+            target.classList.contains('cancel')))
 
+            if(aboutCreateTaskItem ){
+                //新建项目列表框 隐藏
+                dispatch(HideTaskItemCreatorAction('close'))
+            }
         } 
     }
     GoToCreateSubTask=(id)=>{// 显示 新建子任务框
@@ -259,17 +272,17 @@ class Tasks extends Component {
         this._isMounted = false;
     }
     render() { 
-        let { hasTaskList , deadlineData } = this.state;
-        let { state:{taskItemInfo} , location:{pathname} } = this.props;
-        let userLoginName='';
-        if(taskItemInfo[0]){
-            userLoginName = taskItemInfo[0].userLoginName;
-        }
+        let { deadlineData } = this.state;
+        let { state:{taskItemInfo,getFileInfo} , location:{pathname} } = this.props;
         //把项目文件数据按照待处理/已完成/进行中 排序
         taskItemInfo.sort(function(a,b){
             return a.index-b.index
         })
         let fileId = pathname.match(/\d+/g)[0];
+        let t;
+        if(getFileInfo.length>0){
+             t = <TaskItemCreator fileId={fileId} getFileInfo={getFileInfo}/>
+        }
         return (
             <ul id="TasksWrap">
                 {taskItemInfo.map(val=>{
@@ -286,7 +299,7 @@ class Tasks extends Component {
                            </li>
                 })}
                 {/* 新建任务列表 */}
-                <TaskItemCreator {...{ fileId}}/>
+                {t}
             </ul> 
         )
     }
