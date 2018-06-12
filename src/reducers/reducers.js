@@ -73,23 +73,27 @@ const taskItemInfo = (state = [], action) =>{
     case 'Create_A_TaskItem':
       return [...state,action.obj];
 
+    //新建一个项目列表   
+    case 'delete_A_TaskItem_Action':
+      state = state.filter(val=>val.taskItemId!==action.taskItemId)
+      return state;
+
     //【进入】 项目文件夹和 【刷新】 的时候请求项目列表
     case 'TaskItems_In_CurrentFile_Action':
-      state =  action.arr.map((val)=>{
-        val.IsCreating = false;//显示创建子任务框
-        val.IsChoiceDeadline = false; //显示创建子任务框的截止时间日历
-        val.IsChoiceUrgencyLevel = false;//显示任务紧急程度的框
-        val.IsShowDropDownContainer = false;//显示下拉框
-        //下拉列表下级的显示框 控制标识
-        val.isModifyTaskItem = false; //编辑列表
-        val.addATaskItemAfterThis = false;//在此后添加新列表
-        val.moveAllSubTasksFromThisToOther = false;//移动本列表所有任务
-        val.copyAllSubTasksInsideThis = false;//复制本列表所有任务
-        val.deleteAllSubTasksInsideThis = false;//清空本列表所有任务
-        val.deleteThisTaskItem = false;//清空本列表所有任务
-        return val;
-      })
-      return state;
+      return action.arr.map((val)=>{
+          val.IsCreating = false;//显示创建子任务框
+          val.IsChoiceDeadline = false; //显示创建子任务框的截止时间日历
+          val.IsChoiceUrgencyLevel = false;//显示任务紧急程度的框
+          val.IsShowDropDownContainer = false;//显示下拉框
+          //下拉列表下级的显示框 控制标识
+          val.isModifyTaskItem = false; //编辑列表
+          val.addATaskItemAfterThis = false;//在此后添加新列表
+          val.moveAllSubTasksFromThisToOther = false;//移动本列表所有任务
+          val.copyAllSubTasksInsideThis = false;//复制本列表所有任务
+          val.deleteAllSubTasksInsideThis = false;//清空本列表所有任务
+          val.deleteThisTaskItem = false;//清空本列表所有任务
+          return val;
+        })
 
      //控制新建任务列表的  子任务  的显示隐藏 被点击的那个新建框才显示
     case 'SubTask_Creator_Is_Show_Action':
@@ -223,11 +227,30 @@ const taskItemInfo = (state = [], action) =>{
 }
 
 
+const subTaskInfo = (state = [] , action) => {
+  switch (action.type){
+    //创建一个子任务
+    case 'create_A_SubTask_Action':
+      return [...state,action.obj];
 
+    //查询一个项目文件下的所有子任务
+    case 'find_All_SubTasks_Inside_A_file_Action':
+      return action.arr
+
+    //删除一个任务列表下的子任务
+    case 'delete_SubTasks_In_A_TaskItem_Action':
+      state = state.filter(val=>val.taskItemId===action.taskItemId)
+      return state  
+
+  default:
+    return state;
+  }
+}
 
 
 const allReduers = combineReducers({
     getFileInfo,
-    taskItemInfo
+    taskItemInfo,
+    subTaskInfo
 })
 export default allReduers;

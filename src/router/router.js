@@ -17,5 +17,5 @@ export let routes = [
         path:'/project/:fileId/:t',
         title:'项目',
         component:Project  
-    }  
+    }
 ]

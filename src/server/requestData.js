@@ -73,22 +73,30 @@ export const CreateANewTaskItemServer = (param) => {
 
 //删除一个任务列表 param:{fileId:XXX , taskItemId:XXX }
 export const deleteATaskItemServer = (param) => {
-    console.log(param)
     return axios.post('/deleteATaskItem', param)
 }
 //---------------子任务-----------------------------------------------
 //查询一个项目文件下的任务列表 和任务列表下 子任务 --子任务还没有写
-export const GetTaskItemAndSubTaskServer = (param) => {
-    return axios.post('/GetTaskItemAndSubTask', param)
+export const GetTaskItemServer = (param) => {
+    return axios.post('/GetTaskItem', param)
 }
 
 //删除一个项目问价下所有的任务列表  和 任务列表下的子任务
 export const DeleteAllTaskItemAndSubTaskInAFileServer = (param) => {
-    console.log(param)
     return axios.post('/DeleteAllTaskItemAndSubTaskInAFile', param)
 }
 
 //新建一个子任务
 export const CreateASubTaskServer = (param) => {
-    return axios.post('CreateASubTask',param)
+    return axios.post('/CreateASubTask',param)
+}
+
+//查询所有当前项目文件的任务列表的任务
+export const GetAllSubTasksServer = (param) => {
+    return axios.post('/GetAllSubTasks',param)
+}
+
+//删除一个任务列表下的所有任务
+export const DeleteAllSubTasksServer = (param) => {
+    return axios.post('/DeleteAllSubTasks',param)
 }

@@ -38,6 +38,7 @@ import './tasks.css';
     deadline:String,任务截止时间
     urgencyLevel:String,紧急程度：普通normal  紧急urgency  非常紧急emtreme urgency
     tag:String,标签
+    checked:Boolean,
     index:Number
 
  */
@@ -71,9 +72,9 @@ class Tasks extends Component {
                 target.classList.contains('ant-select-selection-selected-value') ||
                 target.classList.contains('ant-select-arrow') ||
                 target.classList.contains('ant-radio-group') ||
+                target.classList.contains('ant-radio-group-small') ||
                 target.classList.contains('ant-radio-button-wrapper')||
                 target.classList.contains('ant-radio-button') ||
-                target.classList.contains('ant-radio-button-input') ||   
                 target.classList.contains('ant-radio-button-inner') ||   
                 target.classList.contains('ant-fullcalendar') ||   
                 target.classList.contains('ant-fullcalendar-calendar-body') ||   
@@ -82,10 +83,25 @@ class Tasks extends Component {
                 target.nodeName==="TBODY" ||  
                 target.nodeName==="TR" ||
                 target.nodeName==="TD" || 
-                target.nodeName==="TT" ||
+                target.nodeName==="TH" || 
+                target.nodeName==="TFOOT" ||
+                target.nodeName==="OPTION" ||
+                target.nodeName==="SELECT" ||
                 target.classList.contains('ant-fullcalendar-date') ||   
                 target.classList.contains('ant-fullcalendar-value') ||   
-                target.classList.contains('ant-fullcalendar-content'))
+                target.classList.contains('ant-fullcalendar-content') ||   
+                target.classList.contains('ant-radio-button') ||   
+                target.classList.contains('ant-radio-button-input') ||  
+                target.classList.contains('ant-select-sm') ||   
+                target.classList.contains('ant-fullcalendar-month-select') ||   
+                target.classList.contains('ant-select') ||   
+                target.classList.contains('ant-select-enabled') ||   
+                target.classList.contains('ant-select-dropdown-menu-item') ||   
+                target.classList.contains('ant-select-dropdown-menu-item-selected') ||
+                (target.nodeName==="SPAN" && target.innerText==='Month' ) ||
+                (target.nodeName==="SPAN" && target.innerText==='Year' ) ||
+                target.classList.contains('ant-fullcalendar-column-header') ||
+                target.classList.contains('ant-fullcalendar-column-header-inner') )
 
             //紧急选择框
             let urgencyBox = (target.classList.contains('ant-fullcalendar-content') ||
@@ -273,7 +289,7 @@ class Tasks extends Component {
     }
     render() { 
         let { deadlineData } = this.state;
-        let { state:{taskItemInfo,getFileInfo} , location:{pathname} } = this.props;
+        let { state:{ taskItemInfo , getFileInfo , subTaskInfo } , location:{pathname} } = this.props;
         //把项目文件数据按照待处理/已完成/进行中 排序
         taskItemInfo.sort(function(a,b){
             return a.index-b.index
@@ -295,6 +311,7 @@ class Tasks extends Component {
                                     GoToCreateSubTask={this.GoToCreateSubTask}
                                     GoToShowDropDownContainer={this.GoToShowDropDownContainer}
                                     GoToChoiceSubTaskDeadline={this.GoToChoiceSubTaskDeadline}
+                                    subTaskInfo={subTaskInfo}
                                 />
                            </li>
                 })}

@@ -7,8 +7,8 @@ import Posts from '@/components/fileDetail/posts/posts';
 import Schedules from '@/components/fileDetail/schedules/schedules';
 import Tasks from '@/components/fileDetail/tasks/tasks';
 import Works  from '@/components/fileDetail/works/works';
-import { GetTaskItemAndSubTaskServer } from '@/server/requestData';
-import { TaskItemsInCurrentFileAction } from '@/actions/action';
+import { GetTaskItemServer , GetAllSubTasksServer } from '@/server/requestData';
+import { TaskItemsInCurrentFileAction , findAllSubTasksInsideAfileAction } from '@/actions/action';
 
 const TabPane = Tabs.TabPane;
 
@@ -56,9 +56,13 @@ class SubNav extends Component {
         let { location , dispatch } = this.props;
         let CurrentFileId = location.pathname.match(/\d+/g)[0];
         if(CurrentFileId){
-            //请求项目文件对应的任务列表 和 子任务
-            GetTaskItemAndSubTaskServer({fileId:CurrentFileId}).then(({data})=>{
+            //请求项目文件对应的任务列表
+            GetTaskItemServer({fileId:CurrentFileId}).then(({data})=>{
                 dispatch(TaskItemsInCurrentFileAction(data.CurrentTaskItemInfo))
+            })
+            //请求任务列表数据
+            GetAllSubTasksServer({fileId:CurrentFileId}).then(({data})=>{
+                dispatch(findAllSubTasksInsideAfileAction(data.subTasksData))
             })
             this.setState({
                 fId:CurrentFileId,
@@ -66,12 +70,12 @@ class SubNav extends Component {
         }
     }
     render() {
-        let { location , state } = this.props;
+        let { location , state:{getFileInfo} } = this.props;
         //拿到当前项目文件的id
         let fileId = location.pathname.match(/\d+/g)[0];
         let currentFile;
         if(fileId){
-            currentFile = state.getFileInfo.filter(val=>val.fileId===Number(fileId))[0];
+            currentFile = getFileInfo.filter(val=>val.fileId===Number(fileId))[0];
         }
         return (
             <div id="subNavWrap">

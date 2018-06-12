@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
+import classNames from 'classnames';
 
 // 没有被选中的任务
 class SubTask extends Component {
@@ -8,23 +9,42 @@ class SubTask extends Component {
         this.state = {  }
     }
     render() { 
+        // console.log(this.props)
+        let {
+            deadline,
+            fileId,
+            index,
+            subTaskId,
+            subTaskName,
+            tag,
+            urgencyLevel
+        } = this.props;
+        let a ;
+        if(urgencyLevel==='普通'){
+            a =  'bg-priority-0'
+        }else if(urgencyLevel==='紧急'){
+            a =  'bg-priority-1'
+        }else if(urgencyLevel==='非常紧急'){
+            a =  'bg-priority-2'
+        }
+        let c = classNames('subTask-priority' , a)
         return ( 
             <ul className="subTasksWrap">
                 <li className="subTask-card-mode">
                     <div className="subTask-card">
-                        <div className="subTask-priority bg-priority-0"></div>
+                        <div className={c}></div>
                         {/* 选框 */}
                         <div className="subTask-check-box check-box normal"></div>
                         {/* 小条的任务 */}
                         <div className="subTask-content-set">
-                            <h4 className="subTask-Item-Title">aa</h4>
+                            <h4 className="subTask-Item-Title">{subTaskName}</h4>
                             <div className="subTask-info-wrapper">
                                 <div className="task-infos">
-                                    <span className="deadline">5月50日 截止</span>
-                                    <span className="icon-wrapper">
+                                    {deadline? <span className="deadline">{deadline}截止</span>:null}
+                                    {/* <span className="icon-wrapper">
                                         <Icon type="file-text" />
-                                    </span>
-                                    <span className="tag tag-color-blue">标签</span>
+                                    </span> */}
+                                    {tag.map((val,i)=><span key={i} className="tag tag-color-blue">{val}</span>)}
                                 </div>
                             </div>
                         </div>

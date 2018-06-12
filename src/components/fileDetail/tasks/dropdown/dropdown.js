@@ -87,7 +87,7 @@ class DropDown extends Component {
         
     }
     render() {
-        let {taskItemInfo:{
+        let { dispatch , taskItemInfo:{
                 addATaskItemAfterThis,
                 copyAllSubTasksInsideThis,
                 deleteAllSubTasksInsideThis,
@@ -153,7 +153,8 @@ class DropDown extends Component {
                     {...{deleteAllSubTasksInsideThis,
                          deleteThisTaskItem,
                          fileId,
-                         taskItemId}}
+                         taskItemId,
+                         dispatch}}
                     /> : null }
             </div>
          )

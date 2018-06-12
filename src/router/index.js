@@ -1,9 +1,9 @@
 //路由信息
-import React, { Component } from 'react';
+import React from 'react';
 import { routes } from './router.js'
 import { Route } from 'react-router-dom';
 
-class LoginOrProject extends Component {
+class LoginOrProject extends React.Component {
     constructor(props) {
       super(props);
       this.state = {  }
@@ -11,18 +11,18 @@ class LoginOrProject extends Component {
     render() {
       return ( 
         <div className="LoginOrProject">
-          {
-            routes.map((item) => {
-              return (
-                  <Route 
-                    key={item.path}
-                    exact
-                    path={item.path}
-                    component={item.component}
-                  ></Route>
-              )
-            })
-          }
+            {
+              routes.map((item) => {
+                return (
+                    <Route 
+                      key={item.path}
+                      exact
+                      path={item.path}
+                      component={item.component}
+                    ></Route> 
+                )
+              })
+            }
         </div>
       )
     }

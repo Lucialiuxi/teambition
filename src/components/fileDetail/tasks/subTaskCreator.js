@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
 import { connect } from 'react-redux';
-// import { CreateASubTaskServer } from '@/server/requestData';
-import { ShowChoiceUrgencyLevelAction  }  from '@/actions/action';
+import { CreateASubTaskServer } from '@/server/requestData';
+import { ShowChoiceUrgencyLevelAction , createASubTaskAction }  from '@/actions/action';
 import EditableTagGroup from './editableTagGroup';
 
 // 新建--项目列表子任务
@@ -19,11 +19,27 @@ class SubTaskCreator extends Component {
         GoToChoiceSubTaskDeadline(id)
     }
     CreateASubTask=()=>{//创建子任务
-        // let { id , dispatch , deadline} = this.props;
+        let { id , dispatch , deadline , state:{subTaskInfo}} = this.props;
         let val = this.subTaskValue.value.trim();
         if(val){
-            this.subTaskValue.value=''
-            // CreateASubTaskServer({id,subTaskName:val},deadline)//发送要创建子任务的数据到后端
+            this.subTaskValue.value='';
+            let tag = this.tagsArr ? this.tagsArr : [];
+            let urgencyLevel = this.state.currentShowUrgencyLevel;
+            let index = 0
+            if(subTaskInfo[0]){
+                let arr = []
+                subTaskInfo.forEach(el => {
+                    arr.push(el.index)
+                });
+                if(arr.length>0){
+                    index =  Math.max.apply(null,arr)
+                }
+            }
+            deadline = deadline ? deadline : '';
+            //发送要创建子任务的数据到后端
+            CreateASubTaskServer({id,subTaskName:val,deadline,urgencyLevel,tag,index,checked:false}).then(({data})=>{
+                dispatch(createASubTaskAction(data.newSubTaskInfo))
+            })
         }
     }
     goToChoiceUrgencyLevel=(e)=>{//点击显示  选择任务紧急程度框
@@ -67,6 +83,9 @@ class SubTaskCreator extends Component {
                     currentShowUrgencyLevel:'普通'
                 }) 
         }
+    }
+    getSetTagsArr=(arr)=>{//拿到EditableTagGroup组件中设置好的标签
+        this.tagsArr = arr;
     }
     render() {
         let {deadline } = this.props;
@@ -117,7 +136,7 @@ class SubTaskCreator extends Component {
                     </section>
                     <div className="setTagBox">
                         <Icon type="tags-o"/>
-                        <EditableTagGroup/>
+                        <EditableTagGroup {...{getSetTagsArr:this.getSetTagsArr}}/>
                     </div>
                 </div>
             </div>

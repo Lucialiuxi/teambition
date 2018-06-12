@@ -26,7 +26,6 @@ class CanlenderMode extends Component {
     }
     render() { 
         const { value, selectedValue } = this.state;
-        console.log(this.props)
         return ( 
             <div 
                 style={{ width: 252, borderRadius: 4 }}

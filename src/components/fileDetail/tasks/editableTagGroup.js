@@ -30,13 +30,14 @@ class EditableTagGroup extends Component {
   }
 //数据标签的输入框失去焦点隐藏
   handleInputConfirm = () => {
+    let { getSetTagsArr } = this.props;
     const state = this.state;
     const inputValue = state.inputValue;
     let tags = state.tags;
     if (inputValue && tags.indexOf(inputValue) === -1) {
       tags = [...tags, inputValue];
     }
-    console.log(tags);
+    getSetTagsArr(tags.slice(1));//把创建好的标签传到父组件中
     this.setState({
       tags,
       inputVisible: false,

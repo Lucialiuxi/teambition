@@ -4,7 +4,7 @@ import { Icon } from 'antd';
 //列表菜单
 import DropDown from './dropdown/dropdown';
 //没有被选中的子任务
-// import SubTask from './subTasks';
+import SubTask from './subTasks';
 //被选中的子任务
 // import CheckedSubTasks from './checkedSubTasks';
 // 新建子任务编辑框 
@@ -17,6 +17,7 @@ class TaskItem extends Component {
         super(props)
         this.state = {  
             hasTaskList:0,//子任务
+            allSubTasksData:[]
          }
     }
     componentDidUpdate(){
@@ -31,13 +32,21 @@ class TaskItem extends Component {
         let { GoToShowDropDownContainer , taskItemInfo } = this.props;
         GoToShowDropDownContainer(taskItemInfo.taskItemId)
     }
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            allSubTasksData:nextProps.subTaskInfo
+        })
+
+    }
     render() { 
         let { taskItemInfo , 
             GoToCreateSubTask , 
             GoToChoiceSubTaskDeadline ,
             deadline
         } = this.props;
-        let { hasTaskList } = this.state;
+        let { hasTaskList , allSubTasksData } = this.state;
+        let SubTasksUnderCurrentTaskItem = allSubTasksData.filter(val=>val.taskItemId===taskItemInfo.taskItemId);
+        let allSubTasks = SubTasksUnderCurrentTaskItem.filter(val=>val.checked===false);
         return ( 
             <div className="underTaskItemDiv">
                 {/* 下拉编辑框 */}
@@ -57,7 +66,7 @@ class TaskItem extends Component {
                 </header>
                 <div className="subTasksContent dls-thin-scroll">
                     {/* 没有被选中的子任务 */}
-                    {/* <SubTask/> */}
+                    { allSubTasks.map(val=><SubTask key={val.subTaskId} {...val}/>) }
 
                     {/* 被选中的子任务 */}
                     {/* <CheckedSubTasks/> */}
@@ -68,12 +77,12 @@ class TaskItem extends Component {
                         id={taskItemInfo.taskItemId}
                         GoToChoiceSubTaskDeadline={GoToChoiceSubTaskDeadline}
                     /> : null }
+                    {/*【添加任务的显示】 点击 显示新建子任务编辑框*/}
+                    {!taskItemInfo.IsCreating ? <ToShowSubTaskCreator  
+                        id={taskItemInfo.taskItemId} 
+                        GoToCreateSubTask={GoToCreateSubTask}
+                    /> : null }
                 </div>
-                {/*【添加任务的显示】 点击 显示新建子任务编辑框*/}
-                {!taskItemInfo.IsCreating ? <ToShowSubTaskCreator  
-                    id={taskItemInfo.taskItemId} 
-                    GoToCreateSubTask={GoToCreateSubTask}
-                /> : null }
             </div>
          )
     }

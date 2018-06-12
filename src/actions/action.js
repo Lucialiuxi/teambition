@@ -53,7 +53,7 @@ export  const DeleteAFlieAction = obj => {
     }
 }
 
-// -------------------------------
+// ----------------------------------------
 //生成默认的项目列表 未完成 已完成 进行中 --开发显示自己看返回的数据
 export  const CreateDefaultTaskItemsAction = arr => {
     return {
@@ -68,6 +68,13 @@ export  const CreateATaskItemAction = obj => {
         obj
     }
 }
+//删除一个项目列表
+export  const deleteATaskItemAction = taskItemId => {
+    return {
+        type: 'delete_A_TaskItem_Action',
+        taskItemId
+    }
+}
 //进入文件的时候把当前的项目列表信息存进state中
 export  const TaskItemsInCurrentFileAction = arr => {
     return {
@@ -77,7 +84,7 @@ export  const TaskItemsInCurrentFileAction = arr => {
 }
 
 
-
+//---------------------------各种显示框-----------------------------------
  //控制【子任务编辑框】  的显示隐藏 被点击的那个【添加任务】才显示
 export  const SubTaskCreatorIsShowAction = taskItemId => {
     return {
@@ -92,7 +99,6 @@ export  const HideAllSubTaskCreatorsAction = (close) => {
         close
     }
 }
-
 
 
 //控制 【子任务编辑框的日历】 显示
@@ -142,49 +148,49 @@ export  const HideTaskItemDropDownContainerAction = (close) => {
         close
     }
 }
-//编辑任务列表
+//编辑任务列表 框显示
 export  const ModifyTaskItemAction = (taskItemId) => {
     return {
         type: 'Modify_TaskItem_Action',
         taskItemId
     }
 }
-//在此后添加新任务列表
+//在此后添加新任务列表 框显示
 export  const addATaskItemAfterThisAction = (taskItemId) => {
     return {
         type: 'add_A_TaskItem_After_This_Action',
         taskItemId
     }
 }
-//移动本任务列表所有子任务
+//移动本任务列表所有子任务 框显示
 export  const moveAllSubTasksFromThisToOtherAction = (taskItemId) => {
     return {
         type: 'move_All_SubTasks_From_This_To_Other_Action',
         taskItemId
     }
 }
-//复制本任务列表所有子任务
+//复制本任务列表所有子任务 框显示
 export  const copyAllSubTasksInsideThisAction = (taskItemId) => {
     return {
         type: 'copy_All_SubTasks_Inside_This_Action',
         taskItemId
     }
 }
-//清空本任务列表所有子任务
+//清空本任务列表所有子任务 框显示
 export  const deleteAllSubTasksInsideThisAction = (taskItemId) => {
     return {
         type: 'delete_All_SubTasks_Inside_This_Action',
         taskItemId
     }
 }
-//删除任务列表
+//删除任务列表 框显示
 export  const deleteThisTaskItemAction = (taskItemId) => {
     return {
         type: 'delete_This_TaskItem_Action',
         taskItemId
     }
 }
-//显示下拉列表框主页
+//显示 下拉列表框主页
 export  const showDropDownContainerMainListAction = (taskItemId) => {
     return {
         type: 'show_DropDownContainer_MainList_Action',
@@ -207,3 +213,25 @@ export  const HideTaskItemCreatorAction = (close) => {
     }
 }
 
+//------------------------子任务-----------------------------
+//创建一个子任务
+export const createASubTaskAction = (obj) => {
+    return {
+        type: 'create_A_SubTask_Action',
+        obj
+    }
+}
+//查询一个项目文件下的所有子任务
+export const findAllSubTasksInsideAfileAction = (arr) => {
+    return {
+        type:'find_All_SubTasks_Inside_A_file_Action',
+        arr
+    }
+}
+//删除一个任务列表下的子任务
+export const deleteSubTasksInATaskItemAction= (taskItemId) => {
+    return {
+        type:'delete_SubTasks_In_A_TaskItem_Action',
+        taskItemId
+    }
+}

@@ -6,7 +6,9 @@ import {
     ShowTaskItemCreatorAction , 
     HideTaskItemCreatorAction ,
     CreateATaskItemAction
-    }  from '@/actions/action';
+}  from '@/actions/action';
+
+import { withRouter } from 'react-router-dom';
 
 import { CreateANewTaskItemServer } from '@/server/requestData';
 
@@ -31,18 +33,22 @@ class TaskItemCreator extends Component {
     }
     ConfirmCreateATaskItem=()=>{
         let taskItemName = this.stageName.value;
-        let { dispatch , state:{taskItemInfo} } = this.props;
+        let { dispatch , state:{taskItemInfo} , location } = this.props;
         let arr = [];
         taskItemInfo.forEach(el => {
             arr.push(el.index)
         });
         let largestIndex = Math.max(...arr);
+        if(!arr[0]){
+            largestIndex=-1;
+        }
         let index = ++largestIndex;
-        let userLoginName = taskItemInfo[0].userLoginName;
-        let fileId =  taskItemInfo[0].fileId;
-        CreateANewTaskItemServer({taskItemName,userLoginName,fileId,index}).then(({data})=>{
+        let fileId =  Number(location.pathname.match(/\d+/g)[0]);
+        CreateANewTaskItemServer({taskItemName,fileId,index}).then(({data})=>{
             dispatch(CreateATaskItemAction(data.newTaskItemData))
         })
+        //新建项目列表框 隐藏
+        dispatch(HideTaskItemCreatorAction('close'))
     }
     render() { 
         let { fileId , getFileInfo } = this.props;
@@ -79,4 +85,4 @@ const mapStateToProps = state => {
         state
     }
 }
-export default connect(mapStateToProps,null)(TaskItemCreator);
+export default withRouter(connect(mapStateToProps,null)(TaskItemCreator));
