@@ -46,7 +46,7 @@ class FileCover extends Component {
         });
         return ( 
             <div  className="fileCover">
-                <div className="starFlies">
+                {starProjects[0] && <div className="starFlies">
                     <h2>
                         <span className="title">星标项目</span>
                     </h2>
@@ -57,7 +57,7 @@ class FileCover extends Component {
                         })
                     }
                     </ul>
-                </div>
+                </div>}
                 <div className="myOwnFlies">
                     <h2>
                         <span className="title">我拥有的项目</span>

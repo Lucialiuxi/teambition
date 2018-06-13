@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Icon } from 'antd';
 import classNames from 'classnames';
 
 // 没有被选中的任务
@@ -9,12 +8,8 @@ class SubTask extends Component {
         this.state = {  }
     }
     render() { 
-        // console.log(this.props)
         let {
             deadline,
-            fileId,
-            index,
-            subTaskId,
             subTaskName,
             tag,
             urgencyLevel

@@ -16,7 +16,7 @@ body{
     background-color: #fff;
     box-sizing: border-box;
     z-index: 1;
-    overflow-x: auto;
+    overflow-x: scroll;
     overflow-y: hidden;
 }
 #TasksWrap::-webkit-scrollbar-thumb{
@@ -62,9 +62,6 @@ body{
     margin: 16px 10px 16px 0;
 }
 #TasksWrap .task-creator-handler-wrap{
-    /* position: relative;
-    top: 0;
-    left: 0; */
     background-color: #eee;
     transition: box-shadow 218ms ease;
 }
@@ -484,7 +481,6 @@ body{
     background-color: #fff;
     z-index: 999;
     border-radius: 5px;
-    overflow: hidden;
     box-shadow: 0 2px 20px rgba(0,0,0,.1);
 }
 #dropdown-container header{
@@ -597,9 +593,7 @@ body{
     cursor: not-allowed;
     background-color: #ccc;
 }
-.choiceDeadline{
-    /* display: none; */
-}
+
 .choiceDeadline .ant-fullcalendar-header{
     padding: 10px 9px 11px 0;
 } 
@@ -643,39 +637,150 @@ body{
     margin: 0;
     padding: 16px;
     color: #383838;
-    /* display: none; */
 }
-.MoveOrCopySubTaskWrap li{
+.MoveOrCopySubTaskWrap li.MoveOrCopySubTaskList{
     padding-bottom: 33px;
     margin-bottom: 10px;
     height: 20px;
     border-bottom: 1px solid #e5e5e5;
+    position: relative;
 }
-.MoveOrCopySubTaskWrap li span{
+#ShowFileNameCoverIndropDownContainer{
+    position: absolute;
+    z-index: 1000;
+    width: 200px;
+    left: 30px;
+    top: 20px;
+    padding: 16px 0;
+    background: #fff;
+    border: 0 solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 2px 20px rgba(0,0,0,.1);
+    box-sizing: content-box;
+}
+#ShowFileNameCoverIndropDownContainer .searchFileNameInput{
+    height: 32px;
+    line-height: 20px;
+    margin-bottom: 7px;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    padding: 8px 6px;
+    color: #383838;
+    box-shadow: none;
+    box-sizing: border-box;
+}
+#ShowFileNameCoverIndropDownContainer .ShowFileNameWrap{
+    min-height: 0%;
+    max-height: 216px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-align: start;
+}
+#ShowFileNameCoverIndropDownContainer .ShowFileNameWrap::-webkit-scrollbar {
+    width: 2%;
+    color: #eee;
+    cursor: pointer;
+}
+#ShowFileNameCoverIndropDownContainer .no-star-File-wrap .title,
+#ShowFileNameCoverIndropDownContainer .star-File-wrap .title{
+    font-size: 12px;
+    color: #a6a6a6;
+    padding: 4px 16px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0;
+}
+#ShowFileNameCoverIndropDownContainer .ShowFileNameWrap .no-star-File,
+#ShowFileNameCoverIndropDownContainer .ShowFileNameWrap .all-star-Files{
+    line-height: 20px;
+    position: relative;
+    color: gray;
+}
+#ShowFileNameCoverIndropDownContainer .ShowFileNameWrap div{
+    padding: 6px 16px;
+}
+
+#ShowFileNameCoverIndropDownContainer .ShowFileNameWrap ul li:hover{
+    background-color: #f5f5f5;
+}
+#ShowFileNameCoverIndropDownContainer  .no-star-File i,
+#ShowFileNameCoverIndropDownContainer  .all-star-Files i{
+    font-size: 16px;
+    color: gray;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+.MoveOrCopySubTaskWrap li.MoveOrCopySubTaskList span{
     float: right;
 }
-.MoveOrCopySubTaskWrap li .MoveOrCopySubTaskTitle{
+.MoveOrCopySubTaskWrap li.MoveOrCopySubTaskList .MoveOrCopySubTaskTitle{
     float: left;
     font-size: 14px;
     font-weight: bolder;
 }
-.MoveOrCopySubTaskWrap li span i{
+.MoveOrCopySubTaskWrap li.MoveOrCopySubTaskList .selectFileTitleSpan,
+.MoveOrCopySubTaskWrap li.MoveOrCopySubTaskList .selectTaskItemTitleSpan{
+    cursor: pointer;
+}
+.MoveOrCopySubTaskWrap li.MoveOrCopySubTaskList span i{
     margin-left: 8px;
 }
-.MoveOrCopySubTaskWrap li span i,
-.MoveOrCopySubTaskWrap li span em{
+.MoveOrCopySubTaskWrap li.MoveOrCopySubTaskList span i,
+.MoveOrCopySubTaskWrap li.MoveOrCopySubTaskList span em{
     font-size: 14px;
     color: gray;
 }
-.MoveOrCopySubTaskWrap li span em{
+.MoveOrCopySubTaskWrap li.MoveOrCopySubTaskList span em{
     font-style: normal;
+}
+#CurrentTaskItemNameCoverWrap{
+    position: absolute;
+    left: 30px;
+    top: 20px;
+    background: #fff;
+    border: 0 solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 2px 20px rgba(0,0,0,.1);
+    width: 200px;
+    overflow: hidden;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    z-index: 1000;
+}
+#CurrentTaskItemNameCoverWrap li.CurrentTaskItemName:hover{
+    background-color: #f5f5f5;
+}
+#CurrentTaskItemNameCoverWrap li.CurrentTaskItemName{
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: #fff;
+    cursor: pointer;
+    padding: 8px 20px 8px 12px;
+    line-height: 20px;
+    vertical-align: middle;
+    font-size: 14px;
+    user-select: none;
+    box-sizing: border-box;
+    word-break: break-word;
+    color: gray;
+}
+#CurrentTaskItemNameCoverWrap li.CurrentTaskItemName i{
+    font-size: 16px;
+    color: gray;
+    position: absolute;
+    right: 5px;
+    top: 10px;
 }
 #dropdown-container .DeleteSubTaskOrDeleteTaskItemWrap{
     width: 252px;
     box-sizing: border-box;
     margin: 0;
     padding: 16px;
-    /* display: none; */
 }
 #dropdown-container .DeleteSubTaskOrDeleteTaskItemWrap div.tips{
     line-height: 20px;
@@ -891,3 +996,5 @@ body{
     font-size: 16px;
     margin: 5px 10px 0 0;
 }
+
+/*  */

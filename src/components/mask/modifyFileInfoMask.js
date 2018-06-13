@@ -110,9 +110,7 @@ class ModifyFileInfoMask extends Component {
         }
     }
     componentDidUpdate(){
-        console.log('componentDidUpdate')
         let goToModifyFileInfoModal = document.getElementsByClassName('goToModifyFileInfoModal')[0];
-        console.log(goToModifyFileInfoModal)
     }
     render() { 
         // console.log(this.props)

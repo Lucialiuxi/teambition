@@ -5,7 +5,7 @@ export  const ClearStateAction = () => {
     }
 }
 
-//新建项目
+//新建项目文件夹
 export  const CreateAFile = obj => {
     return {
         type: 'Create_A_File',
@@ -73,6 +73,13 @@ export  const deleteATaskItemAction = taskItemId => {
     return {
         type: 'delete_A_TaskItem_Action',
         taskItemId
+    }
+}
+//更改一个项目列表的名字 obj->{taskItemId,taskItemName}
+export const ModifyATaskItemNameAction = obj => {
+    return {
+        type:'MODIFY_A_TASKITEM_NAME_ACTION',
+        obj
     }
 }
 //进入文件的时候把当前的项目列表信息存进state中
@@ -176,6 +183,30 @@ export  const copyAllSubTasksInsideThisAction = (taskItemId) => {
         taskItemId
     }
 }
+
+/**移动OR复制任务 的【项目名显示框】   显示
+ * 
+ * @param {taskItemId:Number,isShowCurrentTaskItemName:Boolean}
+ */
+export  const ToSeeShowFileNameCoverAction = (obj) => {
+    console.log(obj)
+    return {
+        type: 'TO_SEE_SHOW_FILENAMECOVER',
+        obj
+    }
+}
+
+/**移动OR复制任务 的【列表名显示框】   显示
+ * 
+ * @param {taskItemId:Number,isShowCurrentTaskItemName:Boolean}
+ */
+export  const ToSeeShowCurrentTaskItemNameCoverAction = (obj) => {
+    return {
+        type: 'TO_SEE_SHOW_CURRENT_TASKITEMNAMECOVER',
+        obj
+    }
+}
+
 //清空本任务列表所有子任务 框显示
 export  const deleteAllSubTasksInsideThisAction = (taskItemId) => {
     return {

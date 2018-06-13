@@ -120,7 +120,7 @@
     height: 40px;
     padding: 0 48px;
     line-height: 40px;
-    cursor: default;
+    cursor: pointer;
 }
 .goToModifyFileInfo .ant-modal .ant-modal-content{
     height: 445px;
@@ -132,6 +132,7 @@
 .goToModifyFileInfo .ant-modal  .ant-modal-footer div button:disabled{
     background-color: #d9d9d9;
     border-color: #d9d9d9;
+    cursor: not-allowed;
 }
 .goToModifyFileInfo .ant-modal-content .ant-modal-title{
     text-align: center;

@@ -64,6 +64,7 @@ export const CreateTaskItemServer = (param) => {
 
 //新建一个任务列表param:{index:XXX,taskItemName:XXX}
 export const CreateANewTaskItemServer = (param) => {
+    console.log(param)
     return axios.post('/CreateANewTaskItem', {
         ...param,
         taskItemId:Math.ceil((Math.random()-.5)*10000000+ Date.now()),
@@ -99,4 +100,12 @@ export const GetAllSubTasksServer = (param) => {
 //删除一个任务列表下的所有任务
 export const DeleteAllSubTasksServer = (param) => {
     return axios.post('/DeleteAllSubTasks',param)
+}
+
+
+/**修改项目列表的名字
+ * param: {fileId:Number , taskItemId:Number , taskItemName:String}
+ */
+export const ModifyATaskItemNameServer = (param) =>{
+    return axios.post('/ModifyATaskItemName',param)
 }

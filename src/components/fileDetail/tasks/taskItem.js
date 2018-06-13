@@ -20,14 +20,6 @@ class TaskItem extends Component {
             allSubTasksData:[]
          }
     }
-    componentDidUpdate(){
-        //子任务编辑框获取焦点
-        // let SubTaskCreatorBox = document.getElementsByClassName('subTask-creator-wrap').item(0);
-        // if(SubTaskCreatorBox){
-        //     let SubTaskContent = SubTaskCreatorBox.getElementsByClassName('task-content-input form-control').item(0);
-        //     SubTaskContent.focus();
-        // } 
-    }
     toShowDropDownContainer=()=>{
         let { GoToShowDropDownContainer , taskItemInfo } = this.props;
         GoToShowDropDownContainer(taskItemInfo.taskItemId)
