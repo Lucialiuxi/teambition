@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { compose } from 'C:/Users/lhm14/AppData/Local/Microsoft/TypeScript/2.9/node_modules/redux';
 
 axios.defaults.baseURL = 'http://localhost:8080/';
 
@@ -77,35 +78,48 @@ export const deleteATaskItemServer = (param) => {
     return axios.post('/deleteATaskItem', param)
 }
 //---------------子任务-----------------------------------------------
-//查询一个项目文件下的任务列表 和任务列表下 子任务 --子任务还没有写
+//查询一个项目文件下的任务列表 
 export const GetTaskItemServer = (param) => {
     return axios.post('/GetTaskItem', param)
 }
 
-//删除一个项目问价下所有的任务列表  和 任务列表下的子任务
+//删除一个项目问价下所有的任务列表  和 任务列表下的子任务 ----在删除一个文件的时候
 export const DeleteAllTaskItemAndSubTaskInAFileServer = (param) => {
+    console.log(param)
     return axios.post('/DeleteAllTaskItemAndSubTaskInAFile', param)
 }
 
-//新建一个子任务
+
+/**新建一个子任务
+ * 
+ * @param {checked:false , deadline:String,id:Number,index:Number,subTaskName:String,tag:Array,urgencyLevel:String}
+ */
 export const CreateASubTaskServer = (param) => {
     return axios.post('/CreateASubTask',param)
 }
 
-//查询所有当前项目文件的任务列表的任务
+
+/**查询所有当前项目文件的任务列表的任务
+ * 
+ * @param {fileId: Number} param 
+ */
 export const GetAllSubTasksServer = (param) => {
     return axios.post('/GetAllSubTasks',param)
 }
 
 //删除一个任务列表下的所有任务
+/**
+ * 
+ * @param {fileId: Number, taskItemId: Number} param 
+ */
 export const DeleteAllSubTasksServer = (param) => {
     return axios.post('/DeleteAllSubTasks',param)
 }
 
 
-/**修改项目列表的名字
- * param: {fileId:Number , taskItemId:Number , taskItemName:String}
- */
+ /**修改项目列表的名字
+  *  @param {fileId:Number , taskItemId:Number , taskItemName:String} param 
+  */
 export const ModifyATaskItemNameServer = (param) =>{
     return axios.post('/ModifyATaskItemName',param)
 }

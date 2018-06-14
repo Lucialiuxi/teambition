@@ -669,6 +669,7 @@ body{
     color: #383838;
     box-shadow: none;
     box-sizing: border-box;
+    outline: none;
 }
 #ShowFileNameCoverIndropDownContainer .ShowFileNameWrap{
     min-height: 0%;
@@ -682,6 +683,7 @@ body{
     color: #eee;
     cursor: pointer;
 }
+
 #ShowFileNameCoverIndropDownContainer .no-star-File-wrap .title,
 #ShowFileNameCoverIndropDownContainer .star-File-wrap .title{
     font-size: 12px;
@@ -691,6 +693,7 @@ body{
     text-overflow: ellipsis;
     white-space: nowrap;
     margin: 0;
+    font-size: 14px;
 }
 #ShowFileNameCoverIndropDownContainer .ShowFileNameWrap .no-star-File,
 #ShowFileNameCoverIndropDownContainer .ShowFileNameWrap .all-star-Files{
@@ -768,6 +771,7 @@ body{
     box-sizing: border-box;
     word-break: break-word;
     color: gray;
+    text-align: start;
 }
 #CurrentTaskItemNameCoverWrap li.CurrentTaskItemName i{
     font-size: 16px;

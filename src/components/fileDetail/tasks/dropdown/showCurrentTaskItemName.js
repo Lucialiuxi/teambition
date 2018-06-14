@@ -9,21 +9,16 @@ class ShowCurrentTaskItemNameCover extends Component {
         this.state = {  }
     }
     render() { 
-        let { state:{taskItemInfo} , fileId:id } = this.props;
+        let { state:{taskItemInfo} , fileId:id , taskItemId} = this.props;
+        let taskItemUnderUpper = taskItemInfo.filter(val=>val.fileId===id);
         return ( 
             <ul id="CurrentTaskItemNameCoverWrap">
-                <li className="CurrentTaskItemName"> 
-                    222222222222222222222222
-                    <Icon type="check"  className="selectTaskItemNameICon"/>
-                </li>
-                <li className="CurrentTaskItemName"> 
-                    222222222222222222222222
-                    <Icon type="check"  className="selectTaskItemNameICon"/>
-                </li>
-                <li className="CurrentTaskItemName"> 
-                    222222222222222222222222
-                    <Icon type="check"  className="selectTaskItemNameICon"/>
-                </li>
+                { taskItemUnderUpper.map(val=>{
+                   return  <li key={val.taskItemId} className="CurrentTaskItemName"> 
+                                {val.taskItemName}
+                                {val.taskItemId===taskItemId ? <Icon type="check"  className="selectTaskItemNameICon"/> : null}
+                            </li>
+                })}
             </ul>
          )
     }

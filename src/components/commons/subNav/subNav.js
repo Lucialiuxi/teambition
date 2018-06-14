@@ -87,7 +87,7 @@ class SubNav extends Component {
                     <Icon type="right" />
                     <span>
                         {currentFile?currentFile.FileName:''}
-                        <Icon type="down" style={{ fontSize: 12}} />
+                        <Icon type="down" style={{ fontSize: 12}} className="down"/>
                     </span>   
                     <Icon type="star" className={currentFile&&currentFile.star ? 'starActive' : ''}/>
                 </div>

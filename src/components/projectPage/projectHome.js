@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import './project.css';
 import cookie from 'react-cookies';
 import {
@@ -41,14 +42,14 @@ class Project  extends Component {
         }
     }
     componentWillMount(){
-        let { dispatch , history , location } = this.props;
+        let { ClearStateAction , AllFileInfoArr , history , location } = this.props;
         if(location.pathname==='/projects'){//如果是大图标文件页面，就清空当前文件id和所在的项目文件区
             this.setState({
                 currentFileId:'',
                 activeBar:''
             })
         //每次登录的时候先清空state里面的大图标文件数据
-        dispatch(allActions.ClearStateAction());
+        ClearStateAction()
         }else{
             let {t} = this.props.match.params;
             if( t === 'tasks'){
@@ -80,7 +81,7 @@ class Project  extends Component {
         //请求项目文件信息数据
         getAllFilesInfo({userLoginName:user}).then(({data})=>{
             if(data.AllFilesInfoData.length>0){
-                dispatch(allActions.AllFileInfoArr(data.AllFilesInfoData))
+                AllFileInfoArr(data.AllFilesInfoData)
             }
         })
     }
@@ -163,11 +164,14 @@ class Project  extends Component {
         )
     }
 }
-//要修改的数据
+
 const mapStateToProps = state => {
     return  {
         state
     }
 }
  
-export default withRouter(connect(mapStateToProps,null)(Project));
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators(allActions,dispatch)
+}
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Project));

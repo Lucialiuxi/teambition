@@ -18,7 +18,6 @@ import { MoveFileToRecycleBinServer } from '@/server/requestData'
           okText:'移动到回收站',
           maskClosable:true,
           onOk:()=>{
-            console.log(this.props)
             MoveFileToRecycleBinServer({...this.props,inRecycleBin:true}).then(({data})=>{
               this.props.dispatch(MoveFileToRecycleBin(data.afterModifyData))
 

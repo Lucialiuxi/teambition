@@ -109,9 +109,6 @@ class ModifyFileInfoMask extends Component {
             this.save.removeAttribute('disabled')
         }
     }
-    componentDidUpdate(){
-        let goToModifyFileInfoModal = document.getElementsByClassName('goToModifyFileInfoModal')[0];
-    }
     render() { 
         // console.log(this.props)
         let { FileName , FileAbstract } = this.state;

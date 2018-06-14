@@ -16,6 +16,7 @@ class FileItemInRecyCleBin extends Component {
         this.state = {  }
     }
     showConfirm=()=>{
+        let { dispatch } = this.props;
         confirm({
             title: '恢复项目',
             content: '恢复项目后，您就可以正常使用该项目了',
@@ -23,12 +24,13 @@ class FileItemInRecyCleBin extends Component {
             maskClosable:true,
             onOk:()=>{
                 MoveFileToRecycleBinServer({...this.props,inRecycleBin:false}).then(({data})=>{
-                    this.props.dispatch(MoveFileToRecycleBin(data.afterModifyData))                    
+                    dispatch(MoveFileToRecycleBin(data.afterModifyData))                    
                 })
             }
         });
     }
     showDeleteConfirm=()=>{
+        let { dispatch , state:{taskItemInfo,subTaskInfo}} = this.props;
         confirm({
           title: '删除项目',
           content: '一旦你删除了项目「333」，所有与项目有关的信息将会被永久删除。这是一个不可恢复的操作，请谨慎对待！',
@@ -39,7 +41,7 @@ class FileItemInRecyCleBin extends Component {
           maskClosable:true,
           onOk:()=>{
             DeleteAFlieServer(this.props).then(({data})=>{
-                this.props.dispatch(DeleteAFlieAction(data.deletedFileInfo))
+                dispatch(DeleteAFlieAction(data.deletedFileInfo))
             })
 
           }
@@ -68,5 +70,9 @@ class FileItemInRecyCleBin extends Component {
          )
     }
 }
- 
-export default connect()(FileItemInRecyCleBin);
+const mapStateToProps = state => {
+    return {
+        state
+    }
+}
+export default connect(mapStateToProps,null)(FileItemInRecyCleBin);

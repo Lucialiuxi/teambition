@@ -143,13 +143,19 @@ const taskItemInfo = (state = [], action) =>{
 
         //移动OR复制任务 的【项目名显示框】   显示
         case 'TO_SEE_SHOW_FILENAMECOVER':
-        console.log('qqqqqqqq')
           return state.map((val)=>{
               if(action.obj.taskItemId===val.taskItemId){
                 val.isShowFileName= action.obj.isShowFileName
               }
               return val;
           })
+
+         //移动OR复制任务 的【项目名显示框】   隐藏
+         case 'TO_HIDE_SHOW_FILENAMECOVER':
+            if(action.close==='close'){
+              state.forEach((val)=>val.isShowFileName= false)
+            }
+            return state;
 
         //移动OR复制任务 的【列表名显示框】   显示
         case 'TO_SEE_SHOW_CURRENT_TASKITEMNAMECOVER':
@@ -159,7 +165,15 @@ const taskItemInfo = (state = [], action) =>{
               }
               return val;
           })
-          
+         
+        //移动OR复制任务 的【列表名显示框】   隐藏
+        case 'TO_HIDE_SHOW_CURRENT_TASKITEMNAMECOVER':
+            if(action.close==='close'){
+              state.forEach((val)=>val.isShowCurrentTaskItemName= false)
+            }
+            return state;
+
+
         //清空本任务列表所有子任务 显示
         case 'delete_All_SubTasks_Inside_This_Action':
           return state.map((val)=>{

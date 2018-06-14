@@ -189,10 +189,20 @@ export  const copyAllSubTasksInsideThisAction = (taskItemId) => {
  * @param {taskItemId:Number,isShowCurrentTaskItemName:Boolean}
  */
 export  const ToSeeShowFileNameCoverAction = (obj) => {
-    console.log(obj)
     return {
         type: 'TO_SEE_SHOW_FILENAMECOVER',
         obj
+    }
+}
+
+/**移动OR复制任务 的【项目名显示框】   隐藏
+ * 
+ * @param 'close'
+ */
+export  const ToHideShowFileNameCoverAction = (close) => {
+    return {
+        type: 'TO_HIDE_SHOW_FILENAMECOVER',
+        close
     }
 }
 
@@ -204,6 +214,17 @@ export  const ToSeeShowCurrentTaskItemNameCoverAction = (obj) => {
     return {
         type: 'TO_SEE_SHOW_CURRENT_TASKITEMNAMECOVER',
         obj
+    }
+}
+
+/**移动OR复制任务 的【列表名显示框】   隐藏
+ * 
+ * @param 'close'
+ */
+export  const ToHideShowCurrentTaskItemNameCoverAction = (close) => {
+    return {
+        type: 'TO_HIDE_SHOW_CURRENT_TASKITEMNAMECOVER',
+        close
     }
 }
 

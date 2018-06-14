@@ -289,7 +289,9 @@ ul{
     cursor: pointer;
 }
 
-
+#subNavLeftTool .down{
+    margin-left: 5px;
+}
 #fileInsideWrap .ant-tabs-nav-container .ant-tabs-tab{
     color: #383838;
     font-size: 15px;

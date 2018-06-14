@@ -11,7 +11,9 @@ import {
     TaskItemCalenderIsShowAction,
     HideAllTaskItemCalenderAction,
     HideChoiceUrgencyLevelAction,
-    HideTaskItemCreatorAction
+    HideTaskItemCreatorAction,
+    ToHideShowFileNameCoverAction,
+    ToHideShowCurrentTaskItemNameCoverAction
 }  from '@/actions/action';
 
 import CanlenderMode from './calenderMode';
@@ -61,7 +63,8 @@ class Tasks extends Component {
              * 点击最外层/用户名/创建标签外层div 都没有反应
              */
             //日历所有标签
-            let CanlenderCondition = (target.classList.contains('CommonCanlender')||
+            let CanlenderCondition = (
+                target.classList.contains('CommonCanlender')||
                 target.classList.contains('ant-alert')||
                 target.classList.contains('ant-alert-message') ||
                 target.classList.contains('ant-alert-description') ||
@@ -104,7 +107,8 @@ class Tasks extends Component {
                 target.classList.contains('ant-fullcalendar-column-header-inner') )
 
             //紧急选择框
-            let urgencyBox = (target.classList.contains('ant-fullcalendar-content') ||
+            let urgencyBox = (
+                target.classList.contains('ant-fullcalendar-content') ||
                 target.getAttribute('id')==='taskUrgency' ||
                 target.classList.contains('taskUrgencyLi') ||
                 target.classList.contains('normalBtn') ||
@@ -118,7 +122,8 @@ class Tasks extends Component {
                 target.classList.contains('showUrgencyLevel') )
 
             //设置子任务的标签
-            let aboutTags = (target.classList.contains('editableTagGroupWrap') || 
+            let aboutTags = (
+                target.classList.contains('editableTagGroupWrap') || 
                 target.classList.contains('goToAddTagIcon') || 
                 target.classList.contains('ant-tag') ||
                 target.classList.contains('setTagBox') ||
@@ -127,8 +132,30 @@ class Tasks extends Component {
                 target.classList.contains('anticon-cross') ||
                 target.classList.contains('setSubTaskTagInput'))
 
-            
-            let aboutDropDownMenu = (target.classList.contains('DeleteSubTaskOrDeleteTaskItemWrap') || 
+            //关于下拉列表菜单里面的移动或者复制项目的选择 项目名cover框
+            let aboutChooseFileNameCover = (
+                target.getAttribute('id')==='ShowFileNameCoverIndropDownContainer' ||
+                target.classList.contains('searchFileNameInput') ||
+                target.classList.contains('ShowFileNameWrap') ||
+                target.classList.contains('no-star-File-wrap') ||
+                target.classList.contains('all-no-star-Files') ||
+                target.classList.contains('star-File-wrap') ||
+                target.classList.contains('all-star-Files') ||
+                target.classList.contains('star-File') ||
+                target.classList.contains('checkFileNameIcon') ||
+                target.classList.contains('no-star-File') ||
+                target.classList.contains('divWrap') ||
+                target.classList.contains('title'))
+
+            //关于下拉列表菜单里面的移动或者复制项目的选择 列表名cover框 列表名
+            let aboutChooseTaskItemNameCover = (
+                target.getAttribute('id')==='CurrentTaskItemNameCoverWrap' ||
+                target.classList.contains('CurrentTaskItemName') ||
+                target.classList.contains('selectTaskItemNameICon') )
+
+            //关于下拉列表菜单
+            let aboutDropDownMenu = (
+                    target.classList.contains('DeleteSubTaskOrDeleteTaskItemWrap') || 
                     target.classList.contains('tips') || 
                     target.classList.contains('confirmToDeleteSubTaskOrDeleteTaskItem') ||
                     target.classList.contains('MoveOrCopySubTaskWrap') ||
@@ -152,20 +179,21 @@ class Tasks extends Component {
                     target.classList.contains('anticon-plus')  ||
                     target.classList.contains('anticon-copy') ||
                     target.classList.contains('anticon-delete') ||
-                    target.classList.contains('anticon-down-circle-o')||
-                    target.classList.contains('MOrAddListTaskItem')||
-                    target.classList.contains('createATaskItemText')||
-                    target.classList.contains('MTaskItemInput')||
-                    target.classList.contains('createATaskItemBtn')||
-                    target.classList.contains('saveModifyInputValueBtn')||
-                    target.classList.contains('createATaskItemBtn'))
-
-
+                    target.classList.contains('anticon-down-circle-o') ||
+                    target.classList.contains('MOrAddListTaskItem') ||
+                    target.classList.contains('createATaskItemText') ||
+                    target.classList.contains('MTaskItemInput') ||
+                    target.classList.contains('createATaskItemBtn') ||
+                    target.classList.contains('saveModifyInputValueBtn') ||
+                    aboutChooseFileNameCover ||
+                    aboutChooseTaskItemNameCover)
+            
+//-------------------------------控制新建任务框的各种cover框----------------------------------
             if(target.classList.contains('task-creator-handler-wrap') ||
                 target.classList.contains('task-creator-handler') ||
                 target.classList.contains('AddSubTaskIcon')
             ){
-                // console.log('点击弹出新建框')
+                // 点击弹出新建框
                 if(this._isMounted){
                     this.setState({
                         deadlineData:{
@@ -188,18 +216,17 @@ class Tasks extends Component {
                 // 紧急选择框
                 urgencyBox
             ){
-                // console.log('不作用')
                 if(!CanlenderCondition){//关闭日历
                     dispatch(HideAllTaskItemCalenderAction('close'));
                 }
                 if(!(target.classList.contains('showUrgencyLevel') ||
                 target.classList.contains('normal') ||
                 target.classList.contains('urgency') ||
-                target.classList.contains('emtremeUrgency'))){//关闭任务紧急情况选择框
+                target.classList.contains('emtremeUrgency'))){
+                    //关闭任务紧急情况选择框
                     dispatch(HideChoiceUrgencyLevelAction('close'));
                 }
-            }else if(target.classList.contains('task-content-input')){
-                // console.log('输入任务内容')
+            }else if(target.classList.contains('task-content-input')){//输入任务内容
                 //关闭日历
                 dispatch(HideAllTaskItemCalenderAction('close'));
             }else if(target.classList.contains('date-wrap') ||
@@ -214,12 +241,10 @@ class Tasks extends Component {
                 // console.log('关闭设置紧急程度')
                 dispatch(HideChoiceUrgencyLevelAction('close'));
             }else if(aboutTags){//设置标签
-                // console.log('设置标签')
                 ////关闭任务紧急情况选择框
                 dispatch(HideChoiceUrgencyLevelAction('close'));
             }else if(target.classList.contains('confirmCreacteBtn')){
                 //创建子任务
-                // console.log('创建子任务')
             }else{
                     dispatch(HideChoiceUrgencyLevelAction('close'));
                 // 关闭 新建子任务框
@@ -233,27 +258,45 @@ class Tasks extends Component {
                 }
             }
 //----------------------------控制下拉菜单--------------------------------------------
-            if(aboutDropDownMenu){
-                // console.log('下拉菜单')
-            }else{//隐藏下拉菜单
+            if(!aboutDropDownMenu){
+                //隐藏下拉菜单
                 dispatch(HideTaskItemDropDownContainerAction('close'));
+            }else{
+                //下拉列表菜单里面的移动或者复制项目的选择 项目名cover框 隐藏
+                if(!aboutChooseFileNameCover &&
+                    !(target.classList.contains('selectFileTitleSpan') ||
+                    target.classList.contains('FileTitleEm') ||
+                    target.classList.contains('selectFileDownICon'))
+                ){
+                    dispatch(ToHideShowFileNameCoverAction('close'))
+                }
+                //下拉列表菜单里面的移动或者复制项目的选择 列表名cover框 隐藏
+                if(!aboutChooseTaskItemNameCover &&
+                    !(target.classList.contains('selectTaskItemTitleSpan') ||
+                    target.classList.contains('TaskItemTitleEm') ||
+                    target.classList.contains('selectTaskItemDownICon'))
+                ){
+                    dispatch(ToHideShowCurrentTaskItemNameCoverAction('close'))
+                }
             }
 //----------------------------控制新建任务列表框--------------------------------------------
             let aboutCreateTaskItem = (target.classList.contains('createWrap') ||
-            !(target.classList.contains('createTaskItem') ||
-            target.classList.contains('taskItemCreateIcon') ||
-            target.classList.contains('taskItemCreateIconWrap') ||
-            target.classList.contains('creator-form-wrap') ||
-            target.classList.contains('stage-name') ||
-            target.classList.contains('taskItemCreateIconWrap') ||
-            target.classList.contains('taskItemCreator-btns') ||
-            target.classList.contains('submit') ||
-            target.classList.contains('cancel')))
+                !(target.classList.contains('createTaskItem') ||
+                target.classList.contains('taskItemCreateIcon') ||
+                target.classList.contains('taskItemCreateIconWrap') ||
+                target.classList.contains('creator-form-wrap') ||
+                target.classList.contains('stage-name') ||
+                target.classList.contains('taskItemCreateIconWrap') ||
+                target.classList.contains('taskItemCreator-btns') ||
+                target.classList.contains('submit') ||
+                target.classList.contains('cancel')))
 
             if(aboutCreateTaskItem ){
                 //新建项目列表框 隐藏
                 dispatch(HideTaskItemCreatorAction('close'))
             }
+//----------------------控制复制或者移动任务 的选择项目 列表 的cover框-----------------------------
+
         } 
     }
     GoToCreateSubTask=(id)=>{// 显示 新建子任务框
