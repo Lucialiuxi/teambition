@@ -333,11 +333,12 @@ class Tasks extends Component {
     render() { 
         let { deadlineData } = this.state;
         let { state:{ taskItemInfo , getFileInfo , subTaskInfo } , location:{pathname} } = this.props;
+        let fileId = pathname.match(/\d+/g)[0];
+        taskItemInfo = taskItemInfo.filter(val=>val.fileId == fileId)
         //把项目文件数据按照待处理/已完成/进行中 排序
         taskItemInfo.sort(function(a,b){
             return a.index-b.index
         })
-        let fileId = pathname.match(/\d+/g)[0];
         let t;
         if(getFileInfo.length>0){
              t = <TaskItemCreator fileId={fileId} getFileInfo={getFileInfo}/>

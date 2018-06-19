@@ -2,19 +2,31 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
 import { connect } from 'react-redux';
-
 class ShowCurrentTaskItemNameCover extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
     }
+    choiceDeterminationTaskItem = (e) => {
+        let { changeTaskItemDestination } = this.props;
+        let t = e.target;
+        let TIid,TIName;
+        if(t.nodeName==="I"){
+            t = e.target.parentNode.parentNode;
+        }
+        if(t.nodeName==='LI'){
+            TIid = Number(t.dataset.id);
+            TIName = t.innerText.trim();
+        }
+        changeTaskItemDestination(TIid,TIName)
+    }
     render() { 
         let { state:{taskItemInfo} , fileId:id , taskItemId} = this.props;
         let taskItemUnderUpper = taskItemInfo.filter(val=>val.fileId===id);
         return ( 
-            <ul id="CurrentTaskItemNameCoverWrap">
+            <ul id="CurrentTaskItemNameCoverWrap" onClick={this.choiceDeterminationTaskItem}>
                 { taskItemUnderUpper.map(val=>{
-                   return  <li key={val.taskItemId} className="CurrentTaskItemName"> 
+                   return  <li key={val.taskItemId} className="CurrentTaskItemName" data-id={val.taskItemId}> 
                                 {val.taskItemName}
                                 {val.taskItemId===taskItemId ? <Icon type="check"  className="selectTaskItemNameICon"/> : null}
                             </li>

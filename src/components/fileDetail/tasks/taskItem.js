@@ -6,7 +6,7 @@ import DropDown from './dropdown/dropdown';
 //没有被选中的子任务
 import SubTask from './subTasks';
 //被选中的子任务
-// import CheckedSubTasks from './checkedSubTasks';
+import CheckedSubTasks from './checkedSubTasks';
 // 新建子任务编辑框 
 import SubTaskCreator from './subTaskCreator';
 //【添加任务的显示】 点击去 显示新建子任务编辑框
@@ -39,6 +39,7 @@ class TaskItem extends Component {
         let { hasTaskList , allSubTasksData } = this.state;
         let SubTasksUnderCurrentTaskItem = allSubTasksData.filter(val=>val.taskItemId===taskItemInfo.taskItemId);
         let allSubTasks = SubTasksUnderCurrentTaskItem.filter(val=>val.checked===false);
+        let allCheckedSubtasks =  SubTasksUnderCurrentTaskItem.filter(val=>val.checked===true);
         return ( 
             <div className="underTaskItemDiv">
                 {/* 下拉编辑框 */}
@@ -61,8 +62,7 @@ class TaskItem extends Component {
                     { allSubTasks.map(val=><SubTask key={val.subTaskId} {...val}/>) }
 
                     {/* 被选中的子任务 */}
-                    {/* <CheckedSubTasks/> */}
-
+                   { allCheckedSubtasks.map(val=><CheckedSubTasks key={val.subTaskId} {...val}/>) }
                     {/* 新建子任务编辑框 */}
                     {taskItemInfo.IsCreating ? <SubTaskCreator 
                         deadline={deadline ? deadline : null}

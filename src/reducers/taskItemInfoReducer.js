@@ -202,6 +202,20 @@ const taskItemInfo = (state = [], action) =>{
               return val;
           }) 
   
+        //把查询到的任务列表的数据存到state中
+        case 'SAVE_FOUND_TASKITEMS_ACTION':
+          let Fid = action.arr[0].fileId;
+          let bl = state.some(el=>el.fileId===Fid);
+          if(!bl){
+            let newArr = action.arr.map(val=>{
+              val.isShowTaskItemCreator = false;
+              return val;
+            })
+            return state.concat(newArr)
+          }else{
+            return state
+          }
+
     default:
           return state
     }

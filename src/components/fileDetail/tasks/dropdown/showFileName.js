@@ -18,7 +18,7 @@ class ShowFileNameCover extends Component {
             t = e.target.parentNode.parentNode;
         }
         if(t.nodeName==='LI'){
-            FIid = t.dataset.id;
+            FIid = Number(t.dataset.id);
             FName = t.innerText.trim();
         }
         changeFileDestination(FIid,FName)
@@ -28,13 +28,13 @@ class ShowFileNameCover extends Component {
         let starFile = getFileInfo.filter(val=>val.star===true)
         let nostarFile = getFileInfo.filter(val=>val.star===false)
         let allNoStarFiles = starFile.map(val=>{
-                    return <li key={val.fileId}  className="no-star-File" data-id={val.fileId}>
-                                <div className="divWrap">
-                                    {val.FileName}
-                                    {id===val.fileId ? <Icon type="check"  className="checkFileNameIcon"/> : null}
-                                </div>
-                            </li>
-                })
+                return <li key={val.fileId}  className="no-star-File" data-id={val.fileId}>
+                            <div className="divWrap">
+                                {val.FileName}
+                                {id===val.fileId ? <Icon type="check"  className="checkFileNameIcon"/> : null}
+                            </div>
+                        </li>
+            })
         return ( 
             <div id="ShowFileNameCoverIndropDownContainer">
                  <input type="text" className="searchFileNameInput" placeholder="查找项目"/>

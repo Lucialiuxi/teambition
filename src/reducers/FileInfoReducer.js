@@ -15,7 +15,6 @@ const getFileInfo = (state = [], action) => {
           return val;
         })
 
- 
       //修改大图标文件信息
       case 'Modify_file_Info':
         return state.map(item=>{

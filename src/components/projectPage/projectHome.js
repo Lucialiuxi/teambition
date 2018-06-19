@@ -116,12 +116,14 @@ class Project  extends Component {
     resizeDetailPage=()=>{//在项目文件详情页，自适应变化高度
         let fileDetailAreaWrap = document.getElementById('ct');
         let subNavWrap = document.getElementById('subNavWrap');
-        let cth=fileDetailAreaWrap.parentNode.offsetHeight
-        fileDetailAreaWrap.style.height = cth + 'px';
-        if(subNavWrap){
-            let H1 = subNavWrap.lastElementChild.offsetHeight;
-            let H2 = subNavWrap.lastElementChild.firstElementChild.offsetHeight;
-            subNavWrap.lastElementChild.lastElementChild.style.height = H1 - H2 + 'px';
+        if(fileDetailAreaWrap){
+            let cth=fileDetailAreaWrap.parentNode.offsetHeight
+            fileDetailAreaWrap.style.height = cth + 'px';
+            if(subNavWrap){
+                let H1 = subNavWrap.lastElementChild.offsetHeight;
+                let H2 = subNavWrap.lastElementChild.firstElementChild.offsetHeight;
+                subNavWrap.lastElementChild.lastElementChild.style.height = H1 - H2 + 'px';
+            }
         }
     }
     render() {

@@ -92,14 +92,14 @@ export  const TaskItemsInCurrentFileAction = arr => {
 
 
 //---------------------------各种显示框-----------------------------------
- //控制【子任务编辑框】  的显示隐藏 被点击的那个【添加任务】才显示
+ //控制【任务编辑框】  的显示隐藏 被点击的那个【添加任务】才显示
 export  const SubTaskCreatorIsShowAction = taskItemId => {
     return {
         type: 'SubTask_Creator_Is_Show_Action',
         taskItemId
     }
 }
-//隐藏所有的新建任务列表的【子任务编辑框】
+//隐藏所有的新建任务列表的【任务编辑框】
 export  const HideAllSubTaskCreatorsAction = (close) => {
     return {
         type: 'Hide_All_SubTaskCreators_Action',
@@ -108,7 +108,7 @@ export  const HideAllSubTaskCreatorsAction = (close) => {
 }
 
 
-//控制 【子任务编辑框的日历】 显示
+//控制 【任务编辑框的日历】 显示
 export  const TaskItemCalenderIsShowAction = taskItemId => {
     return {
         type: 'TaskItem_Calender_IsShow_Action',
@@ -116,7 +116,7 @@ export  const TaskItemCalenderIsShowAction = taskItemId => {
     }
 }
 
-//所有的【子任务编辑框的日历】 隐藏
+//所有的【任务编辑框的日历】 隐藏
 export  const HideAllTaskItemCalenderAction = (close) => {
     return {
         type: 'Hide_All_TaskItem_Calender_Action',
@@ -169,14 +169,14 @@ export  const addATaskItemAfterThisAction = (taskItemId) => {
         taskItemId
     }
 }
-//移动本任务列表所有子任务 框显示
+//移动本任务列表所有任务 框显示
 export  const moveAllSubTasksFromThisToOtherAction = (taskItemId) => {
     return {
         type: 'move_All_SubTasks_From_This_To_Other_Action',
         taskItemId
     }
 }
-//复制本任务列表所有子任务 框显示
+//复制本任务列表所有任务 框显示
 export  const copyAllSubTasksInsideThisAction = (taskItemId) => {
     return {
         type: 'copy_All_SubTasks_Inside_This_Action',
@@ -228,7 +228,25 @@ export  const ToHideShowCurrentTaskItemNameCoverAction = (close) => {
     }
 }
 
-//清空本任务列表所有子任务 框显示
+/**移动任务
+ * @param {fileId:Number,taskItemId:Number,currentTaskItemId:Number}
+ */
+export const MoveSubTasksToAnotherTaskItemAction = (arr) => {
+    return {
+        type: 'MOVE_SUBTASKS_TO_ANOTHER_TASKITEM_ACTION',
+        arr
+    }
+}
+
+//复制任务 [{},{}] 数组的每个对象都是完整的一个任务数据 
+export const CopySubTasksForAnotherTaskItemAction = arr => {
+    return {
+        type: 'COPY_SUBTASKS_FOR_ANOTHER_TASKITEM_ACTION',
+        arr
+    }
+}
+
+//清空本任务列表所有任务 框显示
 export  const deleteAllSubTasksInsideThisAction = (taskItemId) => {
     return {
         type: 'delete_All_SubTasks_Inside_This_Action',
@@ -265,25 +283,41 @@ export  const HideTaskItemCreatorAction = (close) => {
     }
 }
 
-//------------------------子任务-----------------------------
-//创建一个子任务
+//------------------------任务-----------------------------
+//创建一个任务
 export const createASubTaskAction = (obj) => {
     return {
         type: 'create_A_SubTask_Action',
         obj
     }
 }
-//查询一个项目文件下的所有子任务
+//查询一个项目文件下的所有任务
 export const findAllSubTasksInsideAfileAction = (arr) => {
     return {
         type:'find_All_SubTasks_Inside_A_file_Action',
         arr
     }
 }
-//删除一个任务列表下的子任务
-export const deleteSubTasksInATaskItemAction= (taskItemId) => {
+//删除一个任务列表下的任务
+export const deleteSubTasksInATaskItemAction = (taskItemId) => {
     return {
         type:'delete_SubTasks_In_A_TaskItem_Action',
         taskItemId
+    }
+}
+
+//查询一个项目列表下的任务列表
+export const SaveFoundTaskItemsAction = (arr) => {
+    return {
+        type:'SAVE_FOUND_TASKITEMS_ACTION',
+        arr
+    }
+}
+
+//切换任务的选中状态 { subTaskId:Number , checked:Boolean }
+export const SwitchToCheckSubtaskAction = (obj) => {
+    return {
+        type:'SWITCH_TO_CHECK_SUBTASK_ACTIOIN',
+        obj
     }
 }

@@ -30,7 +30,7 @@ class FileItemInRecyCleBin extends Component {
         });
     }
     showDeleteConfirm=()=>{
-        let { dispatch , state:{taskItemInfo,subTaskInfo}} = this.props;
+        let { dispatch } = this.props;
         confirm({
           title: '删除项目',
           content: '一旦你删除了项目「333」，所有与项目有关的信息将会被永久删除。这是一个不可恢复的操作，请谨慎对待！',

@@ -13,6 +13,33 @@ const subTaskInfo = (state = [] , action) => {
         state = state.filter(val=>val.taskItemId!==action.taskItemId)
         return state  
   
+      //移动任务
+      case 'MOVE_SUBTASKS_TO_ANOTHER_TASKITEM_ACTION':
+        let { currentTaskItemId , fileId , taskItemId } = action.arr;
+        return state.map(val=>{
+            if(val.taskItemId===currentTaskItemId){
+                val.taskItemId = taskItemId;
+                val.fileId = fileId;
+            }
+            return val;
+        })
+      //复制任务 [{},{}] 数组的每个对象都是完整的一个任务数据 
+      case 'COPY_SUBTASKS_FOR_ANOTHER_TASKITEM_ACTION':
+        let arr = [...state].concat(action.arr);
+        state = [...arr]
+        return state;
+
+      //切换任务的选中状态
+      case 'SWITCH_TO_CHECK_SUBTASK_ACTIOIN':
+        return state.map(val => {
+          if(val.subTaskId === action.obj.subTaskId){
+            // console.log(val)
+            val.checked = action.obj.checked;
+            // console.log(val)
+          }
+          return val
+        })
+
     default:
       return state;
     }

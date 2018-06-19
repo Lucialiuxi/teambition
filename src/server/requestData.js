@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { compose } from 'C:/Users/lhm14/AppData/Local/Microsoft/TypeScript/2.9/node_modules/redux';
 
 axios.defaults.baseURL = 'http://localhost:8080/';
 
@@ -63,9 +62,8 @@ export const CreateTaskItemServer = (param) => {
     return axios.post('/CreateTaskItem', {param,arr})
 }
 
-//新建一个任务列表param:{index:XXX,taskItemName:XXX}
+//新建一个任务列表param:{index:XXX,taskItemName:XXX,fileId:Number}
 export const CreateANewTaskItemServer = (param) => {
-    console.log(param)
     return axios.post('/CreateANewTaskItem', {
         ...param,
         taskItemId:Math.ceil((Math.random()-.5)*10000000+ Date.now()),
@@ -122,4 +120,17 @@ export const DeleteAllSubTasksServer = (param) => {
   */
 export const ModifyATaskItemNameServer = (param) =>{
     return axios.post('/ModifyATaskItemName',param)
+}
+
+/**复制 or 移动 一个任务列表的所有任务到另一个列表 MoveOrCopy:'move'/'copy'
+ * @param {fileId:Number , taskItemId:Number , MoveOrCopy:String ,currentTaskItemId:Number } param 
+ */
+export const MoveOrCopySubtaskToAnotherTaskItemServer = (param) => {
+    return axios.post('/MoveOrCopySubtaskToAnotherTaskItem',param)
+}
+/**选中一个任务
+ * @param { taskItemId:Number ,subTaskId:Number , checked:Boolean } param 
+ */
+export const SwitchToCheckSubtaskServer = (param) => {
+    return axios.post('/SwitchToCheckSubtask',param)
 }

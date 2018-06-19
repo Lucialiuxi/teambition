@@ -31,7 +31,7 @@ class TaskItemCreator extends Component {
         let { dispatch } = this.props;
         dispatch(HideTaskItemCreatorAction('close'))
     }
-    ConfirmCreateATaskItem=()=>{
+    ConfirmCreateATaskItem=()=>{//点击新建按钮
         let taskItemName = this.stageName.value;
         let { dispatch , state:{taskItemInfo} , location } = this.props;
         let arr = [];
@@ -39,10 +39,11 @@ class TaskItemCreator extends Component {
             arr.push(el.index)
         });
         let largestIndex = Math.max(...arr);
-        if(!arr[0]){
+        if((!arr[0]) && (arr[0]!==0)){
             largestIndex=-1;
         }
         let index = ++largestIndex;
+        
         let fileId =  Number(location.pathname.match(/\d+/g)[0]);
         CreateANewTaskItemServer({taskItemName,fileId,index}).then(({data})=>{
             dispatch(CreateATaskItemAction(data.newTaskItemData))
