@@ -53,7 +53,11 @@ class SubNav extends Component {
         tabBar(t,activeKey,this.state.fId);
     }
     componentWillMount(){
-        let { location , dispatch } = this.props;
+        let { location , match:{path} , dispatch } = this.props;
+        //确定刷新的时候的TabPane固定在哪一个
+        this.setState({
+            activeKey:path.charAt(path.length-1)
+        })
         let CurrentFileId = location.pathname.match(/\d+/g)[0];
         if(CurrentFileId){
             //请求项目文件对应的任务列表
@@ -69,6 +73,13 @@ class SubNav extends Component {
             })
         }
     }
+    componentWillReceiveProps(nextProps){
+        //确定刷新的时候的TabPane固定在哪一个
+        let { match:{path} } = nextProps;
+        this.setState({
+            activeKey:path.charAt(path.length-1)
+        })
+    }
     render() {
         let { location , state:{getFileInfo} } = this.props;
         //拿到当前项目文件的id
@@ -80,7 +91,6 @@ class SubNav extends Component {
         return (
             <div id="subNavWrap">
                 <div id="subNavLeftTool">
-                    {/* <span onClick={this.goToFileCoverPage}>首页</span> */}
                     <span>
                         <Link to="/projects">首页</Link>
                     </span>

@@ -98,12 +98,12 @@ class Project  extends Component {
     //点击文件内部切换 到任务/文件/群聊
     clickTabBar=(t,k,fId)=>{
         let { history } = this.props;
-        console.log('tabBar',t,k,fId)
         this.setState({
             activeBar:k,
             currentFileId:fId
         })
         history.push(`/project/${fId}/${t}`)
+        // history.push({pathname:`/project/${fId}/${t}`,state:{'k':k}})
     }
     componentDidMount(){
         if(this.state.activeBar && cookie.load('UserName')){//在项目文件详情页，自适应变化高度
