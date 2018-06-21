@@ -20,7 +20,7 @@ body{
     overflow-y: hidden;
 }
 #TasksWrap::-webkit-scrollbar-thumb{
-    width: 2%;
+    width: 2px;
     color: #eee;
     cursor: pointer;
 }

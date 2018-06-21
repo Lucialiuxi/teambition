@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import { Checkbox , Icon } from 'antd';
-
+import classnames from 'classnames';
 
 class WorksNav extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = { 
+            viewType:'ListView'
+         }
     }
     onChange(e) {
         console.log(`checked = ${e.target.checked}`);
     }
     render() { 
+        let { viewType } = this.state;
+        let cls1 = classnames('ThumbnailView-Icon',{'active':viewType==='ThumbnailView'})
+        let cls2 = classnames('ListView-Icon',{'active':viewType==='ListView'})
         return ( 
             <div className="worksNavWrap">
-                <div className="worksNavLeft">
-                    <Checkbox onChange={this.onChange}/>
+                <Checkbox onChange={this.onChange} className="CheckAllBox"/>
+                {/* <div className="worksNavWhenChecked">
                     <span className="alreadyCheckedCount">
                         已经选中5项
                     </span>
@@ -30,6 +35,23 @@ class WorksNav extends Component {
                         <Icon type="delete" />
                         删除
                     </span>
+                </div> */}
+
+                {/* <Icon type="caret-down" /> */}
+                {/*  */}
+                <div className="worksNavUnCheck">
+                    <div className="workFileItemInfo">
+                        <a className="workFileItem-name">名称</a>
+                        <a className="workFileItemEstablish-author">创建者</a>
+                        <a className="workFileItemmodify-time">
+                            更新时间
+                            <Icon type="caret-up" className="workFileItemmodify-time-sort-icon"/>
+                        </a>
+                    </div>
+                </div>
+                <div id="ThumbnailView-Or-ListView">
+                    <Icon type="appstore-o" className={cls1} title="缩略图模式"/>
+                    <Icon type="bars"  className={cls2} title="列表模式"/>
                 </div>
             </div>
          )

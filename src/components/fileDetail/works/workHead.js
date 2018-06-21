@@ -12,13 +12,6 @@ class WorkHead extends React.Component {
                 <header className="WorkHead">
                     <Breadcrumb separator=">" className="work-header-title">
                         <Breadcrumb.Item href="" >文件库</Breadcrumb.Item>
-                        <Breadcrumb.Item href="" >文档</Breadcrumb.Item>
-                        <Breadcrumb.Item href="">456 </Breadcrumb.Item>
-                        <Breadcrumb.Item href="">45 </Breadcrumb.Item>
-                        <Breadcrumb.Item href="">45666 </Breadcrumb.Item>
-                        <Breadcrumb.Item href="">4566 </Breadcrumb.Item>
-                        <Breadcrumb.Item href="">45 </Breadcrumb.Item>
-                        <Breadcrumb.Item href="">cc</Breadcrumb.Item>
                         <Breadcrumb.Item>ddd</Breadcrumb.Item>
                     </Breadcrumb>
                     <div className="workHeadTools">

@@ -2,7 +2,8 @@ import React from 'react';
 import './works.css';
 import WorkHead from './workHead.js';
 import WorksNav from './worksNav.js';
-import WorkFileBox from './workFiles/workFileBox.js'
+import WorkFileBox from './workFileBox.js';
+
 
 class Works extends React.Component {
     constructor(props) {

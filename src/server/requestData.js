@@ -12,6 +12,8 @@ export const login = (param) => {
     return axios.post('/userLogin',param)
 }
 
+//------------------项目文件file------------------------------------------------------------
+
 //新建项目文件夹
 export const createAFileServer = (param) => {
     return axios.post('/createFile',param)
@@ -44,7 +46,8 @@ export const DeleteAFlieServer = (param) => {
 
 
 
-//--------------------------任务列表------------------------------
+//--------------------------tasks任务------------------------------
+
 //新建默认的任务列表
 export const CreateTaskItemServer = (param) => {
     let arr = []
@@ -75,7 +78,7 @@ export const CreateANewTaskItemServer = (param) => {
 export const deleteATaskItemServer = (param) => {
     return axios.post('/deleteATaskItem', param)
 }
-//---------------子任务-----------------------------------------------
+
 //查询一个项目文件下的任务列表 
 export const GetTaskItemServer = (param) => {
     return axios.post('/GetTaskItem', param)
@@ -134,3 +137,5 @@ export const MoveOrCopySubtaskToAnotherTaskItemServer = (param) => {
 export const SwitchToCheckSubtaskServer = (param) => {
     return axios.post('/SwitchToCheckSubtask',param)
 }
+
+//------------------------------文件works--------------------------------------

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import getFileInfo from './FileInfoReducer';
-import taskItemInfo from './taskItemInfoReducer';
-import subTaskInfo from './subTaskInfoReducer';
+import getFileInfo from './tasks/FileInfoReducer';
+import taskItemInfo from './tasks/taskItemInfoReducer';
+import subTaskInfo from './tasks/subTaskInfoReducer';
 
 const allReduers = combineReducers({
     getFileInfo,

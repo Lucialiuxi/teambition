@@ -1,0 +1,1 @@
+//从action.js拿 项目文件的action

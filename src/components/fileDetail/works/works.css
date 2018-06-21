@@ -1,3 +1,9 @@
+body{
+    font-size: 14px;
+}
+input , button{
+    outline: none;
+}
 #WorksWrap{
     width: 1100px;
     height: 100%;
@@ -5,7 +11,12 @@
     margin: 0 auto;
     margin-top: 20px;
     background-color: #fff;
-    padding: 20px;
+    position: relative;
+    padding: 20px 0;
+    color: gray;
+}
+#WorksWrap .WorkHeadWrap{
+    position: relative;
 }
 #WorksWrap .WorkHead{
     padding: 18px 30px;
@@ -13,7 +24,7 @@
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     height: 56px;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #f5f5f5;
 }
 #WorksWrap .WorkHead .workCreatorPlusIcon{
     font-size: 14px;
@@ -60,27 +71,470 @@
     background-color: #fff;
     color: gray;
     position: relative;
+    z-index: 1;
     height: 56px;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #f5f5f5;
 }
-#WorksWrap .worksNavLeft span{
+#WorksWrap .worksNavWhenChecked,
+#WorksWrap .worksNavUnCheck{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+}
+#WorksWrap .CheckAllBox{
+    margin-right: 15px;
+}
+#WorksWrap .worksNavWhenChecked span{
     display: inline-block;
     margin-right: 20px;
     font-size: 15px;
     cursor: pointer;
 }
-#WorksWrap .worksNavLeft span.ant-checkbox{
+#WorksWrap .worksNavWhenChecked span.ant-checkbox{
     margin-right: 3px;  
 }
-#WorksWrap .worksNavLeft .alreadyCheckedCount i,
-#WorksWrap .worksNavLeft .moveCheckedWorkFile i,
-#WorksWrap .worksNavLeft .copyCheckedWorkFile i,
-#WorksWrap .worksNavLeft .deleteCheckedWorkFile i{
+#WorksWrap .worksNavWhenChecked .alreadyCheckedCount i,
+#WorksWrap .worksNavWhenChecked .moveCheckedWorkFile i,
+#WorksWrap .worksNavWhenChecked .copyCheckedWorkFile i,
+#WorksWrap .worksNavWhenChecked .deleteCheckedWorkFile i{
     margin-right: 5px;
 }
-#WorksWrap .worksNavLeft .alreadyCheckedCount:hover,
-#WorksWrap .worksNavLeft .moveCheckedWorkFile:hover,
-#WorksWrap .worksNavLeft .copyCheckedWorkFile:hover,
-#WorksWrap .worksNavLeft .deleteCheckedWorkFile:hover{
+#WorksWrap .worksNavWhenChecked .alreadyCheckedCount:hover,
+#WorksWrap .worksNavWhenChecked .moveCheckedWorkFile:hover,
+#WorksWrap .worksNavWhenChecked .copyCheckedWorkFile:hover,
+#WorksWrap .worksNavWhenChecked .deleteCheckedWorkFile:hover{
     color: #3da8f5;
 }
+#WorksWrap .worksNavUnCheck a{
+    color: gray;
+    font-size: 15px;
+    cursor: pointer;
+} 
+#WorksWrap .worksNavUnCheck i{
+    font-size: 12px;
+}
+#WorksWrap .worksNavUnCheck{
+    width: 90%;
+    display: inline-block;
+}
+#WorksWrap worksNavUnCheck .workFileItemInfo{
+    width: 100%;
+    display: inline-block;
+}
+#WorksWrap .worksNavUnCheck a.workFileItem-name{
+    width: 50%;
+    display: inline-block;
+    padding-left: 4px;
+}
+#WorksWrap .worksNavUnCheck a{
+    vertical-align: top;
+}
+#WorksWrap .worksNavUnCheck a.workFileItemEstablish-author{
+    display: inline-block;
+    width: 150px;
+    padding-right: 20px;
+}
+#WorksWrap .worksNavUnCheck a.workFileItemmodify-time{
+    display: inline-block;
+    width: 90px;
+}
+#WorksWrap .workFileItemmodify-time i{
+    margin-left: 5px;
+}
+#worksNavWrap .CheckAllBox{
+    position: relative;
+}
+#ThumbnailView-Or-ListView{
+    position: absolute;
+    top: 18px;
+    right: 12px;
+    width: 60px;
+    height: 20px;
+}
+#ThumbnailView-Or-ListView i{
+    transition: color 218ms ease;
+    display: inline-block;
+    font-family: tb-icons!important;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    speak: none;
+    text-transform: none;
+    text-rendering: auto;
+    cursor: pointer;
+}
+#ThumbnailView-Or-ListView i.ThumbnailView-Icon{
+    padding: 0 8px;
+    font-size: 18px;
+}
+#ThumbnailView-Or-ListView i.ListView-Icon{
+    font-size: 20px;
+}
+#ThumbnailView-Or-ListView .active,
+#ThumbnailView-Or-ListView i:hover{
+    color: #3da8f5;
+}
+#WorksWrap .forScrollBar{
+    position: relative;
+    min-height: 400px;
+    margin: 0 -20px;
+    padding: 0 20px;
+    text-align: start;
+    z-index: 1;
+}
+#WorksWrap .workFilesWrap{
+    overflow: auto;
+    overflow-y: visible;
+    overflow-x: hidden;
+    position: relative;
+    z-index: 1;
+    padding: 20px 0;
+}
+.workFilesWrap::-webkit-scrollbar{
+    background: #fff;
+    width: 8px; 
+}
+.workFilesWrap::-webkit-scrollbar-thumb {
+    background-color: #a6a6a6;
+    border-left: 2px solid transparent;
+}
+.workFilesWrap .workFileItemLi{
+    position: relative;
+    transition: background-color 218ms;
+    height: 56px;
+    border-bottom: 1px solid #f5f5f5;
+}
+.workFilesWrap .workFileItemLi:hover{
+    background-color: #f5f5f5;
+    border-color: #f5f5f5;
+}
+.workFilesWrap .workFileItemLi:hover .ModifyItemTools{
+    display: block;
+}
+.workFilesWrap .workFileItemLi .LiCheckBox{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    margin-right: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.workFilesWrap .workFileItemLi .workFileItemInfoWrap{
+    width: 100%;
+    height: 56px;
+    box-sizing: border-box;
+    vertical-align: top;
+    padding-left: 25px;
+}
+.workFileItemLi .workFileItemInfoWrap .aboutWorkFileItemName{
+    height: 100%;
+    padding: 12px 0;
+    margin-left: 28px;
+    width: 440px;
+    display: inline-block;
+}
+.workFileItemInfoWrap .aboutWorkFileItemName .WorkFileIcon,
+.workFileItemInfoWrap .aboutWorkFileItemName .workFileItemName,
+.workFileItemInfoWrap .aboutWorkFileItemName .ModifyWorkFileItemNameInput{
+    float: left;
+}
+.workFileItemInfoWrap .aboutWorkFileItemName .WorkFileIcon{
+    font-size: 32px;
+    color: #3da8f5;
+    margin-right: 12px;
+}
+.workFileItemInfoWrap .aboutWorkFileItemName .workFileItemName,
+.workFileItemInfoWrap .aboutWorkFileItemName .ModifyWorkFileItemNameInput{
+    width: 285px;
+    height: 100%;
+    margin: 0;
+    line-height: 32px;
+    font-size: 14px;
+    text-align: start;
+}
+.workFilesWrap .workFileItemLi .workFileItemInfo{
+    width: 605px;
+    display: inline-block;
+    height: 55px;
+    vertical-align: top;
+}
+.workFileItemLi .workFileItemInfo span{
+    text-align: center;
+}
+.workFileItemInfoWrap .aboutWorkFileItemName .ModifyWorkFileItemNameInput{
+    padding: 0 4px;
+    line-height: 28px;
+    border: 1px solid #f5f5f5;
+    width: 80%;
+}
+.workFileItemInfo .establishUser,
+.workFileItemInfo .lastestModifyTime,
+.workFileItemInfo .ModifyItemTools{
+    float: left;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: gray;
+    font-size: 14px; 
+    line-height: 54px; 
+}
+.workFileItemInfo .establishUser{
+    width: 130px;
+    position: relative;
+}
+.workFileItemInfo .lastestModifyTime{
+    padding: 0 20px;
+    width: 141px;
+    position: relative;
+}
+.workFileItemInfo .ModifyItemTools{
+    width: 55%;
+    position: relative;
+    display: none;
+}
+.workFileItemInfo .ModifyItemTools i{
+    float: right;
+    height: 56px;
+    line-height: 56px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.emptyWorkFileIcon{
+    font-size: 42px;
+}  
+#emptyWorkFileWrap {
+    margin: 0;
+    padding: 112px 0;
+    line-height: 30px;
+    text-align: center;
+    color: gray;
+}
+.delteWorkFileCover-Wrap{
+    position: absolute;
+    width: 250px;
+    height: 165px;
+    padding: 0;
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid transparent;
+    box-shadow: 0 7px 21px rgba(0,0,0,.1);
+}
+.workFileItemLi .delteWorkFileCover-Wrap{
+    top: 40px;
+    right: 25px;
+}
+.check-frame .delteWorkFileCover-Wrap{
+    top: 40px;
+    left: 0;
+    z-index: 1111;
+}
+.delteWorkFileCover-Wrap .delteWorkFileCover-Head{
+    padding: 10px 15px;
+    height: 51px;
+    width: 250px;
+    border-bottom: 1px solid rgba(0,0,0,.07);
+    box-sizing: border-box;
+}
+.delteWorkFileCover-Head .delteWorkFileCover-Title{
+    float: left;
+    font-weight: bold;
+    text-align: center;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+}
+.delteWorkFileCover-Head .delteWorkFileCover-leftIcon{
+    float: left;
+    display: none;
+}
+.ThumbNailWorkFileItemLi .delteWorkFileCover-Head .delteWorkFileCover-leftIcon{
+    display: inline-block;
+    line-height: 36px;
+    font-size: 16px;
+}
+.ThumbNailWorkFileItemLi .delteWorkFileCover-Title{
+    width: 184px;
+}
+.delteWorkFileCover-Head .delteWorkFileCover-closeIcon{
+    float: right;
+    font-size: 20px;
+    line-height: 36px;
+}
+.delteWorkFileCover-Wrap .delteWorkFileCover-Content{ 
+    padding: 15px;
+}
+.delteWorkFileCover-Content .delteWorkFileCover-Tip{
+    margin-bottom: 15px;
+}
+.delteWorkFileCover-Content .delteWorkFile-ConfirmBtn{
+    width: 218px;
+    height: 38px;
+    background-color: #ff4f3e;
+    border:none;
+    color: #fff;
+    display: inline-block;
+    padding: 8px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 3px;
+    white-space: nowrap;
+    user-select: none;
+    box-sizing: border-box;
+}
+.delteWorkFileCover-Content .delteWorkFile-ConfirmBtn:hover{
+    opacity: .8;
+}
+.workFilesWrap .ThumbNailWorkFileItemLi{
+    display: inline-block;
+    margin: 0 0 12px 17px;
+}
+.workFilesWrap .ThumbNailWorkFileItemLi .check-frame:hover .check-frame-checkIcon,
+.workFilesWrap .ThumbNailWorkFileItemLi .check-frame:hover .check-frame-downIcon{
+    cursor: pointer;
+    display: block;
+}
+.workFilesWrap .ThumbNailWorkFileItemLi .check-frame{
+    width: 164px;
+    height: 164px;
+    position: relative;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5;
+    background: url(./img/thumbnailfilepic.png) no-repeat 50px 50px;
+    background-size: 65px 52px;
+}
+.workFilesWrap .ThumbNailWorkFileItemLi .check-frame.active{
+    border: 4px solid #3da8f5;
+}
+.ThumbNailWorkFileItemLi .check-frame i{
+    cursor: pointer;
+    transform: translate(0.4px,-2px);
+    color: grey;
+}
+.ThumbNailWorkFileItemLi .check-frame i.check-frame-downIcon{
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: 0 0 3px #a6a6a6;
+    background-color: #fff;
+    bottom: 20px;
+    left: 70%;
+    font-size: 16px;
+    z-index: 1;
+    position: absolute;
+    display: none;
+}
+.ThumbNailWorkFileItemLi .check-frame i.check-frame-checkIcon{
+    left: 3px;
+    top: 3px;
+    font-size: 22px;
+    visibility: visible;
+    z-index: 1;
+    position: absolute;
+    display: none;
+}
+.ThumbNailWorkFileItemLi .check-frame i.check-frame-checkIcon.active{
+    color: #3da8f5;
+}
+#ModifyMenuCoverWrap{
+    position: absolute;
+    z-index: 999;
+    left: 45px;
+    top: 10px;
+    display: block;
+    box-shadow: 0 7px 21px rgba(0,0,0,.1);
+    width: 190px;
+    max-width: none;
+    padding: 0;
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid transparent;
+    white-space: normal;
+    background-clip: padding-box;
+    border-radius: 3px;
+}
+#ModifyMenuCoverWrap .ModifyMenuCover-head{
+    padding: 10px 0;
+    margin: 0 15px;
+    border-bottom: 1px solid rgba(0,0,0,.07);
+}
+#ModifyMenuCoverWrap .ModifyMenuCover-head h3{
+    display: inline-block;
+    width: 120px;
+    text-indent: 43px;
+    position: relative;
+    margin-right: 20px;
+    font-size: 15px;
+    font-weight: 700;
+}
+#ModifyMenuCoverWrap .ModifyMenuCover-head .ModifyMenuCover-closeIcon{
+    font-size: 18px;
+    margin-top: 5px;
+    z-index: 1;
+    position: absolute;
+}
+#ModifyMenuCoverWrap .ModifyMenuCover-content{
+    max-height: 319px;
+    padding: 5px 0 20px 0;
+}
+#ModifyMenuCoverWrap .ModifyMenuCover-content .ModifyMenuList{
+    color: gray;
+    display: block;
+    cursor: pointer;
+    padding: 5px 15px;
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 30px;
+}
+#ModifyMenuCoverWrap .ModifyMenuCover-content .ModifyMenuList:hover{
+    background-color: #f5f5f5;
+}
+.ModifyMenuCover-content .ModifyMenuList i{
+    margin-right: 15px;
+}
+.ThumbNailWorkFileItemLi .title-bar{
+    font-size: 14px;
+    margin-top: 8px;
+    width: 164px;
+    color: #383838;
+    box-shadow: none;
+    overflow: hidden;
+}
+.ThumbNailWorkFileItemLi .title-bar .title-edit-input,
+.ThumbNailWorkFileItemLi .title-bar  .elastic-title{
+    padding: 0 4px;
+    line-height: 28px;
+    width: 100%;
+    min-width: 0;
+    height: 30px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 3px;
+}
+.ThumbNailWorkFileItemLi .title-bar .title-edit-input{
+    border: 1px solid #f5f5f5;
+}
+.ThumbNailWorkFileItemLi .title-bar  .elastic-title:hover{
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+
+
+

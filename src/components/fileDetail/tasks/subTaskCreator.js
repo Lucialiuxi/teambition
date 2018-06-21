@@ -99,6 +99,7 @@ class SubTaskCreator extends Component {
                 className="task-content-input form-control" 
                 placeholder="任务内容"
                 ref={ node => this.subTaskValue = node }  
+                autoFocus = "autoFocus"
             ></textarea>
             <div className="createUser">Lucia</div>
             <div className="date-wrap" onClick={this.setDeadline}>
