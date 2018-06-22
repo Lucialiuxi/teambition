@@ -8,7 +8,7 @@ import Schedules from '@/components/fileDetail/schedules/schedules';
 import Tasks from '@/components/fileDetail/tasks/tasks';
 import Works  from '@/components/fileDetail/works/works';
 import { GetTaskItemServer , GetAllSubTasksServer } from '@/server/requestData';
-import { TaskItemsInCurrentFileAction , findAllSubTasksInsideAfileAction } from '@/actions/action';
+import { TaskItemsInCurrentFileAction , findAllSubTasksInsideAfileAction } from '@/actions/taskAction';
 
 const TabPane = Tabs.TabPane;
 
@@ -53,7 +53,7 @@ class SubNav extends Component {
         tabBar(t,activeKey,this.state.fId);
     }
     componentWillMount(){
-        let { location , match:{path} , dispatch } = this.props;
+        let { location , match:{path} , dispatch , state: {getFileInfo} } = this.props;
         //确定刷新的时候的TabPane固定在哪一个
         this.setState({
             activeKey:path.charAt(path.length-1)
@@ -126,11 +126,11 @@ class SubNav extends Component {
          )
     }
 }
- //要修改的数据
+
 const mapStateToProps = state => {
     return  {
         state
     }
-  }
+}
  
 export default withRouter(connect(mapStateToProps,null)(SubNav));

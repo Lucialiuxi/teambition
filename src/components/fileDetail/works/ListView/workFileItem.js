@@ -3,10 +3,6 @@ import React from 'react';
 import DelteWorkFileCover from '../delteCover.js';
 //列表模式
 class WorkFileItem extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {  }
-    }
     TocheckAworkFileItem(e) {
         console.log(`checked = ${e.target.checked}`);
     }

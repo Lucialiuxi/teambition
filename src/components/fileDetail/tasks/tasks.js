@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import TaskItem from './taskItem';
 import TaskItemCreator from './taskItemCreator';
-import { 
-    SubTaskCreatorIsShowAction , 
-    HideAllSubTaskCreatorsAction ,
-    TaskItemDropDownContainerShowAction,
-    HideTaskItemDropDownContainerAction,
-    TaskItemCalenderIsShowAction,
-    HideAllTaskItemCalenderAction,
-    HideChoiceUrgencyLevelAction,
-    HideTaskItemCreatorAction,
-    ToHideShowFileNameCoverAction,
-    ToHideShowCurrentTaskItemNameCoverAction
-}  from '@/actions/action';
+import * as taskActions from '@/actions/taskAction';
 
 import CanlenderMode from './calenderMode';
 
@@ -29,7 +19,6 @@ import './tasks.css';
     fileId: Number,项目文件id
     taskItemId: Number,任务列表id
     taskItemName: String,任务列表名
-    subTaskCount: Number子任务数量
  */
 /** 
  子任务 subTask
@@ -51,12 +40,19 @@ class Tasks extends Component {
             deadlineData:{}
         }
     }
-    componentWillMount(){
-    }
     componentDidMount(){
+        console.log(this.props)
         this._isMounted = true
         //  点击新建子任务编辑框 之外的地方  隐藏编辑框
-        let { dispatch } = this.props;
+        let {
+            HideAllTaskItemCalenderAction,
+            HideChoiceUrgencyLevelAction,
+            HideAllSubTaskCreatorsAction,
+            ToHideShowCurrentTaskItemNameCoverAction,
+            HideTaskItemCreatorAction,
+            HideTaskItemDropDownContainerAction,
+            ToHideShowFileNameCoverAction
+            } = this.props;
         document.onclick=(e)=>{
             let target = e.target;
             /**\
@@ -188,7 +184,7 @@ class Tasks extends Component {
                     aboutChooseFileNameCover ||
                     aboutChooseTaskItemNameCover)
             
-//-------------------------------控制新建任务框的各种cover框----------------------------------
+            //-------------------------------控制新建任务框的各种cover框----------------------------------
             if(target.classList.contains('task-creator-handler-wrap') ||
                 target.classList.contains('task-creator-handler') ||
                 target.classList.contains('AddSubTaskIcon')
@@ -217,18 +213,18 @@ class Tasks extends Component {
                 urgencyBox
             ){
                 if(!CanlenderCondition){//关闭日历
-                    dispatch(HideAllTaskItemCalenderAction('close'));
+                    HideAllTaskItemCalenderAction('close');
                 }
                 if(!(target.classList.contains('showUrgencyLevel') ||
                 target.classList.contains('normal') ||
                 target.classList.contains('urgency') ||
                 target.classList.contains('emtremeUrgency'))){
                     //关闭任务紧急情况选择框
-                    dispatch(HideChoiceUrgencyLevelAction('close'));
+                    HideChoiceUrgencyLevelAction('close');
                 }
             }else if(target.classList.contains('task-content-input')){//输入任务内容
                 //关闭日历
-                dispatch(HideAllTaskItemCalenderAction('close'));
+                HideAllTaskItemCalenderAction('close');
             }else if(target.classList.contains('date-wrap') ||
                      target.classList.contains('anticon-calendar') ||
                      target.classList.contains('date-text')
@@ -239,28 +235,28 @@ class Tasks extends Component {
                      (!target.classList.contains('showUrgencyLevel'))
             ){//设置紧急程度
                 // console.log('关闭设置紧急程度')
-                dispatch(HideChoiceUrgencyLevelAction('close'));
+                HideChoiceUrgencyLevelAction('close');
             }else if(aboutTags){//设置标签
                 ////关闭任务紧急情况选择框
-                dispatch(HideChoiceUrgencyLevelAction('close'));
+               HideChoiceUrgencyLevelAction('close');
             }else if(target.classList.contains('confirmCreacteBtn')){
                 //创建子任务
             }else{
-                    dispatch(HideChoiceUrgencyLevelAction('close'));
+                    HideChoiceUrgencyLevelAction('close');
                 // 关闭 新建子任务框
-                dispatch(HideAllSubTaskCreatorsAction('close'));
+                HideAllSubTaskCreatorsAction('close');
                 //关闭日历
-                dispatch(HideAllTaskItemCalenderAction('close'));
+                HideAllTaskItemCalenderAction('close');
                 if(this._isMounted){
                     this.setState({
                         deadlineData:{}
                     })
                 }
             }
-//----------------------------控制下拉菜单--------------------------------------------
+            //----------------------------控制下拉菜单--------------------------------------------
             if(!aboutDropDownMenu){
                 //隐藏下拉菜单
-                dispatch(HideTaskItemDropDownContainerAction('close'));
+                HideTaskItemDropDownContainerAction('close');
             }else{
                 //下拉列表菜单里面的移动或者复制项目的选择 项目名cover框 隐藏
                 if(!aboutChooseFileNameCover &&
@@ -268,7 +264,7 @@ class Tasks extends Component {
                     target.classList.contains('FileTitleEm') ||
                     target.classList.contains('selectFileDownICon'))
                 ){
-                    dispatch(ToHideShowFileNameCoverAction('close'))
+                    ToHideShowFileNameCoverAction('close');
                 }
                 //下拉列表菜单里面的移动或者复制项目的选择 列表名cover框 隐藏
                 if(!aboutChooseTaskItemNameCover &&
@@ -276,7 +272,7 @@ class Tasks extends Component {
                     target.classList.contains('TaskItemTitleEm') ||
                     target.classList.contains('selectTaskItemDownICon'))
                 ){
-                    dispatch(ToHideShowCurrentTaskItemNameCoverAction('close'))
+                    ToHideShowCurrentTaskItemNameCoverAction('close')
                 }
             }
 //----------------------------控制新建任务列表框--------------------------------------------
@@ -293,26 +289,30 @@ class Tasks extends Component {
 
             if(aboutCreateTaskItem ){
                 //新建项目列表框 隐藏
-                dispatch(HideTaskItemCreatorAction('close'))
+                HideTaskItemCreatorAction('close');
             }
 //----------------------控制复制或者移动任务 的选择项目 列表 的cover框-----------------------------
 
         } 
     }
     GoToCreateSubTask=(id)=>{// 显示 新建子任务框
-        let { dispatch } = this.props;
-        dispatch(SubTaskCreatorIsShowAction(id));
-        dispatch(HideTaskItemDropDownContainerAction('close'));//隐藏下拉菜单
+        let {
+            SubTaskCreatorIsShowAction,
+            HideTaskItemDropDownContainerAction,
+            HideAllTaskItemCalenderAction
+            } = this.props;
+        SubTaskCreatorIsShowAction(id);
+        HideTaskItemDropDownContainerAction('close');//隐藏下拉菜单
         //关闭日历
-        dispatch(HideAllTaskItemCalenderAction('close'));
+        HideAllTaskItemCalenderAction('close');
     }
     GoToShowDropDownContainer=(id)=>{// 显示下拉列表菜单
-        let { dispatch } = this.props;
-        dispatch(TaskItemDropDownContainerShowAction(id))
+        let { TaskItemDropDownContainerShowAction } = this.props;
+        TaskItemDropDownContainerShowAction(id);
     }
     GoToChoiceSubTaskDeadline=(id)=>{//显示选择被创建的子任务 的截止时间日历
-        let { dispatch } = this.props;
-        dispatch(TaskItemCalenderIsShowAction(id))
+        let { TaskItemCalenderIsShowAction } = this.props;
+        TaskItemCalenderIsShowAction(id);
         //子任务编辑框失去焦点
         let SubTaskCreatorBox = document.getElementsByClassName('subTask-creator-wrap').item(0);
         if(SubTaskCreatorBox){
@@ -336,8 +336,8 @@ class Tasks extends Component {
         let fileId = Number(pathname.match(/\d+/g)[0]);
         taskItemInfo = taskItemInfo.filter(val=>val.fileId === fileId)
         //把项目文件数据按照待处理/已完成/进行中 排序
-        taskItemInfo.sort(function(a,b){
-            return a.index-b.index
+        taskItemInfo = taskItemInfo.sort(function(a,b){
+            return a.index*100-b.index*100
         })
         let t;
         if(getFileInfo.length>0){
@@ -371,5 +371,8 @@ const mapStateToProps = state => {
         state
     }
 }
- 
-export default withRouter(connect(mapStateToProps,null)(Tasks));
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators(taskActions,dispatch)
+}
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Tasks));

@@ -60,8 +60,8 @@ export const CreateTaskItemServer = (param) => {
         }) 
     }
     arr[0].taskItemName='待处理';
-    arr[1].taskItemName='已完成';
-    arr[2].taskItemName='进行中';
+    arr[1].taskItemName='进行中';
+    arr[2].taskItemName='已完成';
     return axios.post('/CreateTaskItem', {param,arr})
 }
 
@@ -139,3 +139,9 @@ export const SwitchToCheckSubtaskServer = (param) => {
 }
 
 //------------------------------文件works--------------------------------------
+/**查询works文件的显示模式
+ * @param {username:  String} param 
+ */
+export const GetWorkFileViewTypeServer = (param) => {
+    return axios.post('/GetWorkFileViewType',param)
+}

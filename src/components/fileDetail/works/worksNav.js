@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Checkbox , Icon } from 'antd';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 class WorksNav extends Component {
     constructor(props) {
@@ -9,13 +11,18 @@ class WorksNav extends Component {
             viewType:'ListView'
          }
     }
+    componentDidMount(){
+        this.setState({
+            viewType:this.props.tp
+        })
+    }
     onChange(e) {
         console.log(`checked = ${e.target.checked}`);
     }
     render() { 
         let { viewType } = this.state;
-        let cls1 = classnames('ThumbnailView-Icon',{'active':viewType==='ThumbnailView'})
-        let cls2 = classnames('ListView-Icon',{'active':viewType==='ListView'})
+        let cls1 = classnames('ThumbnailView-Icon',{'active':viewType==='ThumbnailView'});
+        let cls2 = classnames('ListView-Icon',{'active':viewType==='ListView'});
         return ( 
             <div className="worksNavWrap">
                 <Checkbox onChange={this.onChange} className="CheckAllBox"/>
@@ -57,5 +64,11 @@ class WorksNav extends Component {
          )
     }
 }
+
+const mapStateToProps = state => {
+    return  {
+        state
+    }
+}
  
-export default WorksNav;
+export default withRouter(connect(mapStateToProps,null)(WorksNav));

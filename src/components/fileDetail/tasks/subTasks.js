@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { SwitchToCheckSubtaskServer } from '@/server/requestData';
-import { SwitchToCheckSubtaskAction }  from '@/actions/action';
+import { SwitchToCheckSubtaskAction }  from '@/actions/taskAction';
 // 没有被选中的任务
 class SubTask extends Component {
     constructor(props) {

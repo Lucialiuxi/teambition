@@ -7,7 +7,7 @@ import './mask.css';
 import MoveFileToRecycleBin from './moveFileToRecycleBin';
 import { postModifyFileInfo } from '@/server/requestData'
 import cookie from 'react-cookies';
-import { ModifyAFileInfo } from '@/actions/action';
+import { ModifyAFileInfo } from '@/actions/fileAction';
 
 class ModifyFileInfoMask extends Component {
     constructor(props) {

@@ -16,9 +16,9 @@ import FileCover from '../fileSurface/fileCover';
 //点击一个文件夹，内部显示
 import FileInside from '@/components/fileDetail/fileInside';
 
-//引入action
-import * as allActions  from '@/actions/action';
-import { getAllFilesInfo } from '@/server/requestData';
+import * as fileActions  from '@/actions/fileAction';
+import * as workActions  from '@/actions/workAction';
+import { getAllFilesInfo , GetWorkFileViewTypeServer } from '@/server/requestData';
 
 
 const { Header, Content } = Layout;
@@ -42,7 +42,12 @@ class Project  extends Component {
         }
     }
     componentWillMount(){
-        let { ClearStateAction , AllFileInfoArr , history , location } = this.props;
+        let { AllFileInfoArr,
+            ClearStateAction,
+            saveWorksViewTypeAction, 
+            history , 
+            location ,
+        } = this.props;
         if(location.pathname==='/projects'){//如果是大图标文件页面，就清空当前文件id和所在的项目文件区
             this.setState({
                 currentFileId:'',
@@ -84,6 +89,12 @@ class Project  extends Component {
                 AllFileInfoArr(data.AllFilesInfoData)
             }
         })
+        //拿到works文件是缩略图模式还是列表模式
+        GetWorkFileViewTypeServer({username:cookie.load('UserName')}).then(({data})=>{
+            if(data.success){
+                saveWorksViewTypeAction({worksViewType:data.data.worksViewType})
+            }
+        })
     }
     //点击大图标文件，进入到文件内部 跳转路由 
     clickInToTheFile=(fileId,userLoginName,FileName)=>{
@@ -103,7 +114,6 @@ class Project  extends Component {
             currentFileId:fId
         })
         history.push(`/project/${fId}/${t}`)
-        // history.push({pathname:`/project/${fId}/${t}`,state:{'k':k}})
     }
     componentDidMount(){
         if(this.state.activeBar && cookie.load('UserName')){//在项目文件详情页，自适应变化高度
@@ -174,6 +184,6 @@ const mapStateToProps = state => {
 }
  
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators(allActions,dispatch)
+    return bindActionCreators(Object.assign(fileActions,workActions),dispatch);
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Project));

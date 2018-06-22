@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import MoveOrCopySubTask from './moveOrCopySubTask';
 import DeleteSubTaskOrDeleteTaskItem from './deleteSubTaskOrDeleteTaskItem';
-import * as allActions  from '@/actions/action';
+import * as allActions  from '@/actions/taskAction';
 import classnames from 'classnames';
 import { CreateANewTaskItemServer , ModifyATaskItemNameServer } from '@/server/requestData';
 
@@ -141,13 +141,14 @@ class DropDown extends Component {
             case '在此后添加新列表':
                 if(val!==''){
                     let allTaskItemIndexData= state.taskItemInfo.map(val=>val.index);
-                    console.log(allTaskItemIndexData)
+                    allTaskItemIndexData = allTaskItemIndexData.sort(function(a,b){
+                        return a-b
+                    })
                     //新建的项目列表index是前一个和后一个index的中间值，如果是最后一个，就是当前index+1
-                    let currentIndex = allTaskItemIndexData.indexOf(index)
-                    console.log(currentIndex)
+                    let currentIndex = allTaskItemIndexData.indexOf(index);
                     let newIndex;
                     if(allTaskItemIndexData[currentIndex+1]){
-                        newIndex = (allTaskItemIndexData[currentIndex] + allTaskItemIndexData[currentIndex+1])/2
+                        newIndex = ((allTaskItemIndexData[currentIndex] + allTaskItemIndexData[currentIndex+1]))/2
                     }else{
                         newIndex = allTaskItemIndexData[currentIndex] + 1
                     }

@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { Icon , Modal } from 'antd';
 import { connect } from 'react-redux';
-import { CreateAFile , CreateDefaultTaskItemsAction }  from '@/actions/action';
+import { CreateAFile }  from '@/actions/fileAction';
+import { CreateDefaultTaskItemsAction }  from '@/actions/taskAction';
 import cookie from 'react-cookies';
 import { createAFileServer , CreateTaskItemServer } from '@/server/requestData';
 

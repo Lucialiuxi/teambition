@@ -3,7 +3,7 @@ import { Icon } from 'antd';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import ModifyFileInfoMask from '@/components/mask/modifyFileInfoMask';
-import { ToggleFileStar } from '@/actions/action';
+import { ToggleFileStar } from '@/actions/fileAction';
 import { ToggleFileStarServer } from '@/server/requestData';
 import {CustomeLink} from '@/commonfunc/';
 

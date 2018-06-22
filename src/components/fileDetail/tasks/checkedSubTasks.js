@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import { SwitchToCheckSubtaskServer } from '@/server/requestData';
-import { SwitchToCheckSubtaskAction }  from '@/actions/action';
+import { SwitchToCheckSubtaskAction }  from '@/actions/taskAction';
 
 // 被选中的任务
 class CheckedSubTasks extends Component {

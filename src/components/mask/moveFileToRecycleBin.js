@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'antd';
 
-import { MoveFileToRecycleBin } from '@/actions/action';
+import { MoveFileToRecycleBin } from '@/actions/fileAction';
 import { MoveFileToRecycleBinServer } from '@/server/requestData'
 
   class moveFileToRecycleBin extends Component {

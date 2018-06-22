@@ -4,7 +4,7 @@ import { Icon } from 'antd';
 import { connect } from 'react-redux';
 import { Modal } from 'antd';
 
-import { MoveFileToRecycleBin , DeleteAFlieAction }  from '@/actions/action';
+import { MoveFileToRecycleBin , DeleteAFlieAction }  from '@/actions/fileAction';
 import { MoveFileToRecycleBinServer , DeleteAFlieServer } from '@/server/requestData';
 
 

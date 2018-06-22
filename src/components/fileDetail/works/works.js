@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import './works.css';
 import WorkHead from './workHead.js';
 import WorksNav from './worksNav.js';
@@ -10,15 +12,29 @@ class Works extends React.Component {
         super(props);
         this.state = {  }
     }
-    render() { 
+    //点击创建文件夹
+    GoToCreateAWorkFile = () => {
+        console.log(555)
+    }
+    render() {
+        let { state:{worksViewType}} = this.props;
+        let tp =  worksViewType.worksViewType;
         return (
-            <div id="WorksWrap">
-                <WorkHead/>
-                <WorksNav/>
-                <WorkFileBox/>
+            <div>
+                {
+                    tp && <div id="WorksWrap">
+                        <WorkHead {...{GoToCreateAWorkFile:this.GoToCreateAWorkFile}}/>
+                        <WorksNav tp={tp}/>
+                        <WorkFileBox  tp={tp}/>
+                    </div>
+                }
             </div>
         )
     }
 }
- 
-export default Works;
+const mapStateToProps = state => {
+    return  {
+        state
+    }
+} 
+export default withRouter(connect(mapStateToProps,null)(Works));

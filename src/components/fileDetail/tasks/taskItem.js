@@ -16,7 +16,6 @@ class TaskItem extends Component {
     constructor(props) {
         super(props)
         this.state = {  
-            hasTaskList:0,//子任务
             allSubTasksData:[]
          }
     }
@@ -36,7 +35,7 @@ class TaskItem extends Component {
             GoToChoiceSubTaskDeadline ,
             deadline
         } = this.props;
-        let { hasTaskList , allSubTasksData } = this.state;
+        let { allSubTasksData } = this.state;
         let SubTasksUnderCurrentTaskItem = allSubTasksData.filter(val=>val.taskItemId===taskItemInfo.taskItemId);
         let allSubTasks = SubTasksUnderCurrentTaskItem.filter(val=>val.checked===false);
         let allCheckedSubtasks =  SubTasksUnderCurrentTaskItem.filter(val=>val.checked===true);
@@ -47,7 +46,7 @@ class TaskItem extends Component {
                 <header className="taskItem-head">
                     <h4>
                         <span className="task-title">{taskItemInfo.taskItemName}</span>
-                        <span className="task-count">{ hasTaskList ? '.'+ hasTaskList : null }</span>
+                        <span className="task-count">{ SubTasksUnderCurrentTaskItem.length ? '.'+ SubTasksUnderCurrentTaskItem.length : null }</span>
                     </h4>
                     {/* 下拉菜单Icon */}
                     <Icon 

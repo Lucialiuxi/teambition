@@ -4,7 +4,7 @@ import { Icon } from 'antd';
 import ShowFileNameCover from './showFileName';
 import ShowCurrentTaskItemNameCover from './showCurrentTaskItemName';
 import { bindActionCreators } from 'redux';
-import * as allActions  from '@/actions/action';
+import * as allActions  from '@/actions/taskAction';
 import { GetTaskItemServer , MoveOrCopySubtaskToAnotherTaskItemServer } from '@/server/requestData';
 
 //移动 或 复制 子任务 --到当前其他任务列表  或者到其他项目文件夹的某一任务列表
@@ -53,13 +53,10 @@ class MoveOrCopySubTask extends Component {
         // console.log(choosedFileId, currentTaskItem.fileId)
         //如果选择要到的文件夹跟不是当前所在的文件夹，就需要请求
         if(choosedFileId !== currentTaskItem.fileId){
-            // console.log('去请求数据')
             GetTaskItemServer({fileId:choosedFileId}).then(({data})=>{
-                // console.log(data.CurrentTaskItemInfo)
                 if(data.CurrentTaskItemInfo){
                     SaveFoundTaskItemsAction(data.CurrentTaskItemInfo)
                 }
-                // console.log(this.props.state.getFileInfo)
             })
         }
     }
@@ -107,7 +104,6 @@ class MoveOrCopySubTask extends Component {
         // console.log('choosedTaskItemId',choosedTaskItemId)
         if(choosedTaskItemId!==taskItemId){
            if(S.indexOf('移动本列表所有任务')!==-1){
-                console.log('移动本列表所有任务')
                 MoveOrCopySubtaskToAnotherTaskItemServer({fileId:choosedFileId,
                         taskItemId:choosedTaskItemId,
                         MoveOrCopy:'move',
@@ -124,7 +120,6 @@ class MoveOrCopySubTask extends Component {
                     }
                 })
            }else if(S.indexOf('复制本列表所有任务')!==-1){
-                console.log('复制本列表所有任务')
                 MoveOrCopySubtaskToAnotherTaskItemServer({fileId:choosedFileId,
                     taskItemId:choosedTaskItemId,
                     MoveOrCopy:'copy',

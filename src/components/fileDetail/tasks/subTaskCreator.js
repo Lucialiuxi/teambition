@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Icon } from 'antd';
 import { connect } from 'react-redux';
 import { CreateASubTaskServer } from '@/server/requestData';
-import { ShowChoiceUrgencyLevelAction , createASubTaskAction }  from '@/actions/action';
+import { ShowChoiceUrgencyLevelAction , createASubTaskAction }  from '@/actions/taskAction';
 import EditableTagGroup from './editableTagGroup';
 
 // 新建--项目列表子任务
