@@ -6,7 +6,8 @@ import cookie from 'react-cookies';
 import {
     BrowserRouter as Router,
     Route,
-    withRouter
+    withRouter,
+    Switch
   } from 'react-router-dom';
 
 import { Layout } from 'antd';
@@ -56,7 +57,13 @@ class Project  extends Component {
         //每次登录的时候先清空state里面的大图标文件数据
         ClearStateAction()
         }else{
-            let {t} = this.props.match.params;
+            let path = this.props.location.pathname;
+            let arr = path.split('/');
+            if(arr.length==4){
+                t = arr[arr.length-1]
+            }else if(arr.length==5){
+                t = arr[arr.length-2]
+            }
             if( t === 'tasks'){
                 this.setState({
                     activeBar:'1'
@@ -138,6 +145,12 @@ class Project  extends Component {
     }
     render() {
         let t = this.state.activeBar ? this.state.activeBar : '1';
+        let { location: {pathname} } = this.props;
+        let arr = pathname.split('/');
+        let myId = ''
+        if(arr[arr.length-2]==='work'){
+            myId = arr[arr.length-1];
+        }
         return ( 
            <div className="projectPageWrap">
                 <Layout  className="projectPage">
@@ -146,6 +159,7 @@ class Project  extends Component {
                         <CommonNav {...this.props}/>
                     </Header>
                     <Content  className="projectPageContent">
+                        <Switch>
                         <Router>
                             <div id="ct">
                                 {/* 首页文件图标区 */}
@@ -159,7 +173,6 @@ class Project  extends Component {
                                 />
                                 {/* 项目文件详情 */}
                                 <Route 
-                                    exact 
                                     path={`/project/:${this.state.currentFileId}/:${t}`}
                                     render={()=><FileInside 
                                                     tabBar={this.clickTabBar}
@@ -168,8 +181,19 @@ class Project  extends Component {
                                                 />
                                     }
                                 />
+                                {/* works文件 */}
+                                <Route 
+                                    path={`/project/:${this.state.currentFileId}/works/:${myId}`}
+                                    render={()=><FileInside 
+                                                    tabBar={this.clickTabBar}
+                                                    activeBar='3'
+                                                    currentFileId={this.state.currentFileId}
+                                                />
+                                    }
+                                />
                             </div>
                         </Router>
+                        </Switch>
                     </Content>
                 </Layout>
            </div>

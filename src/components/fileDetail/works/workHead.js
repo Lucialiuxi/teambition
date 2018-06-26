@@ -1,7 +1,9 @@
 import { Breadcrumb , Icon  } from 'antd';
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import * as allAction from '@/actions/workAction.js'
 
 class WorkHead extends React.Component {
     constructor(props) {
@@ -10,8 +12,8 @@ class WorkHead extends React.Component {
     }
     //点击创建文件夹
     toCreateAWorkFile = () => {
-        let { GoToCreateAWorkFile } = this.props
-        GoToCreateAWorkFile()
+        let { GoToCreateAWorksFileAction } = this.props;
+        GoToCreateAWorksFileAction()
     }
     render() { 
         let { state:{ worksFile } } = this.props;
@@ -20,7 +22,7 @@ class WorkHead extends React.Component {
                 <header className="WorkHead">
                     <Breadcrumb separator=">" className="work-header-title">
                         <Breadcrumb.Item href="" >文件库</Breadcrumb.Item>
-                        { worksFile && worksFile[0] ? <Breadcrumb.Item>ddd</Breadcrumb.Item> : null }
+                        { worksFile && worksFile[0] ? <Breadcrumb.Item></Breadcrumb.Item> : null }
                     </Breadcrumb>
                     <div className="workHeadTools">
                         <a className="workCreator"  onClick={this.toCreateAWorkFile}>
@@ -43,5 +45,7 @@ const mapStateToProps = state => {
         state
     }
 }
- 
-export default withRouter(connect(mapStateToProps,null)(WorkHead));
+const  mapDispatchToProps = (dispatch) => {
+    return bindActionCreators(allAction,dispatch)
+}
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(WorkHead));

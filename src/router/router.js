@@ -16,6 +16,11 @@ export let routes = [
     {
         path:'/project/:fileId/:t',
         title:'项目',
-        component:Project  
+        component:Project
+    },
+    {
+        path:'/project/:fileId/works/:myId',
+        title:'项目',
+        component:Project
     }
 ]

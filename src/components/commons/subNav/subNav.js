@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Tabs ,Icon} from 'antd';
 import { withRouter , Link } from 'react-router-dom';
 import Groupchat from '@/components/fileDetail/groupchat/groupchat';
@@ -7,8 +8,13 @@ import Posts from '@/components/fileDetail/posts/posts';
 import Schedules from '@/components/fileDetail/schedules/schedules';
 import Tasks from '@/components/fileDetail/tasks/tasks';
 import Works  from '@/components/fileDetail/works/works';
-import { GetTaskItemServer , GetAllSubTasksServer } from '@/server/requestData';
-import { TaskItemsInCurrentFileAction , findAllSubTasksInsideAfileAction } from '@/actions/taskAction';
+import { GetTaskItemServer ,
+         GetAllSubTasksServer ,
+         GetAllWorksFileUnderParentWorksFileServer
+} from '@/server/requestData';
+
+import * as taskActions from '@/actions/taskAction';
+import * as workActions from '@/actions/workAction.js';
 
 const TabPane = Tabs.TabPane;
 
@@ -39,6 +45,21 @@ class SubNav extends Component {
             this.setState({
                 activeKey:'3'
             })
+            let { location:{ pathname } , GetAllWorksFileUnderParentWorksFileAction } = this.props;
+            let arr = pathname.split('/');
+            let fileId = arr[2]*1;
+            let parentId = '';
+            if(arr[arr.length-1]!=='tasks'){
+                parentId = arr[arr.length-1]
+            }
+            GetAllWorksFileUnderParentWorksFileServer({
+                fileId,parentId
+            }).then(({data})=>{
+                if(data.success){
+                    GetAllWorksFileUnderParentWorksFileAction(data.data)
+                }
+    
+            })
         }else if(activeKey==='4'){
             t = 'schedules';
             this.setState({
@@ -53,7 +74,14 @@ class SubNav extends Component {
         tabBar(t,activeKey,this.state.fId);
     }
     componentWillMount(){
-        let { location , match:{path} , dispatch , state: {getFileInfo} } = this.props;
+        let { 
+                location , 
+                match:{path} , 
+                state: {getFileInfo} , 
+                TaskItemsInCurrentFileAction,
+                findAllSubTasksInsideAfileAction 
+            } = this.props;
+
         //确定刷新的时候的TabPane固定在哪一个
         this.setState({
             activeKey:path.charAt(path.length-1)
@@ -62,11 +90,11 @@ class SubNav extends Component {
         if(CurrentFileId){
             //请求项目文件对应的任务列表
             GetTaskItemServer({fileId:CurrentFileId}).then(({data})=>{
-                dispatch(TaskItemsInCurrentFileAction(data.CurrentTaskItemInfo))
+                TaskItemsInCurrentFileAction(data.CurrentTaskItemInfo)
             })
             //请求任务列表数据
             GetAllSubTasksServer({fileId:CurrentFileId}).then(({data})=>{
-                dispatch(findAllSubTasksInsideAfileAction(data.subTasksData))
+                findAllSubTasksInsideAfileAction(data.subTasksData)
             })
             this.setState({
                 fId:CurrentFileId,
@@ -132,5 +160,7 @@ const mapStateToProps = state => {
         state
     }
 }
- 
-export default withRouter(connect(mapStateToProps,null)(SubNav));
+const  mapDispatchToProps = (dispatch) => {
+    return bindActionCreators(Object.assign(taskActions,workActions),dispatch)
+}
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(SubNav));

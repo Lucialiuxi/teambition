@@ -110,7 +110,6 @@ export const GetAllSubTasksServer = (param) => {
 
 //删除一个任务列表下的所有任务
 /**
- * 
  * @param {fileId: Number, taskItemId: Number} param 
  */
 export const DeleteAllSubTasksServer = (param) => {
@@ -118,9 +117,9 @@ export const DeleteAllSubTasksServer = (param) => {
 }
 
 
- /**修改项目列表的名字
-  *  @param {fileId:Number , taskItemId:Number , taskItemName:String} param 
-  */
+/**修改项目列表的名字
+*  @param {fileId:Number , taskItemId:Number , taskItemName:String} param 
+*/
 export const ModifyATaskItemNameServer = (param) =>{
     return axios.post('/ModifyATaskItemName',param)
 }
@@ -144,4 +143,54 @@ export const SwitchToCheckSubtaskServer = (param) => {
  */
 export const GetWorkFileViewTypeServer = (param) => {
     return axios.post('/GetWorkFileViewType',param)
+}
+
+/**新建work文件
+ * 
+ * @param { fileId: Number, parentId: String ,myId: String,workFileName: String,lastestModifyTime: String} param 
+ */
+export const CreateAWorkFileServer = (param) => {
+    return axios.post('/CreateAWorkFile',param)
+}
+
+/**查询当前路由所在层级的所有works文件 
+ * @param {fileId: Number,parentId: String } param 
+ */
+export const GetAllWorksFileUnderParentWorksFileServer = (param) => {
+    return axios.post('/GetAllWorksFileUnderParentWorksFile',param)
+}
+
+/**删除文件夹一个项目文件夹
+ * @param {myId:Srting} param 
+ */
+export const DeleteAWorksFileServer = (param) => {
+    return axios.post('/DeleteAWorksFile',param)   
+}
+
+/**修改work文件名
+ * @param {myId:Srting,workFileName:Srting} param 
+ */
+export const ModifyAWorkFileNameServer = (param) => {
+    return axios.post('/ModifyAWorkFileName',param)
+}
+
+/**切换work文件选中状态  单选
+ * @param {myId:String,check:boolean} param 
+ */
+export const ToSwitchCheckAWorkFileServer = (param) => {
+    return axios.post('/ToSwitchCheckAWorkFile',param)
+}
+
+/**切换全选
+ * @param {parentId:String,check:boolean} param 
+ */
+export const ToSwitchCheckAllWorkFileServer = (param) => {
+    return axios.post('/ToSwitchCheckAllWorkFile',param)
+}
+
+/**多选删除
+ * @param {myIdArr:Array} param 
+ */
+export const DeleteCheckedWorkFilesServer = (param) => {
+    return axios.post('/DeleteCheckedWorkFiles',param)
 }

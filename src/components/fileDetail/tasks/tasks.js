@@ -41,7 +41,6 @@ class Tasks extends Component {
         }
     }
     componentDidMount(){
-        console.log(this.props)
         this._isMounted = true
         //  点击新建子任务编辑框 之外的地方  隐藏编辑框
         let {

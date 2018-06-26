@@ -244,6 +244,9 @@ input , button{
 .workFileItemInfoWrap .aboutWorkFileItemName .ModifyWorkFileItemNameInput{
     float: left;
 }
+.workFileItemInfoWrap .aboutWorkFileItemName .ModifyWorkFileItemNameInput{
+    color: #a6a6a6;
+}
 .workFileItemInfoWrap .aboutWorkFileItemName .WorkFileIcon{
     font-size: 32px;
     color: #3da8f5;

@@ -5,16 +5,19 @@ import './works.css';
 import WorkHead from './workHead.js';
 import WorksNav from './worksNav.js';
 import WorkFileBox from './workFileBox.js';
-
+/**
+    username: String,
+    fileId: Number,
+    parentId: String,//最外层文件是‘’
+    myId: String,
+    workFileName: String,
+    lastestModifyTime: Number
+ */
 
 class Works extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {  }
-    }
-    //点击创建文件夹
-    GoToCreateAWorkFile = () => {
-        console.log(555)
+        this.state = {}
     }
     render() {
         let { state:{worksViewType}} = this.props;
@@ -23,10 +26,10 @@ class Works extends React.Component {
             <div>
                 {
                     tp && <div id="WorksWrap">
-                        <WorkHead {...{GoToCreateAWorkFile:this.GoToCreateAWorkFile}}/>
+                        <WorkHead />
                         <WorksNav tp={tp}/>
-                        <WorkFileBox  tp={tp}/>
-                    </div>
+                        <WorkFileBox  {...{tp}}/>
+                    </div> 
                 }
             </div>
         )
@@ -37,4 +40,5 @@ const mapStateToProps = state => {
         state
     }
 } 
+
 export default withRouter(connect(mapStateToProps,null)(Works));
