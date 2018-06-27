@@ -3,7 +3,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import * as allAction from '@/actions/workAction.js'
+import * as allAction from '@/actions/workAction.js';
 
 class WorkHead extends React.Component {
     constructor(props) {

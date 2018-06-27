@@ -90,6 +90,9 @@ input , button{
     font-size: 15px;
     cursor: pointer;
 }
+#WorksWrap .worksNavWhenChecked .moveAndCopyWorkFileWrap,.MoveOrCopyWorkFilesMaskWrap{
+    display: inline-block;
+}
 #WorksWrap .worksNavWhenChecked span.ant-checkbox{
     margin-right: 3px;  
 }
@@ -302,7 +305,14 @@ input , button{
     position: relative;
     display: none;
 }
-.workFileItemInfo .ModifyItemTools i{
+.ModifyItemTools .MoveOrCopyWorkFilesMaskWrap{
+    float: right;
+}
+.ModifyItemTools .MoveOrCopyWorkFilesMaskWrap i{
+    margin-left: 15px;
+}
+.workFileItemInfo .ModifyItemTools i.ModifyItemToolsDeleteIcon,
+.workFileItemInfo .ModifyItemTools i.ModifyItemToolsRenameIcon{
     float: right;
     height: 56px;
     line-height: 56px;

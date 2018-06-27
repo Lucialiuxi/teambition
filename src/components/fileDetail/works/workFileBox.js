@@ -10,7 +10,8 @@ import { bindActionCreators } from 'redux';
 import WorkFileItem from './ListView/workFileItem.js';
 import EmptyWorkFile from './ListView/emptyWorkFile.js';
 import ThumbNailWorkFileItem from './ThumbnailView/ThumbnailworkFileItem.js';
-import { GetAllWorksFileUnderParentWorksFileServer } from '@/server/requestData.js';
+import { GetAllWorksFileUnderParentWorksFileServer
+    } from '@/server/requestData.js';
 import * as allAction from '@/actions/workAction.js';
 
 class WorkFileBox extends React.Component {
@@ -23,8 +24,11 @@ class WorkFileBox extends React.Component {
         let arr = pathname.split('/');
         let fileId = arr[2]*1;
         let parentId = '';
-        if(arr[arr.length-1]!=='works'){
-            parentId = arr[arr.length-1]
+        
+        if(arr.length===4){
+            parentId = '';
+        }else if(arr.length===5){
+            parentId = arr[4];
         }
         let data = await GetAllWorksFileUnderParentWorksFileServer({
             fileId,parentId
@@ -32,8 +36,8 @@ class WorkFileBox extends React.Component {
         if(data.data.success){
             GetAllWorksFileUnderParentWorksFileAction(data.data.data)
         }
-        
     }
+
     render() { 
         let { tp , state:{ worksFile , worksViewType:{forCreate,sortByModifyTime} }} = this.props;
         //按照时间排序
@@ -56,7 +60,7 @@ class WorkFileBox extends React.Component {
                         })
                     : null }
                     { worksFile && worksFile[0] && tp === 'ThumbnailView' ? <ThumbNailWorkFileItem/> : null }
-                    {/* <EmptyWorkFile/> */}
+                    {!worksFile[0] && !forCreate ? <EmptyWorkFile/> : null}
                 </div>
             </ul>
             )

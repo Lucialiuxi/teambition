@@ -5,25 +5,28 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { ToSwitchCheckAllWorkFileAction , 
          ToChangeWorkFileSortTypeAction ,
-         DeleteCheckedWorkFilesAction
+         DeleteCheckedWorkFilesAction ,
+         GetAllWorksFileUnderParentWorksFileAction
      } from '@/actions/workAction.js';
 import { ToSwitchCheckAllWorkFileServer ,
-         DeleteCheckedWorkFilesServer
+         DeleteCheckedWorkFilesServer ,
+         GetAllWorksFileUnderParentWorksFileServer
      } from '@/server/requestData.js';
+import MoveOrCopyWorkFilesMask from '@/components/mask/MoveOrCopyWorkFilesMask.js';
 
 class WorksNav extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            viewType:'ListView',
-            checkAll:false,
-            sort:'',
-            groupDeal:false,
+            viewType:'ListView',//文件展示模式
+            checkAll:false,//全选
+            sort:'',//时间排序是升序还是降序
+            groupDeal:false,//选中多个操作
             checkedCount:0
          }
     }
     componentWillReceiveProps(nextProps){
-        let { state: { worksFile , worksViewType }} = nextProps;
+        let { state: { worksFile , worksViewType } } = nextProps;
         if(worksFile && worksFile[0]){
             let num = 0;
             worksFile.forEach(val=>{
@@ -44,6 +47,7 @@ class WorksNav extends Component {
             })
         }
     }
+
     componentDidMount(){
         this.setState({
             viewType:this.props.tp
@@ -118,14 +122,7 @@ class WorksNav extends Component {
                     <span className="alreadyCheckedCount">
                         已经选中{checkedCount}项
                     </span>
-                    <span className="moveCheckedWorkFile">
-                        <Icon type="profile" />
-                        移动
-                    </span>
-                    <span className="copyCheckedWorkFile">
-                        <Icon type="copy" />
-                        复制
-                    </span>
+                    <MoveOrCopyWorkFilesMask checkedCount={checkedCount}/>
                     <span className="deleteCheckedWorkFile" onClick={this.deleteCheckedWorkFiles}>
                         <Icon type="delete" />
                         删除

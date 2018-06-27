@@ -16,11 +16,10 @@ body{
     background-color: #fff;
     box-sizing: border-box;
     z-index: 1;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 #TasksWrap::-webkit-scrollbar-thumb{
-    width: 2px;
+    height: 2px;
     color: #eee;
     cursor: pointer;
 }

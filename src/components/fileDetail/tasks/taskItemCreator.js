@@ -53,7 +53,7 @@ class TaskItemCreator extends Component {
     }
     render() { 
         let { fileId , getFileInfo } = this.props;
-        let o = getFileInfo.filter(val=>val.fileId===Number(fileId))[0]
+        let o = getFileInfo.filter(val=>val.fileId===Number(fileId))[0];
         return ( 
             <li className="taskItem createWrap">
                 {!o.isShowTaskItemCreator ? 

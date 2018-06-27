@@ -136,12 +136,22 @@ ul{
 .ant-list-item {
     padding: 0;
 }
-.projectPageContent,
-.projectPageContent .fileCover{
+.projectPageContent{
     overflow-x: auto;
     background-color: #f5f5f5;
-
 }
+.projectPageContent::-webkit-scrollbar {
+    width: 8px;     
+    height: 8px;
+}
+.projectPageContent::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #808080;
+}
+.projectPageContent::-webkit-scrollbar-track{
+    border-radius: 10px;
+    background: #EDEDED;
+}m
 
 .projectPageHead .commonNav{
     height: 100%;

@@ -57,11 +57,12 @@ class Project  extends Component {
         //每次登录的时候先清空state里面的大图标文件数据
         ClearStateAction()
         }else{
+            let {t} = this.props.match.params;
             let path = this.props.location.pathname;
             let arr = path.split('/');
-            if(arr.length==4){
+            if(arr.length===4){
                 t = arr[arr.length-1]
-            }else if(arr.length==5){
+            }else if(arr.length===5){
                 t = arr[arr.length-2]
             }
             if( t === 'tasks'){
@@ -87,7 +88,7 @@ class Project  extends Component {
             }
         }
         let user = cookie.load('UserName');
-        if(!user){
+        if(!user){//登出的时候回到登录页
             history.push('/login');
         }
         //请求项目文件信息数据
@@ -143,8 +144,17 @@ class Project  extends Component {
             }
         }
     }
+    componentWillReceiveProps(nextProps){
+        let { pathname } = nextProps.location;
+        let arr = pathname.split('/');
+        if(arr[arr.length-1]==='tasks'){
+           this.setState({
+                activeBar:'1'
+           }) 
+        }
+    }
     render() {
-        let t = this.state.activeBar ? this.state.activeBar : '1';
+        let t = this.state.activeBar ? this.state.activeBar : '';
         let { location: {pathname} } = this.props;
         let arr = pathname.split('/');
         let myId = ''

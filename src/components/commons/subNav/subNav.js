@@ -49,9 +49,6 @@ class SubNav extends Component {
             let arr = pathname.split('/');
             let fileId = arr[2]*1;
             let parentId = '';
-            if(arr[arr.length-1]!=='tasks'){
-                parentId = arr[arr.length-1]
-            }
             GetAllWorksFileUnderParentWorksFileServer({
                 fileId,parentId
             }).then(({data})=>{
@@ -81,12 +78,11 @@ class SubNav extends Component {
                 TaskItemsInCurrentFileAction,
                 findAllSubTasksInsideAfileAction 
             } = this.props;
-
         //确定刷新的时候的TabPane固定在哪一个
         this.setState({
             activeKey:path.charAt(path.length-1)
         })
-        let CurrentFileId = location.pathname.match(/\d+/g)[0];
+        let CurrentFileId = location.pathname.match(/\d+/g)[0]*1;
         if(CurrentFileId){
             //请求项目文件对应的任务列表
             GetTaskItemServer({fileId:CurrentFileId}).then(({data})=>{
@@ -101,15 +97,19 @@ class SubNav extends Component {
             })
         }
     }
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps){        
         //确定刷新的时候的TabPane固定在哪一个
         let { match:{path} } = nextProps;
         this.setState({
             activeKey:path.charAt(path.length-1)
         })
     }
+    shouldComponentUpdate(nextProps,nextState){
+        return true;
+    }
     render() {
         let { location , state:{getFileInfo} } = this.props;
+        let { activeKey } = this.state;
         //拿到当前项目文件的id
         let fileId = location.pathname.match(/\d+/g)[0];
         let currentFile;
@@ -131,7 +131,7 @@ class SubNav extends Component {
                 </div>
                 <Tabs 
                     id="subNavTab" 
-                    activeKey={this.state.activeKey}
+                    activeKey={activeKey}
                     onChange={this.tabToOther}
                 >
                     <TabPane tab="任务" key="1" >

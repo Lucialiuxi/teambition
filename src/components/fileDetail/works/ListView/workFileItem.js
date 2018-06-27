@@ -12,6 +12,9 @@ import { CreateAWorkFileServer ,
     } from '@/server/requestData.js';
 import { bindActionCreators } from 'redux';
 import * as allAction from '@/actions/workAction.js';
+import { timeFormat } from '@/commonfunc/index';
+import MoveOrCopyWorkFilesMask from '@/components/mask/MoveOrCopyWorkFilesMask.js';
+import { GetAllWorksFileUnderParentWorksFileServer } from '@/server/requestData.js';
 /**
     fileId: Number,
     parentId: String,//最外层文件是‘’
@@ -25,11 +28,9 @@ import * as allAction from '@/actions/workAction.js';
 class WorkFileItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            createPerson:''
-         }
+        this.state = {}
     }
-    TocheckAworkFileItem = (e) => {
+    TocheckAworkFileItem = (e) => {//单选
         let { ToSwitchCheckAWorkFileAction } = this.props;
         let myId= this.ccc.rcCheckbox.input.dataset.id;
         ToSwitchCheckAWorkFileServer({myId,check:e.target.checked}).then(({data})=>{
@@ -47,7 +48,6 @@ class WorkFileItem extends React.Component {
             AlreadyCreateAWorksFileAction ,
             AlreadyModifyAWorkFileNameAction ,
             HideInputAction ,
-            forCreate , 
             oneFileData 
         } = this.props;
         let val = this.WorkFileItemNameInput.value.trim();
@@ -71,7 +71,6 @@ class WorkFileItem extends React.Component {
                         if(data && data.success){
                             let { myId , workFileName } = data.data;
                             AlreadyModifyAWorkFileNameAction({myId,workFileName,lastestModifyTime: now})
-                            HideInputAction()
                         }
                     })
                 }
@@ -86,10 +85,10 @@ class WorkFileItem extends React.Component {
                 }).then(({data})=>{
                     if(data && data.success){
                         AlreadyCreateAWorksFileAction(data.data)
-                        HideInputAction()
                     }
                 })
             }
+            HideInputAction()
         }
     }
     deleteOneWorkFile = (myId) => {//删除文件夹
@@ -101,12 +100,12 @@ class WorkFileItem extends React.Component {
             }
         })
     }
-    ModifyOneWorkFile = (myId) => {//重命名
+    ModifyOneWorkFile = (myId) => {//重命名input框显示
         let { ModifyAWorkFileNameAction } = this.props;
         ModifyAWorkFileNameAction(myId)
     }
     ToInside = (e) => {//进入文件内部
-        let { history , location } = this.props;
+        let { history , location , GetAllWorksFileUnderParentWorksFileAction } = this.props;
         let t = e.target;
         let rej = (t.classList.contains('LiCheckBox') ||
                    t.classList.contains('ModifyItemToolsDeleteIcon') ||
@@ -123,7 +122,7 @@ class WorkFileItem extends React.Component {
                  t.classList.contains('lastestModifyTime') ||
                  t.classList.contains('ModifyItemTools')
         ){
-            t = e.target.parentNode.parentNode.parentNode;
+            t = e.target.parentNode.parentNode;
 
         }else if(t.classList.contains('WorkFileIcon') || 
                 t.classList.contains('workFileItemName')
@@ -133,20 +132,82 @@ class WorkFileItem extends React.Component {
         let myId = t.dataset.id;
         if(myId){
             let oldPath = location.pathname;
-            let newpath = `${oldPath}/${myId}`
+            let arr = oldPath.split('/');
+            let fileId = arr[2]*1
+            let newpath = '';
+            if(arr[arr.length-2] === 'works'){
+                oldPath = arr.splice(0,arr.length-1).join('/');
+                newpath = `${oldPath}/${myId}`;
+            }else{
+                oldPath = arr.splice(0,arr.length-1).join('/')+'/works';
+                newpath = `${oldPath}/${myId}`;
+            }
             history.push({pathname:newpath,state:{t:'works'}})
+            GetAllWorksFileUnderParentWorksFileServer({
+                fileId,parentId:myId
+            }).then(({data})=>{
+                if(data.success){
+                    GetAllWorksFileUnderParentWorksFileAction(data.data)
+                }
+            })
         }
+    }
+    goToHideInput = () => {//修改文件名的input失去焦点隐藏时    
+        let { 
+            AlreadyModifyAWorkFileNameAction ,
+            HideInputAction ,
+            oneFileData 
+        } = this.props;
+        let val = this.WorkFileItemNameInput.value.trim();
+        let now = Date.now();
+        if(this.props.oneFileData){//修改文件的名字
+            if(oneFileData.workFileName!==val){
+                ModifyAWorkFileNameServer({
+                    workFileName:val,
+                    myId:oneFileData.myId,
+                    lastestModifyTime: now
+                }).then(({data})=>{
+                    if(data && data.success){
+                        let { myId , workFileName } = data.data;
+                        AlreadyModifyAWorkFileNameAction({myId,workFileName,lastestModifyTime: now})
+                    }
+                })
+            }
+            
+        }
+        HideInputAction()
     }
     render() { 
         let { 
             forCreate, 
-            oneFileData 
+            oneFileData,
+            state:{worksFile}
         } = this.props; 
         let c = false;
-        let dataId = ''
+        let dataId = '';
+        let time = '';
+        let oneLiCanCopyOrMove = worksFile.some(val=>val.check);
         if(oneFileData && oneFileData.myId){
             c = oneFileData.check;
             dataId = oneFileData.myId;
+            time = timeFormat(oneFileData.lastestModifyTime);
+            let year = new Date().getFullYear();
+            let month = new Date().getMonth()+1;
+            let day = new Date().getDate();
+            let modifiedDate = time.split(' ')[0];
+            let y = modifiedDate.split('-')[0]*1;
+            let m = modifiedDate.split('-')[1]*1;
+            let d = modifiedDate.split('-')[2]*1;
+            time = modifiedDate.split(' ')[0];
+            if(year === y){
+                if(month === m){
+                    if(day === d){
+                        time = '今天'
+                    }else if(day > d){
+                        time = day-d+'天前';
+                    }
+                }
+            }
         }
         return (
             <li className="workFileItemLi" onDoubleClick={this.ToInside} data-id={oneFileData?oneFileData.myId:''}>
@@ -169,11 +230,12 @@ class WorkFileItem extends React.Component {
                             onKeyUp={this.ToCreateANewWorkFile}
                             ref={node=>this.WorkFileItemNameInput = node}
                             defaultValue={oneFileData?oneFileData.workFileName:null}
+                            onBlur={this.goToHideInput}
                         />:<p className="workFileItemName">{oneFileData.workFileName}</p>}
                     </div>
                     <div className="workFileItemInfo">
                         <span className="establishUser">lucia</span>
-                        <span className="lastestModifyTime">今天</span>
+                        <span className="lastestModifyTime">{time}</span>
                         {oneFileData && oneFileData.myId ?
                             <div className="ModifyItemTools">
                                 <Icon 
@@ -182,24 +244,15 @@ class WorkFileItem extends React.Component {
                                     className="ModifyItemToolsDeleteIcon"
                                     onClick={this.deleteOneWorkFile.bind(this,oneFileData.myId)}
                                 />
-                                <Icon 
-                                    type="copy"  
-                                    title="复制文件夹" 
-                                    className="ModifyItemToolsCopyIcon"
-                                    />
-                                <Icon 
-                                    type="profile" 
-                                    title="移动文件夹" 
-                                    className="ModifyItemToolsMoveIcon"
-                                />
+                                <MoveOrCopyWorkFilesMask insideLi='true' CanCopyOrMove={oneLiCanCopyOrMove} checkedCount='1'/>
                                 <Icon 
                                     type="edit"  
                                     title="重命名"  
                                     className="ModifyItemToolsRenameIcon"
                                     onClick={this.ModifyOneWorkFile.bind(this,oneFileData.myId)}
                                 /> 
-                            </div>: null
-                        }
+                            </div>
+                            : null}
                     </div>
                 </div>
                 {/* <DelteWorkFileCover/> */}

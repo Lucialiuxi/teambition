@@ -23,10 +23,10 @@ export function CustomeLink({ tag,to,event,className,label}) {
     );
   }
 
-//补零
-export function add0(m){return m<10?'0'+m:m }
+
 //时间戳转化成时间格式
-export function timeFormat(timestamp){
+export function timeFormat(timestamp){//补零
+    function add0(m){return m<10?'0'+m:m }
   //timestamp是整数，否则要parseInt转换,不会出现少个0的情况
     var time = new Date(timestamp);
     var year = time.getFullYear();
@@ -38,24 +38,3 @@ export function timeFormat(timestamp){
     return year+'-'+add0(month)+'-'+add0(date)+' '+add0(hours)+':'+add0(minutes)+':'+add0(seconds);
 }
   
-  // export function CustomeLink({ tag, activeClass,to, exact,label}) {
-  //   return (
-  //     <Route 
-  //       path={to}
-  //       exact={exact}
-  //       children={
-  //         ({match}) => {
-  //             let l = <Link 
-  //             className={match ? activeClass : ''}
-  //               to={to}>{label}
-  //             </Link>;
-            
-  //           l = (tag && tag !== "a") ? React.createElement(tag, null, l) : l;
-  
-  //           return l
-  //         }
-  //       }
-  //     >    
-  //     </Route>
-  //   );
-  // }

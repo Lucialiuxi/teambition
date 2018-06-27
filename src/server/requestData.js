@@ -79,7 +79,10 @@ export const deleteATaskItemServer = (param) => {
     return axios.post('/deleteATaskItem', param)
 }
 
-//查询一个项目文件下的任务列表 
+/**
+ * 查询一个项目文件下的任务列表
+ * @param {fileId: Number} param 
+ */
 export const GetTaskItemServer = (param) => {
     return axios.post('/GetTaskItem', param)
 }

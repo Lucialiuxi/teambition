@@ -9,9 +9,9 @@
     height: 535px;
     width: 670px;
     position: relative;
+    top: -75px;
 }
 .ant-modal .ant-modal-content .ant-modal-body{
-    /* height: 430px; */
     height: 310px;
     padding: 24px 0 0 24px;
 }
@@ -21,9 +21,6 @@
     float: left;
 }
 .ant-modal-content .ant-modal-body .title{
-    /* width: 180px;
-    height: 100%;
-    margin-right: 30px; */
     width: 100px;
     height: 100%;
     margin-right: 20px;
@@ -125,10 +122,7 @@
 .goToModifyFileInfo .ant-modal .ant-modal-content{
     height: 445px;
 }
-.goToModifyFileInfo .ant-modal  .ant-modal-footer div button:last-child{
-    /* background-color: #d9d9d9;
-    border-color: #d9d9d9; */
-}
+
 .goToModifyFileInfo .ant-modal  .ant-modal-footer div button:disabled{
     background-color: #d9d9d9;
     border-color: #d9d9d9;
@@ -154,4 +148,105 @@
 .ant-confirm-body-wrapper{
     padding: 15px;
     box-sizing: border-box;
+}
+ 
+.MoveOrCopyWorkFilesMask .ant-modal-content .ant-modal-body{
+    height: 400px;
+    background: red;
+    padding: 0;
+}
+.MoveOrCopyWorkFilesMask .ant-modal-content .ant-modal-footer{
+    padding: 20px;
+    box-sizing: border-box;
+}
+#MoveOrCopyWorkFilesMaskContent{
+    width: 100%;
+    height: 100%;
+    background: pink;
+}
+#MoveOrCopyWorkFilesMaskContent .projectFileMenuContainer,
+#MoveOrCopyWorkFilesMaskContent .WorkFilesMenu{
+    float: left;
+    height: 100%;
+}
+#MoveOrCopyWorkFilesMaskContent .projectFileMenuContainer{
+    width: 200px;
+    background: skyblue;
+    height: 100%;
+}
+#MoveOrCopyWorkFilesMaskContent .projectFileMenuContainer .projectFileMenuList{
+    height: 93%;
+    overflow-y: visible;
+    overflow-x: hidden;
+
+}
+.projectFileMenuContainer .projectFileMenuTitle{
+    margin-bottom: 5px;
+    background: pink;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+.projectFileMenuContainer .projectFileMenuList .projectFileMenuItem,
+.WorkFilesMenu .WorkFilesMenuList .WorkFilesMenuItem{
+    padding: 0 15px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+}
+.projectFileMenuContainer .projectFileMenuList .projectFileMenuItem.active,
+.WorkFilesMenu .WorkFilesMenuList .WorkFilesMenuItem.active{
+    background: #fff;
+}
+.projectFileMenuContainer .projectFileMenuList .projectFileMenuItem:hover,
+.WorkFilesMenu .WorkFilesMenuList .WorkFilesMenuItem:hover{
+    background: #eee;
+}
+#MoveOrCopyWorkFilesMaskContent .WorkFilesMenuWrap{
+    float: left;
+    background: indianred;
+    height: 400px;
+    width: 470px;
+    overflow: auto;
+    overflow-x: visible;
+    overflow-y: hidden;
+}
+#MoveOrCopyWorkFilesMaskContent .projectFileMenuList::-webkit-scrollbar,
+#MoveOrCopyWorkFilesMaskContent .WorkFilesMenuWrap::-webkit-scrollbar ,
+#MoveOrCopyWorkFilesMaskContent .WorkFilesMenu .WorkFilesMenuList::-webkit-scrollbar {
+    width: 5px;     
+    height: 5px;
+}
+#MoveOrCopyWorkFilesMaskContent .projectFileMenuList::-webkit-scrollbar-thumb,
+#MoveOrCopyWorkFilesMaskContent .WorkFilesMenuWrap::-webkit-scrollbar-thumb,
+#MoveOrCopyWorkFilesMaskContent .WorkFilesMenu .WorkFilesMenuList::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #535353;
+}
+#MoveOrCopyWorkFilesMaskContent .projectFileMenuList::-webkit-scrollbar-thumb,
+#MoveOrCopyWorkFilesMaskContent .WorkFilesMenu .WorkFilesMenuList::-webkit-scrollbar-thumb {
+    background: grey;
+}
+#MoveOrCopyWorkFilesMaskContent .projectFileMenuList::-webkit-scrollbar-track,
+#MoveOrCopyWorkFilesMaskContent .WorkFilesMenuWrap::-webkit-scrollbar-track ,
+#MoveOrCopyWorkFilesMaskContent .WorkFilesMenu .WorkFilesMenuList::-webkit-scrollbar-track{
+    border-radius: 10px;
+    background: #EDEDED;
+}
+#MoveOrCopyWorkFilesMaskContent .WorkFilesMenu .WorkFilesMenuList{
+    display: inline-block;
+    width: 220px;
+    background: slateblue;
+    height: 100%;
+    border-right: 1px solid #eee;
+    padding: 30px 0 15px;
+    overflow-y: visible;
+    overflow-x: hidden;
+}
+#MoveOrCopyWorkFilesMaskContent .WorkFilesMenuWrap .WorkFilesMenu{
+    height: 400px;
+    white-space: nowrap;
 }
