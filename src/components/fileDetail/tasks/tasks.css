@@ -16,12 +16,20 @@ body{
     background-color: #fff;
     box-sizing: border-box;
     z-index: 1;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
-#TasksWrap::-webkit-scrollbar-thumb{
-    height: 2px;
-    color: #eee;
-    cursor: pointer;
+#TasksWrap::-webkit-scrollbar {
+    width: 8px;     
+    height: 8px;
+}
+#TasksWrap::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #808080;
+}
+#TasksWrap::-webkit-scrollbar-track{
+    border-radius: 10px;
+    background: #EDEDED;
 }
 #TasksWrap .taskItem{
     position: relative;

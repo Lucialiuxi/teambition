@@ -2,7 +2,7 @@ import { Breadcrumb , Icon  } from 'antd';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter , Link } from 'react-router-dom';
 import * as allAction from '@/actions/workAction.js';
 
 class WorkHead extends React.Component {
@@ -16,13 +16,24 @@ class WorkHead extends React.Component {
         GoToCreateAWorksFileAction()
     }
     render() { 
-        let { state:{ worksFile } } = this.props;
+        let { state:{ worksFile , worksFilrCrumb } } = this.props;
+        // console.log('worksFilrCrumb',worksFilrCrumb)
+        let len = worksFilrCrumb ? worksFilrCrumb.length : 0;
         return ( 
             <div className="WorkHeadWrap">
                 <header className="WorkHead">
                     <Breadcrumb separator=">" className="work-header-title">
                         <Breadcrumb.Item href="" >文件库</Breadcrumb.Item>
-                        { worksFile && worksFile[0] ? <Breadcrumb.Item></Breadcrumb.Item> : null }
+                        { worksFilrCrumb && worksFilrCrumb[0] ?
+                            worksFilrCrumb.map((val,index)=>{
+                                return <Breadcrumb.Item 
+                                            data-id={val.myId}
+                                            key={val.myId}
+                                        >
+                                        {len===index ? val.workFileName : <Link to={`/project/32673061269736/works/${val.myId}`}>{val.workFileName}</Link>}
+                                        </Breadcrumb.Item>
+                            })
+                         : null }
                     </Breadcrumb>
                     <div className="workHeadTools">
                         <a className="workCreator"  onClick={this.toCreateAWorkFile}>

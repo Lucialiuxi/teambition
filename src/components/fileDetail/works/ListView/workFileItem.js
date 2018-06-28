@@ -1,20 +1,22 @@
 import {  Checkbox , Icon } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { 
     withRouter
 } from 'react-router-dom';
+//删除一个li的定位提醒框
 import DelteWorkFileCover from '../delteCover.js';
+import * as allAction from '@/actions/workAction.js';
 import { CreateAWorkFileServer , 
         DeleteAWorksFileServer ,
         ModifyAWorkFileNameServer , 
         ToSwitchCheckAWorkFileServer
     } from '@/server/requestData.js';
-import { bindActionCreators } from 'redux';
-import * as allAction from '@/actions/workAction.js';
 import { timeFormat } from '@/commonfunc/index';
 import MoveOrCopyWorkFilesMask from '@/components/mask/MoveOrCopyWorkFilesMask.js';
 import { GetAllWorksFileUnderParentWorksFileServer } from '@/server/requestData.js';
+
 /**
     fileId: Number,
     parentId: String,//最外层文件是‘’
@@ -91,21 +93,38 @@ class WorkFileItem extends React.Component {
             HideInputAction()
         }
     }
-    deleteOneWorkFile = (myId) => {//删除文件夹
-        let { DeleteAWorksFileAction } = this.props;
-        DeleteAWorksFileServer({myId})
-        .then(({data})=>{
+    toDeleteOneWorkFile = (myId) => {//显示确认删除定位框
+        let { toShowDelteCoverAction } = this.props;
+        console.log(this.props)
+        toShowDelteCoverAction(myId)
+    }
+    toHideTheDeleteCover = (myId) => {//隐藏显示的定位框
+        let { toHideDelteCoverAction } = this.props;
+        toHideDelteCoverAction()
+    }
+    confirmDeleteThisWorkFile = (myId) => {//删除myId对应的work文件夹
+        let { DeleteAWorksFileAction , toHideDelteCoverAction } = this.props;
+        DeleteAWorksFileServer({myId}).then(({data})=>{
             if(data && data.success){
-                DeleteAWorksFileAction(data.data.myId)
+                DeleteAWorksFileAction(data.data.myId);
             }
+        }).then(()=>{
+            toHideDelteCoverAction()
         })
+
     }
     ModifyOneWorkFile = (myId) => {//重命名input框显示
         let { ModifyAWorkFileNameAction } = this.props;
         ModifyAWorkFileNameAction(myId)
     }
     ToInside = (e) => {//进入文件内部
-        let { history , location , GetAllWorksFileUnderParentWorksFileAction } = this.props;
+        let { 
+                history , 
+                location , 
+                GetAllWorksFileUnderParentWorksFileAction ,
+                dbClickToWorkFileInsideAction ,
+                state: { worksFile } ,
+            } = this.props;
         let t = e.target;
         let rej = (t.classList.contains('LiCheckBox') ||
                    t.classList.contains('ModifyItemToolsDeleteIcon') ||
@@ -142,11 +161,15 @@ class WorkFileItem extends React.Component {
                 oldPath = arr.splice(0,arr.length-1).join('/')+'/works';
                 newpath = `${oldPath}/${myId}`;
             }
+            //被点击的文件的文件名
+            let workFileName = worksFile.find(val=>val.myId===myId).workFileName;
+
             history.push({pathname:newpath,state:{t:'works'}})
             GetAllWorksFileUnderParentWorksFileServer({
                 fileId,parentId:myId
             }).then(({data})=>{
                 if(data.success){
+                    dbClickToWorkFileInsideAction({workFileName,myId})
                     GetAllWorksFileUnderParentWorksFileAction(data.data)
                 }
             })
@@ -154,14 +177,26 @@ class WorkFileItem extends React.Component {
     }
     goToHideInput = () => {//修改文件名的input失去焦点隐藏时    
         let { 
+            location: { pathname } , 
+            state: { getFileInfo } , 
+            AlreadyCreateAWorksFileAction ,
             AlreadyModifyAWorkFileNameAction ,
             HideInputAction ,
             oneFileData 
         } = this.props;
         let val = this.WorkFileItemNameInput.value.trim();
+        let arr = pathname.split('/');
+        let parentId = '';
+        //网址结尾不是works的话，那最后的字符串就是父级的文件id
+        if(arr.length===5){
+            parentId = arr[arr.length-1];
+        }
+        let fileId = arr[2]*1;
         let now = Date.now();
+        let username = getFileInfo.find(val=>val.fileId===fileId).userLoginName;
         if(this.props.oneFileData){//修改文件的名字
             if(oneFileData.workFileName!==val){
+                console.log('修改')
                 ModifyAWorkFileNameServer({
                     workFileName:val,
                     myId:oneFileData.myId,
@@ -174,6 +209,20 @@ class WorkFileItem extends React.Component {
                 })
             }
             
+        }else{//新建一个文件
+            if(val==='') return;
+            console.log('新建')
+            CreateAWorkFileServer({
+                username,
+                fileId,
+                parentId,
+                workFileName: val,
+                lastestModifyTime: now
+            }).then(({data})=>{
+                if(data && data.success){
+                    AlreadyCreateAWorksFileAction(data.data)
+                }
+            })
         }
         HideInputAction()
     }
@@ -184,8 +233,8 @@ class WorkFileItem extends React.Component {
             state:{worksFile}
         } = this.props; 
         let c = false;
-        let dataId = '';
-        let time = '';
+        let dataId = '';//data-id
+        let time = '';//显示创建/修改时间
         let oneLiCanCopyOrMove = worksFile.some(val=>val.check);
         if(oneFileData && oneFileData.myId){
             c = oneFileData.check;
@@ -242,7 +291,7 @@ class WorkFileItem extends React.Component {
                                     type="delete" 
                                     title="删除文件夹" 
                                     className="ModifyItemToolsDeleteIcon"
-                                    onClick={this.deleteOneWorkFile.bind(this,oneFileData.myId)}
+                                    onClick={this.toDeleteOneWorkFile.bind(this,oneFileData.myId)}
                                 />
                                 <MoveOrCopyWorkFilesMask insideLi='true' CanCopyOrMove={oneLiCanCopyOrMove} checkedCount='1'/>
                                 <Icon 
@@ -255,7 +304,11 @@ class WorkFileItem extends React.Component {
                             : null}
                     </div>
                 </div>
-                {/* <DelteWorkFileCover/> */}
+                { oneFileData && oneFileData.goToDelete ? <DelteWorkFileCover 
+                    myId={oneFileData?oneFileData.myId:''}
+                    confirmDeleteThisWorkFile={this.confirmDeleteThisWorkFile}
+                    toHideTheDeleteCover={this.toHideTheDeleteCover}
+                /> : null }
             </li> 
             )
     }

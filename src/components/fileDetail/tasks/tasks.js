@@ -41,7 +41,7 @@ class Tasks extends Component {
         }
     }
     componentDidMount(){
-        this._isMounted = true
+        // this._isMounted = true
         //  点击新建子任务编辑框 之外的地方  隐藏编辑框
         let {
             HideAllTaskItemCalenderAction,
@@ -183,7 +183,7 @@ class Tasks extends Component {
                     aboutChooseFileNameCover ||
                     aboutChooseTaskItemNameCover)
             
-            //-------------------------------控制新建任务框的各种cover框----------------------------------
+            //-----------------------控制新建任务框的各种cover框-----------------
             if(target.classList.contains('task-creator-handler-wrap') ||
                 target.classList.contains('task-creator-handler') ||
                 target.classList.contains('AddSubTaskIcon')
@@ -228,12 +228,10 @@ class Tasks extends Component {
                      target.classList.contains('anticon-calendar') ||
                      target.classList.contains('date-text')
             ){//设置时间
-                // console.log('设置时间')
             }else if((target.classList.contains('priority-container')||
                      target.classList.contains('icon-circle')) && 
                      (!target.classList.contains('showUrgencyLevel'))
             ){//设置紧急程度
-                // console.log('关闭设置紧急程度')
                 HideChoiceUrgencyLevelAction('close');
             }else if(aboutTags){//设置标签
                 ////关闭任务紧急情况选择框
@@ -252,7 +250,7 @@ class Tasks extends Component {
                     })
                 }
             }
-            //----------------------------控制下拉菜单--------------------------------------------
+            //----------------------------控制下拉菜单--------------------------------
             if(!aboutDropDownMenu){
                 //隐藏下拉菜单
                 HideTaskItemDropDownContainerAction('close');
@@ -274,7 +272,7 @@ class Tasks extends Component {
                     ToHideShowCurrentTaskItemNameCoverAction('close')
                 }
             }
-//----------------------------控制新建任务列表框--------------------------------------------
+            //----------------------------控制新建任务列表框--------------------------
             let aboutCreateTaskItem = (target.classList.contains('createWrap') ||
                 !(target.classList.contains('createTaskItem') ||
                 target.classList.contains('taskItemCreateIcon') ||
@@ -290,8 +288,6 @@ class Tasks extends Component {
                 //新建项目列表框 隐藏
                 HideTaskItemCreatorAction('close');
             }
-//----------------------控制复制或者移动任务 的选择项目 列表 的cover框-----------------------------
-
         } 
     }
     GoToCreateSubTask=(id)=>{// 显示 新建子任务框
@@ -327,7 +323,7 @@ class Tasks extends Component {
         }
     }
     componentWillUnmount(){
-        this._isMounted = false;
+        // this._isMounted = false;
     }
     render() { 
         let { deadlineData } = this.state;

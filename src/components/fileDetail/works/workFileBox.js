@@ -1,17 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { 
-    withRouter ,    
-    BrowserRouter as Router,
-    Route
-} from 'react-router-dom';
+import {  withRouter } from 'react-router-dom';
 import FileInside from '@/components/fileDetail/fileInside';
 import { bindActionCreators } from 'redux';
 import WorkFileItem from './ListView/workFileItem.js';
 import EmptyWorkFile from './ListView/emptyWorkFile.js';
 import ThumbNailWorkFileItem from './ThumbnailView/ThumbnailworkFileItem.js';
-import { GetAllWorksFileUnderParentWorksFileServer
-    } from '@/server/requestData.js';
+import { GetAllWorksFileUnderParentWorksFileServer } from '@/server/requestData.js';
 import * as allAction from '@/actions/workAction.js';
 
 class WorkFileBox extends React.Component {
@@ -20,7 +15,7 @@ class WorkFileBox extends React.Component {
         this.state = {  }
     }
     async componentWillMount(){
-        let { location:{ pathname } , GetAllWorksFileUnderParentWorksFileAction } = this.props;
+        let { location:{ pathname } , GetAllWorksFileUnderParentWorksFileAction} = this.props;
         let arr = pathname.split('/');
         let fileId = arr[2]*1;
         let parentId = '';
@@ -37,9 +32,25 @@ class WorkFileBox extends React.Component {
             GetAllWorksFileUnderParentWorksFileAction(data.data.data)
         }
     }
-
+    // shouldComponentUpdate(nextProps){//做性能优化
+    //     let a = this.props.state.worksFile;
+    //     let b = nextProps.state.worksFile;
+    //     let arr = new Set(a.concat(b))
+    //     if(arr.length!==0){
+    //         if(a.length==b.length){
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
     render() { 
-        let { tp , state:{ worksFile , worksViewType:{forCreate,sortByModifyTime} }} = this.props;
+        // tp是文件展示模式
+        let { tp , 
+              state:{ worksFile , 
+                      worksViewType:{ forCreate , sortByModifyTime } 
+                    }
+        } = this.props;
+
         //按照时间排序
         if(sortByModifyTime==='ascend'){//最新创建的排在最前
             worksFile = worksFile.sort((a,b)=>{

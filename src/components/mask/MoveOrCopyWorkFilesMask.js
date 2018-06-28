@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import * as allAction from '@/actions/workAction.js';
 import classnames from 'classnames'
 
+//移动和复制 work文件的弹框
 class MoveOrCopyWorkFilesMask extends React.Component {
   constructor(props) {
       super(props);
@@ -16,7 +17,13 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           title:''
         }
   }
+  clickToSearchWorkFilesInsideAprojectFile = (e) => {//点击 个人项目，查询项目文件下的work文件
+    let t = e.target;
+    if(t.nodeName !== 'LI') return;
+    let fileId = t.dataset.id*1;
+    console.log(fileId)
 
+  }
   showModal = (e) => {//显示移动框
     let t = e.target;
     if(t.classList.contains('moveCheckedWorkFile') || 
@@ -57,7 +64,6 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           state:{ getFileInfo , worksFile },
         } = this.props;
     let CurrentfileId = pathname.match(/\d+/g)[0]*1;
-    console.log(visible)
     return (
       <div className="MoveOrCopyWorkFilesMaskWrap"> 
         {!CanCopyOrMove ?
@@ -72,7 +78,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
             </span>
           </div> 
         : null}
-        <Modal
+        {visible ? <Modal
           className="MoveOrCopyWorkFilesMask"
           title={`${title}${checkedCount}个文件夹  至`}
           visible={this.state.visible}
@@ -81,32 +87,33 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           okText="确认"
           cancelText="取消"
         >
-        <section id="MoveOrCopyWorkFilesMaskContent">
-            <div className="projectFileMenuContainer">
-                <h3 className="projectFileMenuTitle">个人项目</h3>
-                <ul className="projectFileMenuList">
-                   {getFileInfo.map(val=>{
-                      return <li 
-                                className={classnames({'projectFileMenuItem':true,active:val.fileId===CurrentfileId})}
-                                key={val.fileId}
-                              >{val.FileName}</li>
-                   })}
-                </ul>
-            </div>
-            <div className="WorkFilesMenuWrap">
-              <div className="WorkFilesMenu">
-                  <ul className="WorkFilesMenuList">
-                      {worksFile.map(val=>{
-                          return <li 
-                                    className="WorkFilesMenuItem"
-                                    key={val.myId}
-                                  >{val.workFileName}</li>
-                      })}
+          <section id="MoveOrCopyWorkFilesMaskContent">
+              <div className="projectFileMenuContainer">
+                  <h3 className="projectFileMenuTitle">个人项目</h3>
+                  <ul className="projectFileMenuList" onClick={this.clickToSearchWorkFilesInsideAprojectFile}>
+                    {getFileInfo.map(val=>{
+                        return <li 
+                                  className={classnames({'projectFileMenuItem':true,active:val.fileId===CurrentfileId})}
+                                  key={val.fileId}
+                                  data-id={val.fileId}
+                                >{val.FileName}</li>
+                    })}
                   </ul>
-            </div>
-            </div>
-        </section>
-        </Modal>
+              </div>
+              <div className="WorkFilesMenuWrap">
+                <div className="WorkFilesMenu">
+                    <ul className="WorkFilesMenuList">
+                        {worksFile.map(val=>{
+                            return <li 
+                                      className="WorkFilesMenuItem"
+                                      key={val.myId}
+                                    >{val.workFileName}</li>
+                        })}
+                    </ul>
+              </div>
+              </div>
+          </section>
+        </Modal> : null}
       </div>
     );
   }

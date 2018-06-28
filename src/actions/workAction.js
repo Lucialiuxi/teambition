@@ -91,3 +91,35 @@ export const DeleteCheckedWorkFilesAction = (arr) => {
         arr
     }
 }
+
+//点击进入文件内部，记录文件信息  {myId: String,workFileName: String}
+export const dbClickToWorkFileInsideAction = (obj) => {
+    return {
+        type: 'DBCLICK_TO_WORKFILE_INSIDE_ACTION',
+        obj
+    }
+}
+
+//刷新有面包屑导航条的页面，把cookie存的拿出来存起来
+export const getBreadCrumbAction = (arr) => {
+    return {
+        type: 'GET_BREAD_CREAB_ACTION',
+        arr
+    }
+}
+
+//显示deleteCover定位框
+export const toShowDelteCoverAction = (myId) => {
+    console.log(myId)
+    return {
+        type: 'TO_SHOW_DELETE_COVER_ACTION',
+        myId
+    }
+}
+
+//隐藏deleteCover定位框
+export const toHideDelteCoverAction = () => {
+    return {
+        type: 'TO_HIDE_DELETE_COVER_ACTION'
+    }
+}

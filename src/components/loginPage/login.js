@@ -28,21 +28,21 @@ class Login  extends Component {
             id:''
          }
     }
-    changeUsernameValue=(ev)=>{
+    changeUsernameValue=(ev)=>{//输入用户名
         let val = this.refs.username.value
         if(val.trim()==='') return
         this.setState({
             username:val
         })
     }
-    changePasswordValue=(ev)=>{
+    changePasswordValue=(ev)=>{//输入密码
         let pw = this.refs.pw.value
         if(pw.trim()==='') return
         this.setState({
             password:pw
         })
     }
-    registerClick=()=>{
+    registerClick=()=>{//点击注册
         let o = this.state
         register({...o}).then(({data})=>{
             this.setState({
@@ -64,7 +64,7 @@ class Login  extends Component {
             
         })
     }
-    loginClick=()=>{
+    loginClick=()=>{//点击登录
         let o = this.state;
         login({...o}).then(({data})=>{
             this.setState({

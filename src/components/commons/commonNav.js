@@ -69,7 +69,7 @@ const ProjectTypes = [
                         )}
                     />
                 </div>
-                <h1 className="siteLogo">teambition</h1>
+                {/* <h1 className="siteLogo">teambition</h1> */}
                 <div  className="Nav-bar-right">
                     <span className="userAvatar">
                         <Avatar size="large" icon="user" />

@@ -164,6 +164,9 @@
     height: 100%;
     background: pink;
 }
+#MoveOrCopyWorkFilesMaskContent .projectFileMenuContainer{
+    border-right: 1px solid #eee;
+}
 #MoveOrCopyWorkFilesMaskContent .projectFileMenuContainer,
 #MoveOrCopyWorkFilesMaskContent .WorkFilesMenu{
     float: left;
@@ -188,9 +191,8 @@
 }
 .projectFileMenuContainer .projectFileMenuList .projectFileMenuItem,
 .WorkFilesMenu .WorkFilesMenuList .WorkFilesMenuItem{
-    padding: 0 15px;
+    padding: 5px 15px;
     box-sizing: border-box;
-    margin-bottom: 5px;
     cursor: pointer;
     text-overflow: ellipsis;
     white-space: nowrap;

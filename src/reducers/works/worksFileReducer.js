@@ -1,5 +1,5 @@
 const worksFile = ( state = [] , action ) => {
-
+    
     switch (action.type){
         //成功创建一个文件夹
         case 'ALREADY_CREATE_A_WORKS_FILE_ACTION':
@@ -10,7 +10,8 @@ const worksFile = ( state = [] , action ) => {
         //进入works文件 或者刷新的时候，把请求回来的数据保存起来
         case 'GET_ALL_WORKSFILE_UNDER_PARENT_WORKSFILE_ACTION':
             state = [...action.arr].map( val => {
-                val.isModifyWorkFileName = false;
+                val.isModifyWorkFileName = false;//编辑文件名的显示框
+                val.goToDelete = false; //确认删除定位框
                 return val
             });
         return state;
@@ -73,9 +74,21 @@ const worksFile = ( state = [] , action ) => {
             })
         return state.filter(val=>!val.delete)
 
+        //显示deleteCover定位框
+        case 'TO_SHOW_DELETE_COVER_ACTION':
+        return [...state].map(val=>{
+            if(val.myId===action.myId){
+                val.goToDelete = true;
+            }
+            return val;
+        })
 
-
-
+        //隐藏deleteCover定位框
+        case 'TO_HIDE_DELETE_COVER_ACTION':
+        return [...state].map(val=>{
+            val.goToDelete = false;
+            return val;
+        })
 
 
     default:

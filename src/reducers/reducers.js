@@ -4,6 +4,7 @@ import taskItemInfo from './tasks/taskItemInfoReducer';
 import subTaskInfo from './tasks/subTaskInfoReducer';
 import worksViewType from './works/worksViewReducer';
 import worksFile from './works/worksFileReducer';
+import worksFilrCrumb from './works/workFileCrumbRudcer';
 
 const allReduers = combineReducers({
     getFileInfo,//项目文件
@@ -11,6 +12,7 @@ const allReduers = combineReducers({
     subTaskInfo,//任务
     worksViewType,//文件显示模式
     worksFile,//文件
+    worksFilrCrumb,//文件块的面包屑显示
 })
 
 export default allReduers;
