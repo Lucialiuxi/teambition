@@ -36,6 +36,8 @@ class Works extends React.Component {
     }
     shouldComponentUpdate(nextProps){
         let { location: { pathname } } = nextProps;
+        // console.log('1',pathname)
+        // console.log('2',this.props.location.pathname)
         if(pathname.split('/').length===5){
             let newBreadCrumb = [];
             let BreadCrumb = cookie.load('BreadCrumb');
@@ -43,10 +45,10 @@ class Works extends React.Component {
                 newBreadCrumb = nextProps.state.worksFilrCrumb; 
                 if(newBreadCrumb[0]){
                     cookie.save('BreadCrumb',newBreadCrumb,{ path: '/' });
-                    console.log('合并')
+                    // console.log('合并')
                 }
             }else{
-                console.log('设置')
+                // console.log('设置')
                 newBreadCrumb = nextProps.state.worksFilrCrumb;
                 if(!BreadCrumb || newBreadCrumb[0]){
                     cookie.save('BreadCrumb',newBreadCrumb,{ path: '/' });
@@ -92,11 +94,12 @@ class Works extends React.Component {
         }else if(arr.length===5){
             parentId = arr[4];
         }
+        let fileId = arr[2]*1;
         return (
             <div className="WorksOverFlowDiv" >
                 {
                     tp && <div id="WorksWrap">
-                        <WorkHead  currentParentId={ parentId }/>
+                        <WorkHead  {...{fileId , currentParentId:parentId}}/>
                         <WorksNav tp={ tp }/>
                         <WorkFileBox  {...{ tp }}/>
                     </div> 

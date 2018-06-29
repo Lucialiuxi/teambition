@@ -95,7 +95,6 @@ class WorkFileItem extends React.Component {
     }
     toDeleteOneWorkFile = (myId) => {//显示确认删除定位框
         let { toShowDelteCoverAction } = this.props;
-        console.log(this.props)
         toShowDelteCoverAction(myId)
     }
     toHideTheDeleteCover = (myId) => {//隐藏显示的定位框
@@ -134,14 +133,15 @@ class WorkFileItem extends React.Component {
         if(rej) return;
         if(t.classList.contains('workFileItemInfo') ||
             t.classList.contains('workFileItemInfoWrap')
-        ){
+        ){  
             t = e.target.parentNode;
-        }else if(t.classList.contains('aboutWorkFileItemName') ||
-                 t.classList.contains('establishUser') ||
+        }else if(t.classList.contains('aboutWorkFileItemName')){
+            t = e.target.parentNode.parentNode;
+        }else if(t.classList.contains('establishUser') ||
                  t.classList.contains('lastestModifyTime') ||
                  t.classList.contains('ModifyItemTools')
         ){
-            t = e.target.parentNode.parentNode;
+            t = e.target.parentNode.parentNode.parentNode;
 
         }else if(t.classList.contains('WorkFileIcon') || 
                 t.classList.contains('workFileItemName')

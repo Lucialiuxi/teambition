@@ -12,6 +12,19 @@ const worksFilrCrumb = (state=[],action) => {
         case 'GET_BREAD_CREAB_ACTION':
         return Object.assign([],state,action.arr)       
 
+        //点击面包屑导航条，判断导航条的数据是否发生变化
+        case 'CHANGE_BREAD_CRUMB_ACTION':
+            let nState = state.concat();
+            let { myId } = action;
+            let I = nState.findIndex(val=>val.myId===myId);
+            
+           if(I>=0 && nState.length>1){
+                nState.splice(I+1)
+            }
+        return nState;
+        
+        case 'EMPTY_BREAD_CRUMB_ACTION':
+        return state=[];
     default:
         return state;
     }

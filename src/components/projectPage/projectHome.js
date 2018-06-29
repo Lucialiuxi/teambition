@@ -145,7 +145,7 @@ class Project  extends Component {
         }
     }
     componentWillReceiveProps(nextProps){
-        let { pathname } = nextProps.location;
+        let { location:{pathname} } = nextProps;
         let arr = pathname.split('/');
         if(arr[arr.length-1]==='tasks'){
            this.setState({

@@ -5,26 +5,70 @@ import {
     withRouter
 } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import * as allAction from '@/actions/workAction.js';
+import * as workAction from '@/actions/workAction.js';
+import { GetAllWorksFileUnderParentWorksFileServer } from '@/server/requestData.js';
 import classnames from 'classnames'
 
+/**
+  打开的时候，先看路由，
+    如果是works结尾，那就显示一栏
+  如果不是works结尾，就通过parentId找到以上层级的全部workfile
+ */
 //移动和复制 work文件的弹框
 class MoveOrCopyWorkFilesMask extends React.Component {
   constructor(props) {
       super(props);
       this.state = { 
-          visible: false,
-          title:''
+          visible: false,//控制弹框的显示
+          title:'',//弹框的类型
+          activeFileId:0,//被点击要高亮的个人项目li
         }
   }
-  clickToSearchWorkFilesInsideAprojectFile = (e) => {//点击 个人项目，查询项目文件下的work文件
+  componentWillMount(){
+    //把当前所在的项目文件下的数据存到reducer中
+    let { location: {pathname} , 
+          state:{ worksFile , WorkFileMoveAndCopyMaskData } ,
+          saveAGroupOfSameParentIdWorkFilesAction
+        } = this.props;
+    let pathArr = pathname.split('/');
+    if(pathArr.length===4){
+      localStorage.removeItem("WorkFileMoveAndCopyMaskData")
+      let CurrentfileId = pathname.match(/\d+/g)[0]*1;
+      this.setState({
+        activeFileId:CurrentfileId
+      })
+      saveAGroupOfSameParentIdWorkFilesAction({ ParentId: '' , arr:worksFile })
+    }else if(pathArr.length===5){
+      saveAGroupOfSameParentIdWorkFilesAction({ ParentId: pathArr[4]  ,  arr:worksFile })
+    }
+    localStorage.setItem('WorkFileMoveAndCopyMaskData',JSON.stringify(WorkFileMoveAndCopyMaskData))	
+  }
+
+  shouldComponentUpdate(nextProps){
+    return true
+  }
+
+  //点击 个人项目，查询项目文件下的work文件
+  clickToSearchWorkFilesInsideAprojectFile = (e) => {
+    let { 
+      saveAGroupOfSameParentIdWorkFilesAction, 
+      state:{ worksFile , WorkFileMoveAndCopyMaskData } ,
+       } = this.props;
     let t = e.target;
     if(t.nodeName !== 'LI') return;
     let fileId = t.dataset.id*1;
-    console.log(fileId)
-
+    GetAllWorksFileUnderParentWorksFileServer({fileId,parentId:''}).then(({data})=>{
+      if(data.success){
+        saveAGroupOfSameParentIdWorkFilesAction({ ParentId: '' , arr:data.data })
+      }
+    })
+    this.setState({
+      activeFileId:fileId
+    })
   }
-  showModal = (e) => {//显示移动框
+
+  //移动和复制 work文件的弹框
+  showModal = (e) => {
     let t = e.target;
     if(t.classList.contains('moveCheckedWorkFile') || 
       t.classList.contains('moveCheckedWorkFileIcon')
@@ -43,27 +87,28 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       visible: true,
     });
   }
+
   handleOk = (e) => {
     // console.log(e);
     this.setState({
       visible: false,
     });
   }
+
   handleCancel = (e) => {
     // console.log(e);
     this.setState({
       visible: false,
     });
   }
+
   render() {
-    let { title , visible } = this.state;
+    let { title , visible , activeFileId } = this.state;
     let { checkedCount , 
           insideLi , 
           CanCopyOrMove ,
-          location: {pathname} , 
-          state:{ getFileInfo , worksFile },
+          state:{ getFileInfo , worksFile , WorkFileMoveAndCopyMaskData},
         } = this.props;
-    let CurrentfileId = pathname.match(/\d+/g)[0]*1;
     return (
       <div className="MoveOrCopyWorkFilesMaskWrap"> 
         {!CanCopyOrMove ?
@@ -93,7 +138,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
                   <ul className="projectFileMenuList" onClick={this.clickToSearchWorkFilesInsideAprojectFile}>
                     {getFileInfo.map(val=>{
                         return <li 
-                                  className={classnames({'projectFileMenuItem':true,active:val.fileId===CurrentfileId})}
+                                  className={classnames({'projectFileMenuItem':true,active:val.fileId===activeFileId})}
                                   key={val.fileId}
                                   data-id={val.fileId}
                                 >{val.FileName}</li>
@@ -102,14 +147,9 @@ class MoveOrCopyWorkFilesMask extends React.Component {
               </div>
               <div className="WorkFilesMenuWrap">
                 <div className="WorkFilesMenu">
-                    <ul className="WorkFilesMenuList">
-                        {worksFile.map(val=>{
-                            return <li 
-                                      className="WorkFilesMenuItem"
-                                      key={val.myId}
-                                    >{val.workFileName}</li>
-                        })}
-                    </ul>
+                    {/* <ul className="WorkFilesMenuList">
+                        <li  className="WorkFilesMenuItem" >555555</li>
+                    </ul> */}
               </div>
               </div>
           </section>
@@ -125,6 +165,6 @@ const mapStateToProps = state => {
 }
 
 const  mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(allAction,dispatch)
+  return bindActionCreators(workAction,dispatch)
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MoveOrCopyWorkFilesMask));

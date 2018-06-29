@@ -4,6 +4,9 @@ body{
 input , button{
     outline: none;
 }
+a{
+    text-decoration: none;
+}
 .WorksOverFlowDiv{
     width: 1100px;
     height: 100%;
@@ -34,7 +37,7 @@ input , button{
     margin-right: 5px;
 }
 #WorksWrap .WorkHead .work-header-title{
-    font-size: 18px;
+    font-size: 16px;
     color: #383838;
 
 }

@@ -34,13 +34,11 @@ const ProjectTypes = [
           this.state = {  }
       }
       clickLoginOut=()=>{
-          console.log('clickLoginOut')
           let { history } = this.props;
           history.replace('/login')
           cookie.remove('UserName');
       }
       render() { 
-        //   console.log(this.props)
           return ( 
             <div className="commonNav">
                 <div className="Nav-bar-left">

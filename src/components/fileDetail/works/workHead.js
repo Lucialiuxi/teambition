@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter , Link } from 'react-router-dom';
 import * as allAction from '@/actions/workAction.js';
+import { GetAllWorksFileUnderParentWorksFileServer } from '@/server/requestData.js';
 
 class WorkHead extends React.Component {
     constructor(props) {
@@ -15,15 +16,44 @@ class WorkHead extends React.Component {
         let { GoToCreateAWorksFileAction } = this.props;
         GoToCreateAWorksFileAction()
     }
+    componentWillReceiveProps(nextProps){
+        let { location:{pathname:p} ,
+              changeBreadCrumbAction ,
+              emptyBreadCrumbAction ,
+              GetAllWorksFileUnderParentWorksFileAction
+        } = this.props;
+        let { location:{pathname} } = nextProps;
+        if(pathname!==p){
+            let arr = pathname.split('/');
+            let  myId = '';
+            if(arr.length===5){
+                myId = arr[4];
+            }
+            //work页回到最顶层文件的时候，不显示导航条 并清空已经存的移动和复制弹框用的数据
+            if(pathname==='/project/32673061269736/works'){
+                emptyBreadCrumbAction()
+            }
+            changeBreadCrumbAction(myId);
+            GetAllWorksFileUnderParentWorksFileServer({fileId: arr[2],parentId: myId }).then(({data})=>{
+                if(data.success){
+                    GetAllWorksFileUnderParentWorksFileAction(data.data)
+                }
+            })
+            return true
+        }else{
+            return false
+        }
+    }
     render() { 
-        let { state:{ worksFile , worksFilrCrumb } } = this.props;
-        // console.log('worksFilrCrumb',worksFilrCrumb)
+        let { state:{ worksFilrCrumb } } = this.props;
         let len = worksFilrCrumb ? worksFilrCrumb.length : 0;
         return ( 
             <div className="WorkHeadWrap">
                 <header className="WorkHead">
                     <Breadcrumb separator=">" className="work-header-title">
-                        <Breadcrumb.Item href="" >文件库</Breadcrumb.Item>
+                        <Breadcrumb.Item>
+                            <Link to={`/project/32673061269736/works`}>文件库</Link>
+                        </Breadcrumb.Item>
                         { worksFilrCrumb && worksFilrCrumb[0] ?
                             worksFilrCrumb.map((val,index)=>{
                                 return <Breadcrumb.Item 

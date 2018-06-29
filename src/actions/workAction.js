@@ -108,9 +108,24 @@ export const getBreadCrumbAction = (arr) => {
     }
 }
 
+//点击面包屑导航条，判断导航条的数据是否发生变化
+export const changeBreadCrumbAction = myId => {
+    return {
+        type: 'CHANGE_BREAD_CRUMB_ACTION',
+        myId
+    }
+}
+
+//work页回到最顶层文件的时候 和不在work页的时候，不显示导航条
+export const emptyBreadCrumbAction = () => {
+    return {
+        type: 'EMPTY_BREAD_CRUMB_ACTION'
+    }
+}
+
+
 //显示deleteCover定位框
 export const toShowDelteCoverAction = (myId) => {
-    console.log(myId)
     return {
         type: 'TO_SHOW_DELETE_COVER_ACTION',
         myId
@@ -121,5 +136,23 @@ export const toShowDelteCoverAction = (myId) => {
 export const toHideDelteCoverAction = () => {
     return {
         type: 'TO_HIDE_DELETE_COVER_ACTION'
+    }
+}
+
+/**
+ * 点击复制和移动workfiles的弹框里面的li，请求到的那个文件里面的文件的数据存起来
+ * @param { ParentId: String  ,  arr:[{},{},...] } obj 
+ */
+export const saveAGroupOfSameParentIdWorkFilesAction = obj => {
+    return {
+        type: 'SAVE_A_GROUP_OF_SAME_PARENTID_WOKRFILES_ACTION',
+        obj
+    }
+}
+
+//路由走到'/project/32673061269736/works'-->清空复制和移动workfiles弹框存的数据,
+export const emptyAGroupOfSameParentIdWorkFilesAction = obj => {
+    return {
+        type: 'EMPTY_A_GROUP_OF_SAME_PARENTID_WOKRFILES_ACTION',
     }
 }

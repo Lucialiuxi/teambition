@@ -28,7 +28,7 @@ class SubNav extends Component {
     //点击切换 任务  分享 文件 日程 群聊
     tabToOther=(activeKey)=>{
         //点击项目详情分类名字的时候传 【点击的项目详情分类名字、数字  文件id】 --到Project组件中
-        let { tabBar } = this.props;
+        let { tabBar , emptyBreadCrumbAction } = this.props;
         let t = '';
         if( activeKey==='1' || activeKey==='' ){
             t = 'tasks';
@@ -69,6 +69,11 @@ class SubNav extends Component {
             })
         }
         tabBar(t,activeKey,this.state.fId);
+
+        if(activeKey!=='3'){//不在works页的时候，清空面包屑导航
+            emptyBreadCrumbAction()
+
+        }
     }
     componentWillMount(){
         let { 
