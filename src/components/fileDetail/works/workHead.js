@@ -20,7 +20,8 @@ class WorkHead extends React.Component {
         let { location:{pathname:p} ,
               changeBreadCrumbAction ,
               emptyBreadCrumbAction ,
-              GetAllWorksFileUnderParentWorksFileAction
+              GetAllWorksFileUnderParentWorksFileAction,
+              emptyAGroupOfSameParentIdWorkFilesAction
         } = this.props;
         let { location:{pathname} } = nextProps;
         if(pathname!==p){
@@ -30,8 +31,10 @@ class WorkHead extends React.Component {
                 myId = arr[4];
             }
             //work页回到最顶层文件的时候，不显示导航条 并清空已经存的移动和复制弹框用的数据
-            if(pathname==='/project/32673061269736/works'){
+            //清空原来所存的修改和复制的弹框数据
+            if(arr.length===4){
                 emptyBreadCrumbAction()
+                emptyAGroupOfSameParentIdWorkFilesAction()
             }
             changeBreadCrumbAction(myId);
             GetAllWorksFileUnderParentWorksFileServer({fileId: arr[2],parentId: myId }).then(({data})=>{
@@ -45,14 +48,15 @@ class WorkHead extends React.Component {
         }
     }
     render() { 
-        let { state:{ worksFilrCrumb } } = this.props;
+        let { state:{ worksFilrCrumb } ,location:{pathname} } = this.props;
         let len = worksFilrCrumb ? worksFilrCrumb.length : 0;
+        let fileId = pathname.match(/\d+/g)[0]*1;
         return ( 
             <div className="WorkHeadWrap">
                 <header className="WorkHead">
                     <Breadcrumb separator=">" className="work-header-title">
                         <Breadcrumb.Item>
-                            <Link to={`/project/32673061269736/works`}>文件库</Link>
+                            <Link to={`/project/${fileId}/works`}>文件库</Link>
                         </Breadcrumb.Item>
                         { worksFilrCrumb && worksFilrCrumb[0] ?
                             worksFilrCrumb.map((val,index)=>{

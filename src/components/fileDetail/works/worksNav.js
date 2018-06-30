@@ -39,6 +39,10 @@ class WorksNav extends Component {
                 groupDeal:worksFile.some(val=>val.check===true),
                 checkedCount:num
             })
+            if(!worksFile[0]){
+                
+            console.log('空')
+            }
         }
         if(worksViewType){
             let t = worksViewType.sortByModifyTime === 'descend' ? "caret-up" : "caret-down";
@@ -110,6 +114,13 @@ class WorksNav extends Component {
         let { viewType , checkAll , sort , groupDeal , checkedCount } = this.state;
         let cls1 = classnames('ThumbnailView-Icon',{'active':viewType==='ThumbnailView'});
         let cls2 = classnames('ListView-Icon',{'active':viewType==='ListView'});
+        console.log(worksFile)
+        if(!worksFile[0]){
+            console.log('空')
+            groupDeal= false;
+            checkedCount = 0;
+            checkAll = false;
+        }
         return ( 
             <div className="worksNavWrap">
                 <Checkbox 

@@ -210,7 +210,6 @@
 }
 #MoveOrCopyWorkFilesMaskContent .WorkFilesMenuWrap{
     float: left;
-    background: indianred;
     height: 400px;
     width: 470px;
     overflow: auto;
@@ -242,7 +241,6 @@
 #MoveOrCopyWorkFilesMaskContent .WorkFilesMenu .WorkFilesMenuList{
     display: inline-block;
     width: 220px;
-    background: slateblue;
     height: 100%;
     border-right: 1px solid #eee;
     padding: 30px 0 15px;

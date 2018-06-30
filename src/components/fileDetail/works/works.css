@@ -233,6 +233,7 @@ a{
     text-align: center;
     cursor: pointer;
     border-radius: 3px;
+    z-index: 10000;
 }
 
 .workFilesWrap .workFileItemLi .workFileItemInfoWrap{

@@ -36,7 +36,6 @@ class FileItem extends Component {
     }
     render() {
         let { FileName , FileAbstract , fileId , star , goToFileCoverPage } = this.props;
-  
         if(!FileName){
             return null
         }

@@ -116,7 +116,7 @@ export const changeBreadCrumbAction = myId => {
     }
 }
 
-//work页回到最顶层文件的时候 和不在work页的时候，不显示导航条
+//work页回到最顶层文件的时候 和不在work页的时候，不显示面包屑导航条
 export const emptyBreadCrumbAction = () => {
     return {
         type: 'EMPTY_BREAD_CRUMB_ACTION'
@@ -150,9 +150,19 @@ export const saveAGroupOfSameParentIdWorkFilesAction = obj => {
     }
 }
 
-//路由走到'/project/32673061269736/works'-->清空复制和移动workfiles弹框存的数据,
-export const emptyAGroupOfSameParentIdWorkFilesAction = obj => {
+//路由走到'/project/fileId/works'-->清空复制和移动workfiles弹框存的数据,
+export const emptyAGroupOfSameParentIdWorkFilesAction = () => {
     return {
         type: 'EMPTY_A_GROUP_OF_SAME_PARENTID_WOKRFILES_ACTION',
     }
+}
+
+/**点击移动和复制 workfile的弹框的个人项目目录，后只显示顶层文件
+ * { ParentId: String  ,  arr:[{},{},...] }
+ */
+export const showTopLevelWorkFilesAction = obj => {
+    return {
+        type: 'SHOW_TOP_LEVEL_WORKFILES_ACTION',
+        obj
+    }  
 }

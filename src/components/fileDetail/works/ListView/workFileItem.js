@@ -126,6 +126,10 @@ class WorkFileItem extends React.Component {
             } = this.props;
         let t = e.target;
         let rej = (t.classList.contains('LiCheckBox') ||
+                   t.classList.contains('ant-checkbox-wrapper') ||
+                   t.classList.contains('ant-checkbox') ||
+                   t.classList.contains('ant-checkbox-input') ||
+                   t.classList.contains('ant-checkbox-inner') ||
                    t.classList.contains('ModifyItemToolsDeleteIcon') ||
                    t.classList.contains('ModifyItemToolsCopyIcon') ||
                    t.classList.contains('ModifyItemToolsMoveIcon') ||
@@ -293,7 +297,12 @@ class WorkFileItem extends React.Component {
                                     className="ModifyItemToolsDeleteIcon"
                                     onClick={this.toDeleteOneWorkFile.bind(this,oneFileData.myId)}
                                 />
-                                <MoveOrCopyWorkFilesMask insideLi='true' CanCopyOrMove={oneLiCanCopyOrMove} checkedCount='1'/>
+                                <MoveOrCopyWorkFilesMask 
+                                    insideLi='true' 
+                                    CanCopyOrMove={oneLiCanCopyOrMove} 
+                                    checkedCount='1'
+                                    oneFileData={oneFileData}
+                                />
                                 <Icon 
                                     type="edit"  
                                     title="重命名"  

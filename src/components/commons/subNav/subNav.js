@@ -109,8 +109,12 @@ class SubNav extends Component {
             activeKey:path.charAt(path.length-1)
         })
     }
-    shouldComponentUpdate(nextProps,nextState){
+    shouldComponentUpdate(){
         return true;
+    }
+    componentWillUnmount(){//不在work页的时候，不显示面包屑导航条
+        let { emptyBreadCrumbAction } = this.props;
+        emptyBreadCrumbAction();
     }
     render() {
         let { location , state:{getFileInfo} } = this.props;
