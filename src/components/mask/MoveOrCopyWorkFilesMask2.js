@@ -19,17 +19,17 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       this.state = { 
           visible: false,//控制弹框的显示
           title:'',//弹框的类型
-          activeWorkFileId:[],//目录显示的所在文件以及所有父级都高亮
+          activeWorkFileId:{},//目录显示的所在文件以及所有父级都高亮
           currentfileId:0,//当前所在的项目文件
         }
   }
   componentWillMount(){ 
     //把当前所在的项目文件下的数据存到reducer中
     let { location: {pathname} , 
-      state:{ worksFile , WorkFileMoveAndCopyMaskData } ,
+      state:{ worksFile , WorkFileMoveAndCopyMaskData ,worksFilrCrumb} ,
       saveAGroupOfSameParentIdWorkFilesAction,
       pushAWorkFilesMenuListAction ,
-      oneFileData
+      oneFileData,
     } = this.props;
     let { activeWorkFileId:abc } = this.state;
     let pathArr = pathname.split('/');
@@ -40,24 +40,26 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     if(pathArr.length===4){
       saveAGroupOfSameParentIdWorkFilesAction({ ParentId: '' , arr:worksFile });
       if(oneFileData){
-        abc.push(oneFileData.myId);
+        abc[''] = oneFileData.myId;
         this.setState({
           activeWorkFileId:abc
         })
       }
     }else if(pathArr.length===5){
       saveAGroupOfSameParentIdWorkFilesAction({ ParentId: pathArr[4]  ,  arr:worksFile });
+      let OBJ = {};
       let AllKey = Object.keys(WorkFileMoveAndCopyMaskData);
-      if(oneFileData){
-        AllKey = AllKey.concat(oneFileData.myId);
-        if(AllKey[0]===''){
-          AllKey = AllKey.filter(val => val !== '');
-        }
+      if(AllKey.length>1){
+        AllKey.forEach((val,i)=>{
+          if(worksFilrCrumb[i]){
+            OBJ[val] = worksFilrCrumb[i].myId
+          }
+        })
+        console.log(OBJ)
+        this.setState({
+          activeWorkFileId:OBJ
+        })
       }
-      console.log(AllKey)
-      this.setState({
-        activeWorkFileId:AllKey
-      })
     }
   }
   shouldComponentUpdate(nextProps){
@@ -116,17 +118,18 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       if(data.success){
         if(index===-1){//如果父级的id不存在，就说明是最后一组ul的里，就查询被点击的li的id,存到reducer对象里面
           pushAWorkFilesMenuListAction({ ParentId: clickedLiId , arr:data.data }) 
+          console.log(activeWorkFileId,clickedLiId)
         }else{//如果存在，就把循环看点击的ul是第几个ul，然后把之后的几组数据删掉
           console.log('替换')
           UpdateWorkFileMoveAndCopyMaskDataAction({ ulDataId:ulId , ParentId:clickedLiId})
         }
       }
     })
-    activeWorkFileId.splice(len-1);
-    activeWorkFileId.push(t.dataset.id);
-    this.setState({
-      activeWorkFileId
-    })
+    // activeWorkFileId.splice(len-1);
+    // activeWorkFileId.push(t.dataset.id);
+    // this.setState({
+    //   activeWorkFileId
+    // })
   }
   //移动和复制 work文件的弹框 显示
   showModal = (myId,e) => {
@@ -179,6 +182,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     for(let attr in WorkFileMoveAndCopyMaskData){ 
         arr.push(WorkFileMoveAndCopyMaskData[attr])
     }
+    // console.log(arr) 
     return (
       <div className="MoveOrCopyWorkFilesMaskWrap"> 
         {!CanCopyOrMove ?
@@ -221,13 +225,13 @@ class MoveOrCopyWorkFilesMask extends React.Component {
                       return <ul 
                                 className="WorkFilesMenuList" 
                                 key={index} 
-                                data-id={activeWorkFileId[index]}
+                                data-id={val[0].parentId}
                                 onClick={this.chooseWorkFile}
                               >
                               {
                                 val.map((e,i)=>{
                                   return <li  
-                                            className={classnames({"WorkFilesMenuItem":true, 'active':e.myId===activeWorkFileId[index] })}
+                                            className={classnames({"WorkFilesMenuItem":true, 'active':e.myId===activeWorkFileId[e.parentId] })}
                                             key={e.myId}
                                             data-id={e.myId}
                                           >{e.workFileName}</li>

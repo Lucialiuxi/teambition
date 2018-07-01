@@ -16,9 +16,29 @@ const WorkFileMoveAndCopyMaskData = ( state = {} , action ) => {
         //点击移动和复制 workfile的弹框的个人项目目录，后值只显示顶层文件
         case 'SHOW_TOP_LEVEL_WORKFILES_ACTION':
             let p = action.obj.ParentId;
-            let nState = {p:action.obj.arr};
+            let nState = {};
+            nState[p]=action.obj.arr;
         return nState;
 
+        //点击最后一个WorkFilesMenuList下的li
+        case 'PUSH_A_WORKFILESMENULIST_ACTION':
+            let Obj = {};
+            Obj[action.obj.ParentId] = action.obj.arr;
+            let longerState =  Object.assign({},state,Obj);
+        return longerState;
+
+        //点击的不是最后一个WorkFilesMenuList下的li，parentId 有ulDataId重复的，之后的都删除，把{ParentId:String , arr:[{},{},...]}加进去
+        case 'UPDATE_WORKFILE_MOVE_AND_COPY_MASKDATA_Action':
+            let updateState =  Object.assign({},state);
+            let newObj = {};
+            for(let attr in updateState){
+                if(attr === action.obj.ulDataId){
+                    break;
+                }
+                newObj[attr] = updateState[attr];
+            }
+        return newObj;
+        
     default:
         return state;
     }

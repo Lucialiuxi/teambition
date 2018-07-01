@@ -140,7 +140,7 @@ export const toHideDelteCoverAction = () => {
 }
 
 /**
- * 点击复制和移动workfiles的弹框里面的li，请求到的那个文件里面的文件的数据存起来
+ * 每点击进入下一层文件夹的时候，弹框就会挂载一次，把请求到的每一次的文件的数据存WorkFileMoveAndCopyMaskData
  * @param { ParentId: String  ,  arr:[{},{},...] } obj 
  */
 export const saveAGroupOfSameParentIdWorkFilesAction = obj => {
@@ -165,4 +165,26 @@ export const showTopLevelWorkFilesAction = obj => {
         type: 'SHOW_TOP_LEVEL_WORKFILES_ACTION',
         obj
     }  
+}
+
+/**
+ * 点击最后一个WorkFilesMenuList下的li，把请求到的数据放到reducer中
+ * { ParentId:String , arr:[{},{},...] }
+ */
+export const pushAWorkFilesMenuListAction = obj => {
+    return {
+        type: 'PUSH_A_WORKFILESMENULIST_ACTION',
+        obj
+    } 
+}
+
+/**
+ * 点击的不是最后一个WorkFilesMenuList下的li，parentId 有ulDataId重复的，之后的都删除
+ * { ulDataId:String , ParentId:String }
+ */
+export const UpdateWorkFileMoveAndCopyMaskDataAction = obj => {
+    return {
+        type:'UPDATE_WORKFILE_MOVE_AND_COPY_MASKDATA_Action',
+        obj
+    }
 }

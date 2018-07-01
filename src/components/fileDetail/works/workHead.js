@@ -33,6 +33,7 @@ class WorkHead extends React.Component {
             //work页回到最顶层文件的时候，不显示导航条 并清空已经存的移动和复制弹框用的数据
             //清空原来所存的修改和复制的弹框数据
             if(arr.length===4){
+                console.log('清空')
                 emptyBreadCrumbAction()
                 emptyAGroupOfSameParentIdWorkFilesAction()
             }

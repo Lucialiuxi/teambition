@@ -156,7 +156,7 @@ export const CreateAWorkFileServer = (param) => {
     return axios.post('/CreateAWorkFile',param)
 }
 
-/**查询当前路由所在层级的所有works文件 
+/**查询当前所在层级的所有works文件 
  * @param {fileId: Number,parentId: String } param 
  */
 export const GetAllWorksFileUnderParentWorksFileServer = (param) => {

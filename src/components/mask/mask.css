@@ -200,7 +200,8 @@
     background: #3da8f5;
     color: #fff;
 }
-.projectFileMenuContainer .projectFileMenuList .projectFileMenuItem.active:hover{
+.projectFileMenuContainer .projectFileMenuList .projectFileMenuItem.active:hover,
+.WorkFilesMenu .WorkFilesMenuList .WorkFilesMenuItem.active:hover{
     background: #3da8f5;
     color: #fff;
 }
@@ -220,7 +221,7 @@
 #MoveOrCopyWorkFilesMaskContent .WorkFilesMenuWrap::-webkit-scrollbar ,
 #MoveOrCopyWorkFilesMaskContent .WorkFilesMenu .WorkFilesMenuList::-webkit-scrollbar {
     width: 5px;     
-    height: 5px;
+    height: 10px;
 }
 #MoveOrCopyWorkFilesMaskContent .projectFileMenuList::-webkit-scrollbar-thumb,
 #MoveOrCopyWorkFilesMaskContent .WorkFilesMenuWrap::-webkit-scrollbar-thumb,

@@ -64,7 +64,7 @@ class WorkFileItem extends React.Component {
         let username = getFileInfo.find(val=>val.fileId===fileId).userLoginName;
         if(e.keyCode===13){
             if(this.props.oneFileData){//修改文件的名字
-                if(oneFileData.workFileName!==val){
+                if(oneFileData.workFileName!==val && val!==''){
                     ModifyAWorkFileNameServer({
                         workFileName:val,
                         myId:oneFileData.myId,
@@ -75,20 +75,21 @@ class WorkFileItem extends React.Component {
                             AlreadyModifyAWorkFileNameAction({myId,workFileName,lastestModifyTime: now})
                         }
                     })
-                }
-                
+                }    
             }else{//新建一个文件
-                CreateAWorkFileServer({
-                    username,
-                    fileId,
-                    parentId,
-                    workFileName: val,
-                    lastestModifyTime: now
-                }).then(({data})=>{
-                    if(data && data.success){
-                        AlreadyCreateAWorksFileAction(data.data)
-                    }
-                })
+                if(val!==''){
+                    CreateAWorkFileServer({
+                        username,
+                        fileId,
+                        parentId,
+                        workFileName: val,
+                        lastestModifyTime: now
+                    }).then(({data})=>{
+                        if(data && data.success){
+                            AlreadyCreateAWorksFileAction(data.data)
+                        }
+                    })
+                }
             }
             HideInputAction()
         }
@@ -165,18 +166,20 @@ class WorkFileItem extends React.Component {
                 oldPath = arr.splice(0,arr.length-1).join('/')+'/works';
                 newpath = `${oldPath}/${myId}`;
             }
-            //被点击的文件的文件名
-            let workFileName = worksFile.find(val=>val.myId===myId).workFileName;
+            if(worksFile){
+                //被点击的文件的文件名
+                let workFileName = worksFile.find(val=>val.myId===myId).workFileName;
+                history.push({pathname:newpath,state:{t:'works'}})
+                GetAllWorksFileUnderParentWorksFileServer({
+                    fileId,parentId:myId
+                }).then(({data})=>{
+                    if(data.success){
+                        dbClickToWorkFileInsideAction({workFileName,myId})
+                        GetAllWorksFileUnderParentWorksFileAction(data.data)
+                    }
+                })
 
-            history.push({pathname:newpath,state:{t:'works'}})
-            GetAllWorksFileUnderParentWorksFileServer({
-                fileId,parentId:myId
-            }).then(({data})=>{
-                if(data.success){
-                    dbClickToWorkFileInsideAction({workFileName,myId})
-                    GetAllWorksFileUnderParentWorksFileAction(data.data)
-                }
-            })
+            }
         }
     }
     goToHideInput = () => {//修改文件名的input失去焦点隐藏时    
@@ -199,8 +202,7 @@ class WorkFileItem extends React.Component {
         let now = Date.now();
         let username = getFileInfo.find(val=>val.fileId===fileId).userLoginName;
         if(this.props.oneFileData){//修改文件的名字
-            if(oneFileData.workFileName!==val){
-                console.log('修改')
+            if(oneFileData.workFileName!==val && val!==''){
                 ModifyAWorkFileNameServer({
                     workFileName:val,
                     myId:oneFileData.myId,
@@ -214,19 +216,19 @@ class WorkFileItem extends React.Component {
             }
             
         }else{//新建一个文件
-            if(val==='') return;
-            console.log('新建')
-            CreateAWorkFileServer({
-                username,
-                fileId,
-                parentId,
-                workFileName: val,
-                lastestModifyTime: now
-            }).then(({data})=>{
-                if(data && data.success){
-                    AlreadyCreateAWorksFileAction(data.data)
-                }
-            })
+            if(val!==''){
+                CreateAWorkFileServer({
+                    username,
+                    fileId,
+                    parentId,
+                    workFileName: val,
+                    lastestModifyTime: now
+                }).then(({data})=>{
+                    if(data && data.success){
+                        AlreadyCreateAWorksFileAction(data.data)
+                    }
+                })
+            }
         }
         HideInputAction()
     }

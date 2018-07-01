@@ -114,9 +114,9 @@ class WorksNav extends Component {
         let { viewType , checkAll , sort , groupDeal , checkedCount } = this.state;
         let cls1 = classnames('ThumbnailView-Icon',{'active':viewType==='ThumbnailView'});
         let cls2 = classnames('ListView-Icon',{'active':viewType==='ListView'});
-        console.log(worksFile)
+        // console.log(worksFile)
         if(!worksFile[0]){
-            console.log('空')
+            // console.log('空')
             groupDeal= false;
             checkedCount = 0;
             checkAll = false;

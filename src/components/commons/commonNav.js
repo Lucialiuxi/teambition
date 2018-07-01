@@ -39,6 +39,7 @@ const ProjectTypes = [
           cookie.remove('UserName');
       }
       render() { 
+          let user = cookie.load('UserName');
           return ( 
             <div className="commonNav">
                 <div className="Nav-bar-left">
@@ -46,11 +47,6 @@ const ProjectTypes = [
                         <Icon type="search"/>
                         <input type="text" className="searchProject" placeholder="搜索个人项目"/>
                     </div>
-                    <Icon 
-                        type="plus-circle"  
-                        className="extendBtn"
-                        style={{ fontSize: 20, color: '#3b93ff' }} 
-                    />
                     {/* 下拉选择项目 */}
                     <List
                         className="ProjectTypeSelect"
@@ -67,17 +63,12 @@ const ProjectTypes = [
                         )}
                     />
                 </div>
-                {/* <h1 className="siteLogo">teambition</h1> */}
                 <div  className="Nav-bar-right">
                     <span className="userAvatar">
                         <Avatar size="large" icon="user" />
                     </span>
-                    <span className="msgIcon">
-                        <Icon type="message" style={{ fontSize: 20, color: '#bebebe' }} />
-                    </span>
                     <span className="loginOut" onClick={this.clickLoginOut}>登出</span>
-                    <span className="schedule">日历</span>
-                    <span className="mine">我的</span>
+                    <span className="mine">你好，{user}~~</span>
                 </div>
             </div>
            )
