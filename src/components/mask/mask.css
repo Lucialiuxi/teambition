@@ -247,6 +247,7 @@
     padding: 30px 0 15px;
     overflow-y: visible;
     overflow-x: hidden;
+    /* background: skyblue; */
 }
 #MoveOrCopyWorkFilesMaskContent .WorkFilesMenuWrap .WorkFilesMenu{
     height: 400px;

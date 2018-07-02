@@ -184,7 +184,18 @@ export const pushAWorkFilesMenuListAction = obj => {
  */
 export const UpdateWorkFileMoveAndCopyMaskDataAction = obj => {
     return {
-        type:'UPDATE_WORKFILE_MOVE_AND_COPY_MASKDATA_Action',
+        type:'UPDATE_WORKFILE_MOVE_AND_COPY_MASKDATA_ACTION',
         obj
     }
+}
+
+/**
+ * 关闭移动复制弹框，数据回答打开之前的状态
+ */
+
+export const closeWorkFileMoveAndCopyMaskAction = obj => {
+    return {
+        type:'CLOSE_WORKFILEMOVEANDCOPYMASK_ACTION',
+        obj
+    }   
 }

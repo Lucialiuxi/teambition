@@ -41,7 +41,7 @@ class Tasks extends Component {
         }
     }
     componentDidMount(){
-        this._isMounted = true
+        this._isMounted = true;
         //  点击新建子任务编辑框 之外的地方  隐藏编辑框
         let {
             HideAllTaskItemCalenderAction,
@@ -247,7 +247,7 @@ class Tasks extends Component {
                 if(this._isMounted){
                     this.setState({
                         deadlineData:{}
-                    })
+                    }) 
                 }
             }
             //----------------------------控制下拉菜单--------------------------------
@@ -319,7 +319,7 @@ class Tasks extends Component {
         if(this._isMounted){
             this.setState({
                 deadlineData:{id,time}
-            })
+            })  
         }
     }
     componentWillUnmount(){

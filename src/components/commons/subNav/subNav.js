@@ -12,6 +12,7 @@ import { GetTaskItemServer ,
 
 import * as taskActions from '@/actions/taskAction';
 import * as workActions from '@/actions/workAction.js';
+import cookie from 'react-cookies';
 
 const TabPane = Tabs.TabPane;
 
@@ -19,7 +20,8 @@ class SubNav extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeKey:'1'
+            activeKey:'1',
+            currentFile:{}
         }
     }
     //点击切换 任务  分享 文件 日程 群聊
@@ -41,8 +43,9 @@ class SubNav extends Component {
             let arr = pathname.split('/');
             let fileId = arr[2]*1;
             let parentId = '';
+            let username = cookie.load('UserName');
             GetAllWorksFileUnderParentWorksFileServer({
-                fileId,parentId
+                username,fileId,parentId
             }).then(({data})=>{
                 if(data.success){
                     GetAllWorksFileUnderParentWorksFileAction(data.data)
@@ -92,7 +95,12 @@ class SubNav extends Component {
             activeKey:path.charAt(path.length-1)
         })
     }
-    shouldComponentUpdate(){
+    shouldComponentUpdate(nextProps){
+        let { location:{pathname} , state:{getFileInfo} } = nextProps;
+        //拿到当前项目文件的id
+        let fileId = pathname.match(/\d+/g)[0]*1;
+        let currentFile = getFileInfo.find(val=>val.fileId===fileId)
+        console.log(getFileInfo,fileId)
         return true;
     }
     componentWillUnmount(){//不在work页的时候，不显示面包屑导航条
@@ -104,11 +112,12 @@ class SubNav extends Component {
         let { location , state:{getFileInfo} } = this.props;
         let { activeKey } = this.state;
         //拿到当前项目文件的id
-        let fileId = location.pathname.match(/\d+/g)[0];
+        let fileId = location.pathname.match(/\d+/g)[0]*1;
         let currentFile;
         if(fileId){
             currentFile = getFileInfo.filter(val=>val.fileId===Number(fileId))[0];
         }
+        // console.log(getFileInfo)
         return (
             <div id="subNavWrap">
                 <div id="subNavLeftTool">

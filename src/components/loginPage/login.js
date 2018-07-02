@@ -28,6 +28,12 @@ class Login  extends Component {
             id:''
          }
     }
+    componentWillMount(){
+        let allCookies = cookie.loadAll();
+        for(let attr in allCookies){
+            cookie.remove(attr)
+        }
+    }
     changeUsernameValue=(ev)=>{//输入用户名
         let val = this.refs.username.value
         if(val.trim()==='') return
@@ -89,7 +95,7 @@ class Login  extends Component {
     setUserCookie(){
         let username = this.state.username;
         if(username){
-            cookie.save('UserName',username)
+            cookie.save('UserName',username)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
         }
         
     }

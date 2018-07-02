@@ -89,7 +89,6 @@ export const GetTaskItemServer = (param) => {
 
 //删除一个项目问价下所有的任务列表  和 任务列表下的子任务 ----在删除一个文件的时候
 export const DeleteAllTaskItemAndSubTaskInAFileServer = (param) => {
-    console.log(param)
     return axios.post('/DeleteAllTaskItemAndSubTaskInAFile', param)
 }
 
@@ -157,7 +156,7 @@ export const CreateAWorkFileServer = (param) => {
 }
 
 /**查询当前所在层级的所有works文件 
- * @param {fileId: Number,parentId: String } param 
+ * @param {username: String , fileId: Number,parentId: String } param 
  */
 export const GetAllWorksFileUnderParentWorksFileServer = (param) => {
     return axios.post('/GetAllWorksFileUnderParentWorksFile',param)
@@ -197,3 +196,4 @@ export const ToSwitchCheckAllWorkFileServer = (param) => {
 export const DeleteCheckedWorkFilesServer = (param) => {
     return axios.post('/DeleteCheckedWorkFiles',param)
 }
+

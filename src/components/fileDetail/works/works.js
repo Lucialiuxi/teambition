@@ -26,7 +26,7 @@ class Works extends React.Component {
         let { location: { pathname } , getBreadCrumbAction } = this.props;
         if(pathname.split('/').length===4){
             if(cookie.load('BreadCrumb')){
-                console.log('移除')
+                // console.log('移除')
                 cookie.remove('BreadCrumb',{ path: '/' })
             }
         }else{

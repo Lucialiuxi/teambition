@@ -16,6 +16,7 @@ import { CreateAWorkFileServer ,
 import { timeFormat } from '@/commonfunc/index';
 import MoveOrCopyWorkFilesMask from '@/components/mask/MoveOrCopyWorkFilesMask.js';
 import { GetAllWorksFileUnderParentWorksFileServer } from '@/server/requestData.js';
+import cookie from 'react-cookies';
 
 /**
     fileId: Number,
@@ -241,7 +242,6 @@ class WorkFileItem extends React.Component {
         let c = false;
         let dataId = '';//data-id
         let time = '';//显示创建/修改时间
-        let oneLiCanCopyOrMove = worksFile.some(val=>val.check);
         if(oneFileData && oneFileData.myId){
             c = oneFileData.check;
             dataId = oneFileData.myId;
@@ -264,6 +264,8 @@ class WorkFileItem extends React.Component {
                 }
             }
         }
+        let username = cookie.load('UserName');
+        let oneLiCanCopyOrMove = worksFile.some(val=>val.check);//群组操作的时候，单个li不能再移动复制
         return (
             <li className="workFileItemLi" onDoubleClick={this.ToInside} data-id={oneFileData?oneFileData.myId:''}>
                 <Checkbox 
@@ -289,7 +291,7 @@ class WorkFileItem extends React.Component {
                         />:<p className="workFileItemName">{oneFileData.workFileName}</p>}
                     </div>
                     <div className="workFileItemInfo">
-                        <span className="establishUser">lucia</span>
+                        <span className="establishUser">{username?username:''}</span>
                         <span className="lastestModifyTime">{time}</span>
                         {oneFileData && oneFileData.myId ?
                             <div className="ModifyItemTools">
@@ -299,12 +301,13 @@ class WorkFileItem extends React.Component {
                                     className="ModifyItemToolsDeleteIcon"
                                     onClick={this.toDeleteOneWorkFile.bind(this,oneFileData.myId)}
                                 />
-                                <MoveOrCopyWorkFilesMask 
-                                    insideLi='true' 
-                                    CanCopyOrMove={oneLiCanCopyOrMove} 
-                                    checkedCount='1'
-                                    oneFileData={oneFileData}
-                                />
+                                {
+                                    !oneLiCanCopyOrMove ? <MoveOrCopyWorkFilesMask 
+                                        insideLi='true'
+                                        checkedCount='1'
+                                        oneFileData={oneFileData}
+                                    /> :null
+                                }
                                 <Icon 
                                     type="edit"  
                                     title="重命名"  

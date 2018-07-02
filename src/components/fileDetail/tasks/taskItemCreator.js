@@ -56,14 +56,14 @@ class TaskItemCreator extends Component {
         let o = getFileInfo.filter(val=>val.fileId===Number(fileId))[0];
         return ( 
             <li className="taskItem createWrap">
-                {!o.isShowTaskItemCreator ? 
+                {o && !o.isShowTaskItemCreator ? 
                 <div className="createTaskItem" onClick={this.GoToCreateATaskItem}>
                     <a className="taskItemCreateIconWrap">
                         <Icon type="plus" className="taskItemCreateIcon" />
                         新建任务列表
                     </a>
                 </div> : null }
-                {o.isShowTaskItemCreator ? 
+                {o && o.isShowTaskItemCreator ? 
                 <div className="creator-form-wrap">
                     <input 
                         type="text" 

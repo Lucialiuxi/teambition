@@ -32,11 +32,11 @@ const WorkFileMoveAndCopyMaskData = ( state = {} , action ) => {
             let updateState =  Object.assign({},state);
             let newObj = {};
             for(let attr in updateState){
-                newObj[attr] = updateState[attr];
                 if(attr === action.obj.ulDataId){
                     newObj[attr] = action.obj.arr;
                     break;
                 }
+                newObj[attr] = updateState[attr];
             }
         return newObj;
         

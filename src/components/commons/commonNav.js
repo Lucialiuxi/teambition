@@ -35,8 +35,9 @@ const ProjectTypes = [
       }
       clickLoginOut=()=>{
           let { history } = this.props;
-          history.replace('/login')
           cookie.remove('UserName');
+          cookie.remove('BreadCrumb');
+          history.replace('/login')
       }
       render() { 
           let user = cookie.load('UserName');

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter , Link } from 'react-router-dom';
 import * as allAction from '@/actions/workAction.js';
 import { GetAllWorksFileUnderParentWorksFileServer } from '@/server/requestData.js';
+import cookie from 'react-cookies';
 
 class WorkHead extends React.Component {
     constructor(props) {
@@ -65,7 +66,7 @@ class WorkHead extends React.Component {
                                             data-id={val.myId}
                                             key={val.myId}
                                         >
-                                        {len===index ? val.workFileName : <Link to={`/project/32673061269736/works/${val.myId}`}>{val.workFileName}</Link>}
+                                        {len===index ? val.workFileName : <Link to={`/project/${fileId}/works/${val.myId}`}>{val.workFileName}</Link>}
                                         </Breadcrumb.Item>
                             })
                          : null }
