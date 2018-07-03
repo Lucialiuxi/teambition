@@ -197,3 +197,9 @@ export const DeleteCheckedWorkFilesServer = (param) => {
     return axios.post('/DeleteCheckedWorkFiles',param)
 }
 
+/**切换 缩略图模式ThumbnailView / 列表模式ListView
+ * @param { username:String , worksViewType:String } param 
+ */
+export const ChangeWorksViewTypeServer = (param) => {
+    return axios.post('/ChangeWorksViewType',param)
+}

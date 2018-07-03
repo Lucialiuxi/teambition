@@ -58,7 +58,7 @@ class Works extends React.Component {
         return true;
     }
     componentDidMount(){
-        let { toHideDelteCoverAction } = this.props;
+        let { toHideDelteCoverAction , toHideModifyWorkFileMenuCoverAction } = this.props;
         //鼠标点击的不是 li删除定位框deleteCover的时候，关闭它
         document.onclick = (e) =>{
             let t = e.target;
@@ -72,7 +72,29 @@ class Works extends React.Component {
                 t.classList.contains('delteWorkFileCover-Tip') ||
                 t.classList.contains('delteWorkFile-ConfirmBtn')  ||
                 t.classList.contains('ModifyItemToolsDeleteIcon') )
-            if(!deleteCoverTag){
+            let ModifyMenuCoverTag = (
+                t.getAttribute('id') === 'ModifyMenuCoverWrap' ||
+                t.classList.contains('ModifyMenuCover-head') ||
+                t.classList.contains('ModifyMenuCover-head-title') ||
+                t.classList.contains('ModifyMenuCover-closeIcon') ||
+                t.classList.contains('ModifyMenuCover-content') ||
+                t.classList.contains('ModifyMenuList') ||
+                t.classList.contains('ModifyMenuList-MoveIcon') ||
+                t.classList.contains('ModifyMenuList-title') ||
+                t.classList.contains('ModifyMenuList-DeleteIcon') ||
+                t.classList.contains('check-frame-downIcon') ||
+                t.classList.contains('ModifyMenuList-CopyIcon') ||
+                t.classList.contains('MoveOrCopyWorkFilesMaskWrap') ||
+                t.classList.contains('moveAndCopyWorkFileWrap') ||
+                t.classList.contains('moveCheckedWorkFile') ||
+                t.classList.contains('copyCheckedWorkFile') ||
+                t.classList.contains('moveCheckedWorkFileIcon') ||
+                t.classList.contains('copyCheckedWorkFileIcon')
+            )
+            if(!ModifyMenuCoverTag){//隐藏文件夹菜单的显示框
+                toHideModifyWorkFileMenuCoverAction()
+            }
+            if(!deleteCoverTag){//隐藏确认删除文件夹定位框
                 toHideDelteCoverAction()
             }
         }
@@ -82,6 +104,7 @@ class Works extends React.Component {
                 location:{ pathname } , 
                 state:{worksViewType}
             } = this.props;
+        // console.log(worksViewType)
         let tp =  worksViewType.worksViewType;
         let arr = pathname.split('/');
         let parentId = '';

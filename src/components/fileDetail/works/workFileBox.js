@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {  withRouter } from 'react-router-dom';
-import FileInside from '@/components/fileDetail/fileInside';
 import { bindActionCreators } from 'redux';
 import WorkFileItem from './ListView/workFileItem.js';
 import EmptyWorkFile from './ListView/emptyWorkFile.js';
@@ -54,13 +53,18 @@ class WorkFileBox extends React.Component {
         return (
             <ul className="workFilesWrap">
                 <div className="forScrollBar">
-                    {forCreate ? <WorkFileItem forCreate={forCreate}/> : null}
+                    {forCreate && tp==='ListView' ?<WorkFileItem forCreate={forCreate}/> : null}
+                    {forCreate && tp==='ThumbnailView' ?<ThumbNailWorkFileItem forCreate={forCreate}/> : null}
                     { worksFile && worksFile[0] && tp === 'ListView' ? 
                         worksFile.map(val=>{
                             return <WorkFileItem key={val.myId} oneFileData={val} /> 
                         })
                     : null }
-                    { worksFile && worksFile[0] && tp === 'ThumbnailView' ? <ThumbNailWorkFileItem/> : null }
+                    { worksFile && worksFile[0] && tp === 'ThumbnailView' ? 
+                         worksFile.map(val=>{
+                            return <ThumbNailWorkFileItem key={val.myId} oneFileData={val} /> 
+                        })                   
+                    : null }
                     {!worksFile[0] && !forCreate ? <EmptyWorkFile/> : null}
                 </div>
             </ul>

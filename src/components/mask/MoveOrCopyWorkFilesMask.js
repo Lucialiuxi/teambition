@@ -143,8 +143,8 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     let { WorkFilesMenuListDataId ,openFirstLiHighLight} = this.state;
     let { state:{worksFilrCrumb,WorkFileMoveAndCopyMaskData}} = this.props;
     this.WorkFileMoveAndCopyMaskData = WorkFileMoveAndCopyMaskData;
-    this.WorkFilesMenuListDataId = WorkFilesMenuListDataId;
-    this.openFirstLiHighLight = openFirstLiHighLight;
+    // this.WorkFilesMenuListDataId = WorkFilesMenuListDataId;
+    // this.openFirstLiHighLight = openFirstLiHighLight;
     let arr = []
     worksFilrCrumb.forEach(val=>{
       arr.push(val.myId)
@@ -177,9 +177,6 @@ class MoveOrCopyWorkFilesMask extends React.Component {
   handleOk = (e) => {
     // console.log(e);
     let { closeWorkFileMoveAndCopyMaskAction } = this.props;
-    console.log(this.WorkFileMoveAndCopyMaskData)
-    console.log(this.WorkFilesMenuListDataId )
-    console.log(this.openFirstLiHighLight )
     closeWorkFileMoveAndCopyMaskAction(this.WorkFileMoveAndCopyMaskData)
     this.setState({
       visible: false,
@@ -189,7 +186,6 @@ class MoveOrCopyWorkFilesMask extends React.Component {
   handleCancel = (e) => {
     let { closeWorkFileMoveAndCopyMaskAction } = this.props;
     closeWorkFileMoveAndCopyMaskAction(this.WorkFileMoveAndCopyMaskData)
-    // console.log(e);
     this.setState({
       visible: false,
     });

@@ -50,7 +50,6 @@ class SubNav extends Component {
                 if(data.success){
                     GetAllWorksFileUnderParentWorksFileAction(data.data)
                 }
-    
             })
         }
         tabBar(t,activeKey,this.state.fId);
@@ -99,8 +98,8 @@ class SubNav extends Component {
         let { location:{pathname} , state:{getFileInfo} } = nextProps;
         //拿到当前项目文件的id
         let fileId = pathname.match(/\d+/g)[0]*1;
-        let currentFile = getFileInfo.find(val=>val.fileId===fileId)
-        console.log(getFileInfo,fileId)
+        let currentFile = getFileInfo.find(val=>val.fileId===fileId);
+        // console.log(getFileInfo,fileId)
         return true;
     }
     componentWillUnmount(){//不在work页的时候，不显示面包屑导航条
@@ -117,7 +116,6 @@ class SubNav extends Component {
         if(fileId){
             currentFile = getFileInfo.filter(val=>val.fileId===Number(fileId))[0];
         }
-        // console.log(getFileInfo)
         return (
             <div id="subNavWrap">
                 <div id="subNavLeftTool">

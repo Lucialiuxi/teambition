@@ -10,6 +10,7 @@ const worksFile = ( state = [] , action ) => {
         //进入works文件 或者刷新的时候，把请求回来的数据保存起来
         case 'GET_ALL_WORKSFILE_UNDER_PARENT_WORKSFILE_ACTION':
             state = [...action.arr].map( val => {
+                val.isModifyWorkFileMenu = false;//缩略图里的文件夹菜单的显示框
                 val.isModifyWorkFileName = false;//编辑文件名的显示框
                 val.goToDelete = false; //确认删除定位框
                 return val
@@ -76,12 +77,15 @@ const worksFile = ( state = [] , action ) => {
 
         //显示deleteCover定位框
         case 'TO_SHOW_DELETE_COVER_ACTION':
-        return [...state].map(val=>{
-            if(val.myId===action.myId){
-                val.goToDelete = true;
-            }
-            return val;
-        })
+            state.forEach(val=>{
+                val.isModifyWorkFileMenu = false;
+                val.isModifyWorkFileName = false;
+                if(val.myId===action.myId){
+                    val.goToDelete = true; 
+                    console.log(state)
+                }
+            })
+        return state;
 
         //隐藏deleteCover定位框
         case 'TO_HIDE_DELETE_COVER_ACTION':
@@ -90,6 +94,23 @@ const worksFile = ( state = [] , action ) => {
             return val;
         })
 
+        //显示文件夹菜单的显示框
+        case 'TO_SHOW_MODIFY_WORKFILEMENU_COVER_ACTION':
+        return [...state].map(val=>{
+            if(val.myId===action.myId){
+                val.isModifyWorkFileMenu = true;
+            }else{
+                val.isModifyWorkFileMenu = false;
+            }
+            return val;
+        })   
+
+        //隐藏文件夹菜单的显示框
+        case 'TO_HIDE_MODIFY_WORKFILEMENU_COVER_ACTION':
+        return [...state].map(val=>{
+            val.isModifyWorkFileMenu = false;
+            return val;
+        })  
 
     default:
         return state;

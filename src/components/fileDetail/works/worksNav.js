@@ -3,14 +3,18 @@ import { Checkbox , Icon } from 'antd';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 import { ToSwitchCheckAllWorkFileAction , 
          ToChangeWorkFileSortTypeAction ,
          DeleteCheckedWorkFilesAction ,
      } from '@/actions/workAction.js';
 import { ToSwitchCheckAllWorkFileServer ,
          DeleteCheckedWorkFilesServer ,
+         ChangeWorksViewTypeServer
      } from '@/server/requestData.js';
 import MoveOrCopyWorkFilesMask from '@/components/mask/MoveOrCopyWorkFilesMask.js';
+import cookie from 'react-cookies';
+import * as allAction from '@/actions/workAction.js';
 
 class WorksNav extends Component {
     constructor(props) {
@@ -55,15 +59,15 @@ class WorksNav extends Component {
             viewType:this.props.tp
         })
     }
+
     //全选
     onChange = (e) => {
-        let { state:{worksFile} } = this.props;
+        let { state:{worksFile} ,ToSwitchCheckAllWorkFileAction } = this.props;
         if(worksFile[0]){
             let parentId = worksFile[0].parentId;
-            let { dispatch } = this.props;
             ToSwitchCheckAllWorkFileServer({parentId,check:e.target.checked}).then(({data})=>{
                 if(data.success){
-                    dispatch(ToSwitchCheckAllWorkFileAction({check:e.target.checked}))
+                    ToSwitchCheckAllWorkFileAction({check:e.target.checked})
                     this.setState({
                         checkAll:e.target.checked
                     })
@@ -71,10 +75,11 @@ class WorksNav extends Component {
             })
         }
     }
+
     //切换排序方式
     changeSort = () => {
         let { sort } = this.state;
-        let { dispatch } = this.props;
+        let { ToChangeWorkFileSortTypeAction } = this.props;
         let s = '';
         if(sort==="caret-up"){
             s = 'ascend'
@@ -87,12 +92,12 @@ class WorksNav extends Component {
                 sort:"caret-up"
             })
         }
-        dispatch(ToChangeWorkFileSortTypeAction({sortByModifyTime:s}))
+        ToChangeWorkFileSortTypeAction({sortByModifyTime:s})
     }
 
     //全选删除
     deleteCheckedWorkFiles = () => {
-        let { state:{worksFile},dispatch} = this.props;
+        let { state:{worksFile},DeleteCheckedWorkFilesAction} = this.props;
         let willDeletedFilesId = [];
         let arr = [];
         worksFile.forEach(val=>{
@@ -103,18 +108,40 @@ class WorksNav extends Component {
         })
         DeleteCheckedWorkFilesServer({myIdArr:willDeletedFilesId}).then(({data})=>{
             if(data.success){
-                dispatch(DeleteCheckedWorkFilesAction(arr))
+                DeleteCheckedWorkFilesAction(arr)
             }
         })
     }
+    //切换文件显示模式
+    ChangeWorksViewType = (e) => {
+        let t = e.target;
+        let { ChangeWorksViewTypeAction } = this.props;
+        if(t.nodeName === 'I'){
+            let username = cookie.load('UserName');
+            if(t.classList.contains('ThumbnailView-Icon') && !t.classList.contains('active')){//缩略图模式
+                ChangeWorksViewTypeServer({ username , worksViewType:'ThumbnailView' }).then(({data})=>{
+                    if(data.success){
+                        console.log('改为缩略图模式')
+                        ChangeWorksViewTypeAction({worksViewType: data.data})
+                    }
+                })
+            }else if(t.classList.contains('ListView-Icon') && !t.classList.contains('active')){//列表模式
+                ChangeWorksViewTypeServer({ username , worksViewType:'ListView' }).then(({data})=>{
+                    if(data.success){
+                        console.log('改为列表模式')
+                        ChangeWorksViewTypeAction({worksViewType: data.data})
+                    }
+                })
+            }
+
+        }
+    }
     render() { 
-        let { state:{worksFile}} = this.props;
+        let { state:{worksFile,worksViewType}} = this.props;
         let { viewType , checkAll , sort , groupDeal , checkedCount } = this.state;
-        let cls1 = classnames('ThumbnailView-Icon',{'active':viewType==='ThumbnailView'});
-        let cls2 = classnames('ListView-Icon',{'active':viewType==='ListView'});
-        // console.log(worksFile)
+        let cls1 = classnames('ThumbnailView-Icon',{'active':worksViewType.worksViewType==='ThumbnailView'});
+        let cls2 = classnames('ListView-Icon',{'active':worksViewType.worksViewType==='ListView'});
         if(!worksFile[0]){
-            // console.log('空')
             groupDeal= false;
             checkedCount = 0;
             checkAll = false;
@@ -139,7 +166,7 @@ class WorksNav extends Component {
                 </div> : null }
 
                 {/* <Icon type="caret-down" /> */}
-                {!groupDeal ? <div className="worksNavUnCheck">
+                {!groupDeal &&  worksViewType.worksViewType==='ListView' ? <div className="worksNavUnCheck">
                     <div className="workFileItemInfo">
                         <a className="workFileItem-name">名称</a>
                         <a className="workFileItemEstablish-author">创建者</a>
@@ -149,7 +176,7 @@ class WorksNav extends Component {
                         </a>
                     </div>
                 </div> : null }
-                <div id="ThumbnailView-Or-ListView">
+                <div id="ThumbnailView-Or-ListView" onClick={this.ChangeWorksViewType}>
                     <Icon type="appstore-o" className={cls1} title="缩略图模式"/>
                     <Icon type="bars"  className={cls2} title="列表模式"/>
                 </div>
@@ -163,5 +190,9 @@ const mapStateToProps = state => {
         state
     }
 }
- 
-export default withRouter(connect(mapStateToProps,null)(WorksNav));
+
+const  mapDispatchToProps = (dispatch) => {
+    return bindActionCreators(allAction,dispatch)
+}
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(WorksNav));

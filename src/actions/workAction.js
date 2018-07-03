@@ -199,3 +199,33 @@ export const closeWorkFileMoveAndCopyMaskAction = obj => {
         obj
     }   
 }
+
+/**
+ * 切换 缩略图模式ThumbnailView / 列表模式ListView
+ * { worksViewType: String }
+ */
+export const ChangeWorksViewTypeAction = obj => {
+    return {
+        type:'CHANGE_WORKSViEWTYPE_ACTION',
+        obj
+    }     
+}
+
+/**
+ * 显示文件夹菜单的显示框
+ */
+export const toShowModifyWorkFileMenuCoverAction = myId => {
+    return {
+        type:'TO_SHOW_MODIFY_WORKFILEMENU_COVER_ACTION',
+        myId
+    }     
+}
+
+/**
+ * 隐藏文件夹菜单的显示框
+ */
+export const toHideModifyWorkFileMenuCoverAction = () => {
+    return {
+        type:'TO_HIDE_MODIFY_WORKFILEMENU_COVER_ACTION'
+    }     
+}

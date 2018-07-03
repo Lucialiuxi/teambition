@@ -23,9 +23,10 @@ const worksViewType = (state={},action) => {
             let nstate = Object.assign({},state,{sortByModifyTime:action.obj.sortByModifyTime});
         return nstate;
 
-
-       
-
+        //切换 缩略图模式ThumbnailView / 列表模式ListView
+        case 'CHANGE_WORKSViEWTYPE_ACTION':
+            let newState = Object.assign({},state,{ worksViewType: action.obj.worksViewType });    
+        return newState;
 
 
     default:
