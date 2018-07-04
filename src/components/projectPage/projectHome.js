@@ -69,21 +69,9 @@ class Project  extends Component {
                 this.setState({
                     activeBar:'1'
                 })
-            }else if(t === 'posts'){
-                this.setState({
-                    activeBar:'2'
-                })
             }else if(t === 'works'){
                 this.setState({
                     activeBar:'3'
-                })
-            }else if(t === 'schedules'){
-                this.setState({
-                    activeBar:'4'
-                })
-            }else if(t === 'groupchat'){
-                this.setState({
-                    activeBar:'5'
                 })
             }
         }
@@ -151,6 +139,10 @@ class Project  extends Component {
            this.setState({
                 activeBar:'1'
            }) 
+        }else if(arr[arr.length-1]==='works'){
+            this.setState({
+                 activeBar:'3'
+            }) 
         }
     }
     render() {

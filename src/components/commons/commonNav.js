@@ -17,29 +17,84 @@ const ProjectTypes = [
     {
       title: '文件',
       avatar:<Icon type="file" style={{ fontSize: 20, color: '#aeaeae' }} />
-    },
-    {
-      title: '日程',
-      avatar:<Icon type="calendar" style={{ fontSize: 20, color: '#aeaeae' }} />
-    },
-    {
-      title: '分享',
-      avatar:<Icon type="file-text" style={{ fontSize: 20, color: 'grey' }} />
-    },
+    }
   ];
 
   class CommonNav extends Component {
       constructor(props) {
           super(props);
-          this.state = {  }
+          this.state = { 
+              changePath:false,
+           }
       }
       clickLoginOut=()=>{
           let { history } = this.props;
-          cookie.remove('UserName');
-          cookie.remove('BreadCrumb');
+          let allCookies = cookie.loadAll();
+          for(let attr in allCookies){
+              cookie.remove(attr, { path: '/' })
+          }
           history.replace('/login')
       }
+      GoToOtherPath = (e) => {//跳转路由
+        let t = e.target;
+        let { location: {pathname} , history } = this.props;
+        if(t.classList.contains('ProjectTypeSelect') ||
+           t.classList.contains('ant-spin-nested-loading') ||
+           t.classList.contains('ant-spin-container')
+        ){
+          return;  
+        }else if(t.classList.contains('ant-list-item-meta-avatar')
+        ){
+            t = t.nextElementSibling;
+        }else if(t.nodeName==='I'){
+            t = t.parentNode.nextElementSibling;
+        }
+        let nextPath = '';
+        if(t.innerText.trim()==='项目' && pathname!=='/projects'){
+            nextPath = `/projects`;
+        }else if(t.innerText.trim()==='任务' && pathname.indexOf('works')!==-1){
+            let fileId = pathname.match(/\d+/g)[0]*1;
+            nextPath = `/project/${fileId}/tasks`;
+        }else if(t.innerText.trim()==='文件' && pathname.indexOf('tasks')!==-1){
+            let fileId = pathname.match(/\d+/g)[0]*1;
+            nextPath = `/project/${fileId}/works`;
+        }
+        if(nextPath){
+            history.push(nextPath);
+        }
+        if(this._mouted){
+            this.setState({
+                changePath:false,
+            })
+        }
+      }
+      showOrHideProjectTypeSelect = () => {
+        let { changePath } = this.state;
+        this.setState({
+            changePath:!changePath
+        })
+      }
+      componentDidMount(){
+        this._mouted = true;
+        document.onclick = (e) => {
+            let t = e.target;
+            let ProjectTypeSelectTag = (
+                t.classList.contains('extendBtn') ||
+                t.classList.contains('ProjectTypeSelect') ||
+                t.classList.contains('ant-spin-nested-loading')
+            )
+            if(!ProjectTypeSelectTag && this._mouted){
+                this.setState({
+                    changePath:false,
+                })
+            }
+        }
+      }
+      componentWillUnmount(){
+        this._mouted = false;
+      }
       render() { 
+          let { changePath } = this.state;
           let user = cookie.load('UserName');
           return ( 
             <div className="commonNav">
@@ -49,20 +104,26 @@ const ProjectTypes = [
                         <input type="text" className="searchProject" placeholder="搜索个人项目"/>
                     </div>
                     {/* 下拉选择项目 */}
-                    <List
+                    <Icon 
+                        type="plus-circle"  
+                        className="extendBtn"
+                        style={{ fontSize: 20, color: '#3b93ff' }} 
+                        onClick={this.showOrHideProjectTypeSelect}
+                    />
+                    { changePath ? <List
                         className="ProjectTypeSelect"
                         itemLayout="horizontal"
                         dataSource={ProjectTypes}
                         renderItem={item => (
-                        <List.Item>
+                        <List.Item  onClick={this.GoToOtherPath}>
                             <List.Item.Meta
                             className="ProjectTypeItem"
                             avatar={item.avatar}
-                            title={<a href="https://ant.design">{item.title}</a>}
+                            title={<a>{item.title}</a>}
                             />
                         </List.Item>
                         )}
-                    />
+                    /> : null }
                 </div>
                 <div  className="Nav-bar-right">
                     <span className="userAvatar">

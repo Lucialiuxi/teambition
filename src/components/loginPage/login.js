@@ -31,7 +31,7 @@ class Login  extends Component {
     componentWillMount(){
         let allCookies = cookie.loadAll();
         for(let attr in allCookies){
-            cookie.remove(attr)
+            cookie.remove(attr, { path: '/' })
         }
     }
     changeUsernameValue=(ev)=>{//输入用户名

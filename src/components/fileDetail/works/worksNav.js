@@ -36,10 +36,6 @@ class WorksNav extends Component {
                 groupDeal:worksFile.some(val=>val.check===true),
                 checkedCount:num
             })
-            if(!worksFile[0]){
-                
-            console.log('空')
-            }
         }
         if(worksViewType){
             let t = worksViewType.sortByModifyTime === 'descend' ? "caret-up" : "caret-down";

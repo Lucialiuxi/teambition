@@ -13,6 +13,16 @@ class App extends Component {
     super(props);
     this.state = {}
   }
+  componentWillReceiveProps(nextProps){
+    const {location:{pathname} } = nextProps;
+    if(pathname === '/login'){
+      let allCookies = cookie.loadAll();
+      console.log(allCookies)
+      for(let attr in allCookies){
+          cookie.remove(attr, { path: '/' })
+      }
+    }
+  }
   componentDidMount(){
     const { history , location } = this.props;
     if(location.pathname.slice(0,9)!=='/project/'){

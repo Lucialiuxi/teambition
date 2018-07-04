@@ -39,7 +39,11 @@ export const MoveFileToRecycleBinServer = (param) => {
     return axios.post('/MoveFileToRecycleBin',param)
 }
 
-//删除一个项目文件夹
+
+/**
+ * 删除一个项目文件夹
+ * @param {fileId:Number, userLoginName:String} param 
+ */
 export const DeleteAFlieServer = (param) => {
     return axios.post('/DeleteAFlie',param)
 }

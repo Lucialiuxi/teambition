@@ -65,6 +65,7 @@ class WorkHead extends React.Component {
                                 return <Breadcrumb.Item 
                                             data-id={val.myId}
                                             key={val.myId}
+                                            title={val.workFileName}
                                         >
                                         {len===index ? val.workFileName : <Link to={`/project/${fileId}/works/${val.myId}`}>{val.workFileName}</Link>}
                                         </Breadcrumb.Item>

@@ -31,6 +31,9 @@ a{
     border-top-right-radius: 3px;
     height: 56px;
     border-bottom: 1px solid #f5f5f5;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: top;
 }
 #WorksWrap .WorkHead .workCreatorPlusIcon{
     font-size: 14px;
@@ -39,7 +42,6 @@ a{
 #WorksWrap .WorkHead .work-header-title{
     font-size: 16px;
     color: #383838;
-
 }
 #WorksWrap .WorkHead .work-header-title,
 #WorksWrap .WorkHead .workHeadTools{
@@ -49,7 +51,15 @@ a{
     float: left;
     max-width: 70%;
 }
-.WorkHead .work-header-title span a{
+.WorkHead .work-header-title span a,.WorkHead .work-header-title span{
+    display: inline-block;
+    vertical-align: top;
+}
+.WorkHead .work-header-title .ant-breadcrumb-link{
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     display: inline-block;
 }
 #WorksWrap .WorkHead .workHeadTools{
@@ -495,7 +505,7 @@ li.ModifyMenuList:nth-of-type(2) .MoveOrCopyWorkFilesMaskWrap .copyCheckedWorkFi
     font-size: 16px;
     z-index: 1;
     position: absolute;
-    /* display: none; */
+    display: none;
 }
 .ThumbNailWorkFileItemLi .check-frame .check-frame-checkIcon{
     left: 6px;

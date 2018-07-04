@@ -61,19 +61,18 @@ class ModifyFileInfoMask extends Component {
            target = target.parentNode;
         }
         let ul = this.title;
-        let lis = ul.getElementsByTagName('li')
+        let lis = ul.getElementsByTagName('li');
         let projectInfo = ul.nextElementSibling;
         let projectOption = projectInfo.nextElementSibling;
         //弹框footer
-        let foot = target.parentNode.parentNode.parentNode.lastElementChild
+        let foot = target.parentNode.parentNode.parentNode.lastElementChild;
         if(e.target.innerText.trim()==='项目信息'){
             projectInfo.style.display = 'block';
             projectOption.style.display = 'none';
             [...lis].forEach(item=>item.className='')
             target.className = 'active';
             foot.style.display = 'block';
-            //保存按钮设置为disabled
-            this.save.setAttribute('disabled','disabled');
+            this.saveBtnIsDisabled()
         }else{
             projectInfo.style.display = 'none';
             projectOption.style.display = 'block';
@@ -100,10 +99,11 @@ class ModifyFileInfoMask extends Component {
     }
     //调整 修改文件的保存按钮 是否disabled
     saveBtnIsDisabled=()=>{
-        let { FileAbstract , FileName } = this.props
-        if(this.projectNameinput.value === FileName &&
-            this.FileAbstract.value === FileAbstract
+        let { FileAbstract , FileName } = this.props;
+        if(this.projectNameinput.value.trim() === FileName &&
+            this.FileAbstract.value.trim() === FileAbstract
         ){
+            console.log(this.save)
             this.save.setAttribute('disabled','disabled')
         }else{
             this.save.removeAttribute('disabled')

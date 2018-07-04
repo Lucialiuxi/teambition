@@ -127,10 +127,9 @@ class Works extends React.Component {
     }
     render() {
         let { 
-                location:{ pathname } , 
-                state:{worksViewType}
-            } = this.props;
-        // console.log(worksViewType)
+            location:{ pathname } , 
+            state:{worksViewType}
+        } = this.props;
         let tp =  worksViewType.worksViewType;
         let arr = pathname.split('/');
         let parentId = '';

@@ -23,7 +23,6 @@ class DelteWorkFileCover extends Component {
     }
     render() { 
         let { myId , worksViewType} = this.props;
-        console.log(worksViewType)
         return ( 
             <div className="delteWorkFileCover-Wrap">
                 <header className="delteWorkFileCover-Head">

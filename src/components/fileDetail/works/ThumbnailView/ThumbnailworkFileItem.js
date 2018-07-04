@@ -24,6 +24,20 @@ class ThumbNailWorkFileItem extends Component {
         super(props);
         this.state = {  }
     }
+    componentWillMount(){ 
+        //把当前所在的项目文件下的数据存到reducer中
+        let { 
+          location: { pathname }, 
+          state:{ worksFile },
+          saveAGroupOfSameParentIdWorkFilesAction
+        } = this.props;
+        let pathArr = pathname.split('/');
+        if(pathArr.length===4){//显示顶层的work文件
+          saveAGroupOfSameParentIdWorkFilesAction({ ParentId: '' , arr:worksFile });
+        }else if(pathArr.length===5){
+          saveAGroupOfSameParentIdWorkFilesAction({ ParentId: pathArr[4]  ,  arr:worksFile });
+        }
+      }
     TocheckAworkFileItem = (e) => {//单选
         let { ToSwitchCheckAWorkFileAction } = this.props;
         let myId= this.ccc.rcCheckbox.input.dataset.id;
@@ -115,7 +129,7 @@ class ThumbNailWorkFileItem extends Component {
                 location , 
                 GetAllWorksFileUnderParentWorksFileAction ,
                 dbClickToWorkFileInsideAction ,
-                state: { worksFile } ,
+                state: { worksFile  } 
             } = this.props;
         let t = e.target;
         let rej = (//点击到的是文件夹
@@ -179,7 +193,7 @@ class ThumbNailWorkFileItem extends Component {
         if(myId){
             let oldPath = location.pathname;
             let arr = oldPath.split('/');
-            let fileId = arr[2]*1
+            let fileId = arr[2]*1;
             let newpath = '';
             if(arr[arr.length-2] === 'works'){
                 oldPath = arr.splice(0,arr.length-1).join('/');
@@ -196,7 +210,7 @@ class ThumbNailWorkFileItem extends Component {
                     fileId,parentId:myId
                 }).then(({data})=>{
                     if(data.success){
-                        dbClickToWorkFileInsideAction({workFileName,myId})
+                        dbClickToWorkFileInsideAction({workFileName,myId})//记录面包屑
                         GetAllWorksFileUnderParentWorksFileAction(data.data)
                     }
                 })
@@ -302,7 +316,8 @@ class ThumbNailWorkFileItem extends Component {
                             defaultValue={oneFileData?oneFileData.workFileName:null}
                             onBlur={this.goToHideInput}
                         /> : <p className="elastic-title" 
-                            title={oneFileData && oneFileData.workFileName ? oneFileData.workFileName:''}
+                                title={oneFileData && oneFileData.workFileName ? oneFileData.workFileName:''}
+                                onClick={this.ModifyOneWorkFile.bind(this,oneFileData.myId)}
                         >{oneFileData && oneFileData.workFileName ? oneFileData.workFileName : null}</p>
                     }
                 </div>

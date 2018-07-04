@@ -41,7 +41,10 @@ class FileItemInRecyCleBin extends Component {
           maskClosable:true,
           onOk:()=>{
             DeleteAFlieServer(this.props).then(({data})=>{
-                dispatch(DeleteAFlieAction(data.deletedFileInfo))
+                if(data.success){
+                    let { fileId , userLoginName } = data.deletedFileInfo
+                    dispatch(DeleteAFlieAction({ fileId , userLoginName }))
+                }
             })
 
           }

@@ -4,7 +4,6 @@ const worksFile = ( state = [] , action ) => {
         //成功创建一个文件夹
         case 'ALREADY_CREATE_A_WORKS_FILE_ACTION':
             let addState = state.concat();
-            console.log(action.obj)
             addState.push(action.obj);
         return addState;
 

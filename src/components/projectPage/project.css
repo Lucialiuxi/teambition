@@ -56,8 +56,8 @@ ul{
 }
 .projectPageHead .Nav-bar-left .ProjectTypeSelect{
     position: absolute;
-    top: 60px;
-    left: 310px;
+    top: 36px;
+    left: 324px;
     color: #383838;
 }
 .projectPageHead .Nav-bar-left .extendBtn{
@@ -106,9 +106,9 @@ ul{
     overflow: auto;
     margin: 0;
     padding: 4px 0;
-    height: 190px;
+    height: 120px;
     width: 190px;
-    display: none;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
 }
 .projectPageHead .ProjectTypeSelect .ProjectTypeItem{
     height: 36px;
@@ -128,8 +128,12 @@ ul{
 }
 .ant-list-split .ant-list-item {
     border-bottom: none;
-
+    cursor: pointer;
 } 
+.ant-list-split .ant-list-item:hover{
+    background-color: #f5f5f5;
+
+}
 .ant-list-item:nth-child(1){
     border-bottom: 1px solid #e8e8e8
 }
@@ -187,7 +191,10 @@ ul{
     height: 48px;
     line-height: 48px;
 }
-.Nav-bar-right .mine{
+.Nav-bar-right .loginOut:hover{
+    transform: scale(1.1)
+}
+.Nav-bar-right .mine{   
     width: 160px;
     color: #535353;
     font-weight: bold;
