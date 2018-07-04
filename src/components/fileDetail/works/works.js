@@ -62,7 +62,7 @@ class Works extends React.Component {
         //鼠标点击的不是 li删除定位框deleteCover的时候，关闭它
         document.onclick = (e) =>{
             let t = e.target;
-            let deleteCoverTag = (
+            let deleteCoverTag = (//删除文件夹定位框
                 t.classList.contains('delteWorkFileCover-Wrap') ||
                 t.classList.contains('delteWorkFileCover-Head') ||
                 t.classList.contains('delteWorkFileCover-leftIcon') ||
@@ -72,7 +72,8 @@ class Works extends React.Component {
                 t.classList.contains('delteWorkFileCover-Tip') ||
                 t.classList.contains('delteWorkFile-ConfirmBtn')  ||
                 t.classList.contains('ModifyItemToolsDeleteIcon') )
-            let ModifyMenuCoverTag = (
+
+            let ModifyMenuCoverTag = (//文件夹菜单定位框
                 t.getAttribute('id') === 'ModifyMenuCoverWrap' ||
                 t.classList.contains('ModifyMenuCover-head') ||
                 t.classList.contains('ModifyMenuCover-head-title') ||
@@ -89,12 +90,37 @@ class Works extends React.Component {
                 t.classList.contains('moveCheckedWorkFile') ||
                 t.classList.contains('copyCheckedWorkFile') ||
                 t.classList.contains('moveCheckedWorkFileIcon') ||
-                t.classList.contains('copyCheckedWorkFileIcon')
+                t.classList.contains('copyCheckedWorkFileIcon') ||
+                t.classList.contains('MoveOrCopyWorkFilesMaskWrap') ||
+                t.classList.contains('moveAndCopyWorkFileWrap') ||
+                t.classList.contains('moveCheckedWorkFile') ||
+                t.classList.contains('moveCheckedWorkFileIcon') ||
+                t.classList.contains('copyCheckedWorkFile') ||
+                t.classList.contains('copyCheckedWorkFileIcon') ||
+                t.classList.contains('MoveOrCopyWorkFilesMask')
             )
-            if(!ModifyMenuCoverTag){//隐藏文件夹菜单的显示框
+            let MoveAndCopyMaskTag =(//移动和复制弹框
+                t.classList.contains('MoveOrCopyWorkFilesMaskContent') ||
+                t.classList.contains('projectFileMenuContainer') ||
+                t.classList.contains('projectFileMenuTitle') ||
+                t.classList.contains('projectFileMenuList') ||
+                t.classList.contains('projectFileMenuItem') ||
+                t.classList.contains('projectFileMenuItem active') ||
+                t.classList.contains('WorkFilesMenuWrap') ||
+                t.classList.contains('WorkFilesMenu') ||
+                t.classList.contains('WorkFilesMenuList') ||
+                t.classList.contains('WorkFilesMenuItem') ||
+                t.classList.contains('WorkFilesMenuItem active') ||
+                t.classList.contains('ant-modal-content') ||
+                t.classList.contains('ant-modal-header') ||
+                t.classList.contains('ant-modal-title') ||
+                t.classList.contains('ant-modal-body') ||
+                t.classList.contains('ant-modal-footer')
+            )
+            if(!ModifyMenuCoverTag && !deleteCoverTag && !MoveAndCopyMaskTag){//隐藏文件夹菜单的显示框
                 toHideModifyWorkFileMenuCoverAction()
             }
-            if(!deleteCoverTag){//隐藏确认删除文件夹定位框
+            if(!deleteCoverTag && !ModifyMenuCoverTag){//隐藏确认删除文件夹定位框
                 toHideDelteCoverAction()
             }
         }

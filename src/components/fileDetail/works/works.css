@@ -132,7 +132,7 @@ a{
     display: inline-block;
 }
 #WorksWrap .worksNavUnCheck a.workFileItem-name{
-    width: 50%;
+    width: 42%;
     display: inline-block;
     padding-left: 4px;
 }
@@ -187,9 +187,9 @@ a{
 }
 #WorksWrap .forScrollBar{
     position: relative;
-    min-height: 400px;
+    max-height: 400px;
     margin: 0 -20px;
-    padding: 0 20px;
+    padding: 0 40px;
     text-align: start;
     z-index: 1;
 }
@@ -249,7 +249,7 @@ a{
     height: 100%;
     padding: 12px 0;
     margin-left: 28px;
-    width: 440px;
+    width: 341px;
     display: inline-block;
 }
 .workFileItemInfoWrap .aboutWorkFileItemName .WorkFileIcon,
@@ -264,6 +264,11 @@ a{
     font-size: 32px;
     color: #3da8f5;
     margin-right: 12px;
+}
+.workFileItemInfoWrap .aboutWorkFileItemName .workFileItemName{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .workFileItemInfoWrap .aboutWorkFileItemName .workFileItemName,
 .workFileItemInfoWrap .aboutWorkFileItemName .ModifyWorkFileItemNameInput{
@@ -311,7 +316,7 @@ a{
     position: relative;
 }
 .workFileItemInfo .ModifyItemTools{
-    width: 55%;
+    width: 45%;
     position: relative;
     display: none;
 }

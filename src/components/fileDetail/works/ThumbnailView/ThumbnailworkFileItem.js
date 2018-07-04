@@ -8,7 +8,7 @@ import ModifyMenuCover from '../ModifyMenuCover.js';
 //确认删除文件夹的定位框    
 import DelteWorkFileCover from '../delteCover.js';
 import * as allAction from '@/actions/workAction.js';
-import cookie from 'react-cookies';
+
 import { CreateAWorkFileServer , 
     DeleteAWorksFileServer ,
     ModifyAWorkFileNameServer , 
@@ -90,7 +90,7 @@ class ThumbNailWorkFileItem extends Component {
         let { toShowModifyWorkFileMenuCoverAction } = this.props;
         toShowModifyWorkFileMenuCoverAction(myId)
     }
-    toHideTheDeleteCover = (myId) => {//隐藏显示确认删除定位框
+    toHideTheDeleteCover = () => {//隐藏显示确认删除定位框
         let { toHideDelteCoverAction } = this.props;
         toHideDelteCoverAction()
     }
@@ -118,7 +118,8 @@ class ThumbNailWorkFileItem extends Component {
                 state: { worksFile } ,
             } = this.props;
         let t = e.target;
-        let rej = (t.classList.contains('check-frame-checkIcon') ||
+        let rej = (//点击到的是文件夹
+                   t.classList.contains('check-frame-checkIcon') ||
                    t.classList.contains('ant-checkbox-wrapper') ||
                    t.classList.contains('ant-checkbox') ||
                    t.classList.contains('ant-checkbox-checked') ||
@@ -128,8 +129,52 @@ class ThumbNailWorkFileItem extends Component {
                    t.classList.contains('anticon-down') ||
                    t.classList.contains('check-frame-downIcon') ||
                    t.classList.contains('title-bar') ||
-                   t.classList.contains('elastic-title') )
-        if(rej) return;
+                   t.classList.contains('elastic-title') 
+                )
+        
+        let ModifyMenuCoverTag = (//点击到的是文件夹菜单、移动复制弹框
+                t.getAttribute('id') === 'ModifyMenuCoverWrap' ||
+                t.classList.contains('ModifyMenuCover-head') ||
+                t.classList.contains('ModifyMenuCover-head-title') ||
+                t.classList.contains('ModifyMenuCover-closeIcon') ||
+                t.classList.contains('ModifyMenuCover-content') ||
+                t.classList.contains('ModifyMenuList') ||
+                t.classList.contains('ModifyMenuList-MoveIcon') ||
+                t.classList.contains('ModifyMenuList-title') ||
+                t.classList.contains('ModifyMenuList-DeleteIcon') ||
+                t.classList.contains('check-frame-downIcon') ||
+                t.classList.contains('ModifyMenuList-CopyIcon') ||
+                t.classList.contains('MoveOrCopyWorkFilesMaskWrap') ||
+                t.classList.contains('moveAndCopyWorkFileWrap') ||
+                t.classList.contains('moveCheckedWorkFile') ||
+                t.classList.contains('copyCheckedWorkFile') ||
+                t.classList.contains('moveCheckedWorkFileIcon') ||
+                t.classList.contains('copyCheckedWorkFileIcon') ||
+                t.classList.contains('MoveOrCopyWorkFilesMaskWrap') ||
+                t.classList.contains('moveAndCopyWorkFileWrap') ||
+                t.classList.contains('moveCheckedWorkFile') ||
+                t.classList.contains('moveCheckedWorkFileIcon') ||
+                t.classList.contains('copyCheckedWorkFile') ||
+                t.classList.contains('copyCheckedWorkFileIcon') ||
+                t.classList.contains('MoveOrCopyWorkFilesMask') ||
+                t.classList.contains('MoveOrCopyWorkFilesMaskContent') ||
+                t.classList.contains('projectFileMenuContainer') ||
+                t.classList.contains('projectFileMenuTitle') ||
+                t.classList.contains('projectFileMenuList') ||
+                t.classList.contains('projectFileMenuItem') ||
+                t.classList.contains('projectFileMenuItem active') ||
+                t.classList.contains('WorkFilesMenuWrap') ||
+                t.classList.contains('WorkFilesMenu') ||
+                t.classList.contains('WorkFilesMenuList') ||
+                t.classList.contains('WorkFilesMenuItem') ||
+                t.classList.contains('WorkFilesMenuItem active') ||
+                t.classList.contains('ant-modal-content') ||
+                t.classList.contains('ant-modal-header') ||
+                t.classList.contains('ant-modal-title') ||
+                t.classList.contains('ant-modal-body') ||
+                t.classList.contains('ant-modal-footer')
+            )
+        if(rej || ModifyMenuCoverTag) return;
         let myId = t.dataset.id;
         if(myId){
             let oldPath = location.pathname;
@@ -213,20 +258,17 @@ class ThumbNailWorkFileItem extends Component {
         let { 
             forCreate, 
             oneFileData,
-            state:{worksFile}
+            state:{worksViewType}
         } = this.props; 
         let c = false;
         let dataId = '';//data-id
-        let time = '';//显示创建/修改时间
         if(oneFileData && oneFileData.myId){
             c = oneFileData.check;
             dataId = oneFileData.myId;
         }
-        console.log(oneFileData.goToDelete)
         return ( 
             <li className={classnames({"ThumbNailWorkFileItemLi":true,'active':c})} >
                 <div className="check-frame" onDoubleClick={this.ToInside} data-id={oneFileData?oneFileData.myId:''}>
-                    {/* <Icon type="check-square" className="check-frame-checkIcon"/> */}
                     <Checkbox 
                         className="check-frame-checkIcon"
                         checked={c}
@@ -240,17 +282,26 @@ class ThumbNailWorkFileItem extends Component {
                         onClick={this.toShowModifyWorkFileMenuCover.bind(this,oneFileData?oneFileData.myId:'')}
                     />
                     { oneFileData && oneFileData.isModifyWorkFileMenu ? <ModifyMenuCover oneFileData={oneFileData}/> : null}
-                    { oneFileData && oneFileData.goToDelete ? <DelteWorkFileCover
-                        myId={oneFileData?oneFileData.myId:''}
-                        confirmDeleteThisWorkFile={this.confirmDeleteThisWorkFile}
-                        toHideTheDeleteCover={this.toHideTheDeleteCover}
-                    /> : null}
-                    {/* <DelteWorkFileCover/> */}
+                    { oneFileData && oneFileData.goToDelete ? 
+                        <DelteWorkFileCover
+                            myId={oneFileData?oneFileData.myId:''}
+                            confirmDeleteThisWorkFile={this.confirmDeleteThisWorkFile}
+                            toHideTheDeleteCover={this.toHideTheDeleteCover}
+                            worksViewType = {worksViewType.worksViewType}
+                        /> : null
+                    }
                 </div>
                 <div className="title-bar">
                     {
-                        forCreate || oneFileData.isModifyWorkFileName ? <input  type="text" className="title-edit-input" autoFocus/> :
-                        <p className="elastic-title" 
+                        forCreate || oneFileData.isModifyWorkFileName ? <input  
+                            type="text" 
+                            className="title-edit-input" 
+                            autoFocus
+                            onKeyUp={this.ToCreateANewWorkFile}
+                            ref={node=>this.WorkFileItemNameInput = node}
+                            defaultValue={oneFileData?oneFileData.workFileName:null}
+                            onBlur={this.goToHideInput}
+                        /> : <p className="elastic-title" 
                             title={oneFileData && oneFileData.workFileName ? oneFileData.workFileName:''}
                         >{oneFileData && oneFileData.workFileName ? oneFileData.workFileName : null}</p>
                     }

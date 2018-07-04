@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter , Link } from 'react-router-dom';
 import * as allAction from '@/actions/workAction.js';
 import { GetAllWorksFileUnderParentWorksFileServer } from '@/server/requestData.js';
-import cookie from 'react-cookies';
+
 
 class WorkHead extends React.Component {
     constructor(props) {

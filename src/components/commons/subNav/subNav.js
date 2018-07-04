@@ -63,8 +63,7 @@ class SubNav extends Component {
     componentWillMount(){
         let { 
                 location , 
-                match:{path} , 
-                state: {getFileInfo} , 
+                match:{path} ,  
                 TaskItemsInCurrentFileAction,
                 findAllSubTasksInsideAfileAction 
             } = this.props;
@@ -94,12 +93,7 @@ class SubNav extends Component {
             activeKey:path.charAt(path.length-1)
         })
     }
-    shouldComponentUpdate(nextProps){
-        let { location:{pathname} , state:{getFileInfo} } = nextProps;
-        //拿到当前项目文件的id
-        let fileId = pathname.match(/\d+/g)[0]*1;
-        let currentFile = getFileInfo.find(val=>val.fileId===fileId);
-        // console.log(getFileInfo,fileId)
+    shouldComponentUpdate(){
         return true;
     }
     componentWillUnmount(){//不在work页的时候，不显示面包屑导航条

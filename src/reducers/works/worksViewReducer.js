@@ -3,7 +3,7 @@ const worksViewType = (state={},action) => {
     switch (action.type){
 
         case 'SAVE_WORKS_VIEW_TYPE':
-            let b = {forCreate:false}; //切换文件的显示模式ThumbnailView / ListView
+            let b = {forCreate:false}; 
             let s = {sortByModifyTime:'descend'};//ascend /descend
             state = {...action.obj, ...b,...s};
         return state;

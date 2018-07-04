@@ -29,7 +29,6 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     let { location: {pathname} , 
       state:{ worksFile , WorkFileMoveAndCopyMaskData } ,
       saveAGroupOfSameParentIdWorkFilesAction,
-      pushAWorkFilesMenuListAction ,
       oneFileData
     } = this.props;
     let { WorkFilesMenuListDataId:abc } = this.state;
@@ -67,9 +66,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
   //点击 个人项目，查询项目文件下的work文件
   clickToSearchWorkFilesInsideAprojectFile = (e) => {
     let { 
-      saveAGroupOfSameParentIdWorkFilesAction, 
       showTopLevelWorkFilesAction,
-      state:{ worksFile , WorkFileMoveAndCopyMaskData } ,
        } = this.props;
     let t = e.target;
     if(t.nodeName !== 'LI') return;
@@ -140,11 +137,8 @@ class MoveOrCopyWorkFilesMask extends React.Component {
   }
   //移动和复制 work文件的弹框 显示
   showModal = (myId,e) => {
-    let { WorkFilesMenuListDataId ,openFirstLiHighLight} = this.state;
     let { state:{worksFilrCrumb,WorkFileMoveAndCopyMaskData}} = this.props;
     this.WorkFileMoveAndCopyMaskData = WorkFileMoveAndCopyMaskData;
-    // this.WorkFilesMenuListDataId = WorkFilesMenuListDataId;
-    // this.openFirstLiHighLight = openFirstLiHighLight;
     let arr = []
     worksFilrCrumb.forEach(val=>{
       arr.push(val.myId)
@@ -174,9 +168,28 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     });
   }
 
-  handleOk = (e) => {
-    // console.log(e);
-    let { closeWorkFileMoveAndCopyMaskAction } = this.props;
+  handleOk = (myId,e) => {
+    /*
+    点击确认  
+      单个复制OR移动：如果要移动到的文件夹就是自己，那么不进行操作 ；否则就把移动的文件夹的parentId和项目文件id进行修改
+      多个复制OR移动: 移动到的目的地文件夹是当前选中移动的一个，就不操作；否则就把移动的文件夹的parentId和项目文件id进行修改
+    */
+    let { title } = this.state;
+    let { closeWorkFileMoveAndCopyMaskAction 
+        } = this.props;
+    if(myId){//移动一个通过myId 复制OR移动 --> parentId 和 fileId
+      if(title==='移动'){
+        
+      }else if(title==='复制'){
+
+      }
+    }else{//通过fileId,parentId,check 复制OR移动 --> parentId 和 fileId
+      if(title==='移动'){
+
+      }else if(title==='复制'){
+        
+      }
+    }
     closeWorkFileMoveAndCopyMaskAction(this.WorkFileMoveAndCopyMaskData)
     this.setState({
       visible: false,
@@ -220,7 +233,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           className="MoveOrCopyWorkFilesMask"
           title={`${title}${checkedCount}个文件夹  至`}
           visible={this.state.visible}
-          onOk={this.handleOk}
+          onOk={this.handleOk.bind(this,oneFileData?oneFileData.myId:null)}
           onCancel={this.handleCancel}
           okText="确认"
           cancelText="取消"

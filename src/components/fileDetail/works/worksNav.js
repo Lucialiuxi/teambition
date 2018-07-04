@@ -4,10 +4,6 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { ToSwitchCheckAllWorkFileAction , 
-         ToChangeWorkFileSortTypeAction ,
-         DeleteCheckedWorkFilesAction ,
-     } from '@/actions/workAction.js';
 import { ToSwitchCheckAllWorkFileServer ,
          DeleteCheckedWorkFilesServer ,
          ChangeWorksViewTypeServer
@@ -20,7 +16,6 @@ class WorksNav extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            viewType:'ListView',//文件展示模式
             checkAll:false,//全选
             sort:'',//时间排序是升序还是降序
             groupDeal:false,//选中多个操作
@@ -52,12 +47,6 @@ class WorksNav extends Component {
                 sort:t
             })
         }
-    }
-
-    componentDidMount(){
-        this.setState({
-            viewType:this.props.tp
-        })
     }
 
     //全选
@@ -138,7 +127,7 @@ class WorksNav extends Component {
     }
     render() { 
         let { state:{worksFile,worksViewType}} = this.props;
-        let { viewType , checkAll , sort , groupDeal , checkedCount } = this.state;
+        let {  checkAll , sort , groupDeal , checkedCount } = this.state;
         let cls1 = classnames('ThumbnailView-Icon',{'active':worksViewType.worksViewType==='ThumbnailView'});
         let cls2 = classnames('ListView-Icon',{'active':worksViewType.worksViewType==='ListView'});
         if(!worksFile[0]){

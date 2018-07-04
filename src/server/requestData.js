@@ -203,3 +203,19 @@ export const DeleteCheckedWorkFilesServer = (param) => {
 export const ChangeWorksViewTypeServer = (param) => {
     return axios.post('/ChangeWorksViewType',param)
 }
+
+/**
+ * 移动OR复制一个workFile到其他文件夹下 keyWord:'复制'/'移动'
+ * @param { myId: String , keyWord:Sting , NewfileId: Number , NewParentId:String } param 
+ */
+export const MoveOrCopyOneWorkFileServer = (param) => {
+    return axios.post('/MoveOrCopyOneWorkFile',param)   
+}
+
+/**
+ * 移动OR复制一组workFiles到其他文件夹下 keyWord:'复制'/'移动'
+ * @param { fileId: Number , parentId:String , keyWord:Sting , NewfileId: Number , NewParentId:String } param 
+ */
+export const MoveOrCopyOneGroupWorkFilesServer = (param) => {
+    return axios.post('/MoveOrCopyOneGroupWorkFiles',param)   
+}

@@ -4,18 +4,18 @@ const worksFile = ( state = [] , action ) => {
         //成功创建一个文件夹
         case 'ALREADY_CREATE_A_WORKS_FILE_ACTION':
             let addState = state.concat();
+            console.log(action.obj)
             addState.push(action.obj);
         return addState;
 
         //进入works文件 或者刷新的时候，把请求回来的数据保存起来
         case 'GET_ALL_WORKSFILE_UNDER_PARENT_WORKSFILE_ACTION':
-            state = [...action.arr].map( val => {
-                val.isModifyWorkFileMenu = false;//缩略图里的文件夹菜单的显示框
-                val.isModifyWorkFileName = false;//编辑文件名的显示框
-                val.goToDelete = false; //确认删除定位框
-                return val
-            });
-        return state;
+        return action.arr.map( val => {
+            val.isModifyWorkFileMenu = false;//缩略图里的文件夹菜单的显示框
+            val.isModifyWorkFileName = false;//编辑文件名的显示框
+            val.goToDelete = false; //确认删除定位框
+            return val
+        });
 
         //删除一个work文件夹 myId->文件夹id
         case 'DELETE_A_WORKSFILE_ACTION':
@@ -77,15 +77,15 @@ const worksFile = ( state = [] , action ) => {
 
         //显示deleteCover定位框
         case 'TO_SHOW_DELETE_COVER_ACTION':
-            state.forEach(val=>{
+            let refreshState = state.map(val=>{
                 val.isModifyWorkFileMenu = false;
                 val.isModifyWorkFileName = false;
                 if(val.myId===action.myId){
                     val.goToDelete = true; 
-                    console.log(state)
                 }
+                return val;
             })
-        return state;
+        return refreshState;
 
         //隐藏deleteCover定位框
         case 'TO_HIDE_DELETE_COVER_ACTION':
@@ -99,6 +99,7 @@ const worksFile = ( state = [] , action ) => {
         return [...state].map(val=>{
             if(val.myId===action.myId){
                 val.isModifyWorkFileMenu = true;
+                val.goToDelete = false;
             }else{
                 val.isModifyWorkFileMenu = false;
             }

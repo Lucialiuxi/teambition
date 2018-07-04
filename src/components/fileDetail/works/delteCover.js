@@ -1,5 +1,7 @@
 import React , { Component } from 'react';
 import {Icon } from 'antd';
+import {toShowModifyWorkFileMenuCoverAction} from '@/actions/workAction.js';
+import { connect } from 'react-redux';
 
 //确认删除一个li文件的定位框
 class DelteWorkFileCover extends Component {
@@ -15,12 +17,20 @@ class DelteWorkFileCover extends Component {
          let { toHideTheDeleteCover } = this.props;
          toHideTheDeleteCover(myId)
     }
+    goBackToModifyMenuCover = () => {
+        let {dispatch,myId} = this.props;
+        dispatch(toShowModifyWorkFileMenuCoverAction(myId))
+    }
     render() { 
-        let { myId } = this.props;
+        let { myId , worksViewType} = this.props;
+        console.log(worksViewType)
         return ( 
             <div className="delteWorkFileCover-Wrap">
                 <header className="delteWorkFileCover-Head">
-                    <Icon type="left" className="delteWorkFileCover-leftIcon"/>
+                    {worksViewType? <Icon type="left" 
+                        className="delteWorkFileCover-leftIcon" 
+                        onClick={this.goBackToModifyMenuCover}
+                        /> : null}
                     <h3 className="delteWorkFileCover-Title">移到回收站</h3>
                     <Icon type="close" className="delteWorkFileCover-closeIcon" onClick={this.hideDelteCover.bind(this,myId)}/>
                 </header>
@@ -33,4 +43,4 @@ class DelteWorkFileCover extends Component {
     }
 }
  
-export default DelteWorkFileCover;
+export default connect()(DelteWorkFileCover);

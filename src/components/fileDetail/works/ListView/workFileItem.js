@@ -288,7 +288,7 @@ class WorkFileItem extends React.Component {
                             ref={node=>this.WorkFileItemNameInput = node}
                             defaultValue={oneFileData?oneFileData.workFileName:null}
                             onBlur={this.goToHideInput}
-                        />:<p className="workFileItemName">{oneFileData.workFileName}</p>}
+                        />:<p className="workFileItemName" title={oneFileData.workFileName}>{oneFileData.workFileName}</p>}
                     </div>
                     <div className="workFileItemInfo">
                         <span className="establishUser">{username?username:''}</span>
