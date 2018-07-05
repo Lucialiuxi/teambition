@@ -23,35 +23,50 @@ class Works extends React.Component {
         this.state = {}
     }
     componentWillMount(){
-        let { location: { pathname } , getBreadCrumbAction } = this.props;
+        let { location: { pathname } , 
+              getBreadCrumbAction , 
+              getWorkFileMoveAndCopyMaskDataAction 
+            } = this.props;
         if(pathname.split('/').length===4){
             if(cookie.load('BreadCrumb')){
-                // console.log('移除')
                 cookie.remove('BreadCrumb',{ path: '/' })
             }
-        }else{
+        }else{//在works页刷新，应该显示面包屑的时候，去cookie中去了存到redux中
             let BreadCrumb = cookie.load('BreadCrumb');
-            getBreadCrumbAction(BreadCrumb)
+            let WorkFileMoveAndCopyMaskData = JSON.parse(localStorage.getItem('WorkFileMoveAndCopyMaskData'));
+            getWorkFileMoveAndCopyMaskDataAction(WorkFileMoveAndCopyMaskData)
+            getBreadCrumbAction(BreadCrumb);
         }
     }
     shouldComponentUpdate(nextProps){
-        let { location: { pathname } } = nextProps;
-        if(pathname.split('/').length===5){
+        let { location: { pathname } , 
+              state: { WorkFileMoveAndCopyMaskData,worksFilrCrumb } ,
+              keepSyncAction
+            } = nextProps;
+        let wfc = this.props.state.worksFilrCrumb;
+        let arr = pathname.split('/');
+        if(arr.length===5){//不在works的根路径
             let newBreadCrumb = [];
             let BreadCrumb = cookie.load('BreadCrumb');
-           if(BreadCrumb){
-                newBreadCrumb = nextProps.state.worksFilrCrumb; 
-                if(newBreadCrumb[0]){
+           if(BreadCrumb){//如果cookie里有存面包屑 
+                newBreadCrumb = worksFilrCrumb; 
+                if(newBreadCrumb[0] && wfc.length!==newBreadCrumb.length){
+                    if(wfc.length>worksFilrCrumb.length){
+                        //切换后的面包屑的长度比切换前的短，就说明要缩减存在localstorage和redux里面的WorkFileMoveAndCopyMaskData的长度
+                        keepSyncAction(arr[arr.length-1])
+
+                    }
                     cookie.save('BreadCrumb',newBreadCrumb,{ path: '/' });
                 }
-            }else{
-                newBreadCrumb = nextProps.state.worksFilrCrumb;
+            }else{//如果没有cookie里有存面包屑 
+                newBreadCrumb = nextProps.state.worksFilrCrumb; 
                 if(!BreadCrumb || newBreadCrumb[0]){
                     cookie.save('BreadCrumb',newBreadCrumb,{ path: '/' });
                 }
             }
-        }else{
-            if( (nextProps.state.worksFilrCrumb === this.props.state.worksFilrCrumb) && this.props.state.worksFilrCrumb[0]){
+        }else{//在works的根路径 
+            localStorage.removeItem('WorkFileMoveAndCopyMaskData') 
+            if( (worksFilrCrumb === wfc) && wfc[0]){
                 return false;
             } 
         }

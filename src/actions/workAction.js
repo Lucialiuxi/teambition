@@ -229,3 +229,23 @@ export const toHideModifyWorkFileMenuCoverAction = () => {
         type:'TO_HIDE_MODIFY_WORKFILEMENU_COVER_ACTION'
     }     
 }
+
+/**
+ * 刷新works页面的时候把cookie存的WorkFileMoveAndCopyMaskData存到redux里面
+ */
+export const getWorkFileMoveAndCopyMaskDataAction = (obj) => {
+    return {
+        type:'GET_WORKFILEMOVEANDCOPYMASKDATA_ACTION',
+        obj
+    }     
+}
+/**
+ * 切换面包屑导航栏的时候，面包屑导航栏变短的时候，
+ * 把面包屑导航栏显示除外的数据从WorkFileMoveAndCopyMaskData移除
+ */
+export const keepSyncAction = (myId) => {
+    return {
+        type:'KEEP_SYNC_ACTION',
+        myId
+    }       
+}

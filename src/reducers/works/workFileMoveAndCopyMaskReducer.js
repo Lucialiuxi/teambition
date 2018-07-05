@@ -45,6 +45,23 @@ const WorkFileMoveAndCopyMaskData = ( state = {} , action ) => {
         //关闭移动复制弹框，数据回答打开之前的状态
         case 'CLOSE_WORKFILEMOVEANDCOPYMASK_ACTION':
         return action.obj;
+
+        //刷新works页面不在顶层文件的话，把cookie存的拿出来存起来
+        case 'GET_WORKFILEMOVEANDCOPYMASKDATA_ACTION':
+        return action.obj;
+        
+        //跟切换的面包屑导航同步数据 
+        case 'KEEP_SYNC_ACTION':
+            let syncState =  Object.assign({},state);
+            let copysyncState = {};
+            for(let attr in syncState){
+                copysyncState[attr] = syncState[attr];
+                if(attr===action.myId){
+                    break;
+                }
+            }
+        return copysyncState;
+        
     default:
         return state;
     }

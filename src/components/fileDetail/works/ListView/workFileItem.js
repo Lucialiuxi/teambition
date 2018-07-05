@@ -124,7 +124,7 @@ class WorkFileItem extends React.Component {
                 location , 
                 GetAllWorksFileUnderParentWorksFileAction ,
                 dbClickToWorkFileInsideAction ,
-                state: { worksFile } ,
+                state: { worksFile , WorkFileMoveAndCopyMaskData } ,
             } = this.props;
         let t = e.target;
         let rej = (t.classList.contains('LiCheckBox') ||
@@ -175,11 +175,11 @@ class WorkFileItem extends React.Component {
                     fileId,parentId:myId
                 }).then(({data})=>{
                     if(data.success){
-                        dbClickToWorkFileInsideAction({workFileName,myId})
-                        GetAllWorksFileUnderParentWorksFileAction(data.data)
+                        dbClickToWorkFileInsideAction({workFileName,myId});
+                        GetAllWorksFileUnderParentWorksFileAction(data.data);
+                        localStorage.setItem('WorkFileMoveAndCopyMaskData',JSON.stringify(WorkFileMoveAndCopyMaskData))  
                     }
                 })
-
             }
         }
     }

@@ -23,6 +23,7 @@ const worksFilrCrumb = (state=[],action) => {
             }
         return nState;
         
+        //work页回到最顶层文件的时候 和不在work页的时候，不显示面包屑导航条
         case 'EMPTY_BREAD_CRUMB_ACTION':
         return state=[];
     default:

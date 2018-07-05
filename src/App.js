@@ -17,7 +17,6 @@ class App extends Component {
     const {location:{pathname} } = nextProps;
     if(pathname === '/login'){
       let allCookies = cookie.loadAll();
-      console.log(allCookies)
       for(let attr in allCookies){
           cookie.remove(attr, { path: '/' })
       }

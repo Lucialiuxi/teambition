@@ -1,13 +1,11 @@
 import { Modal, Icon } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
-import { 
-    withRouter
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as workAction from '@/actions/workAction.js';
 import { GetAllWorksFileUnderParentWorksFileServer } from '@/server/requestData.js';
-import classnames from 'classnames'
+import classnames from 'classnames';
 
 /**
  * 点击的时候，存上一次的parentId，然后拿此次的myId作为新的parentId，到reducer里去替换
@@ -40,12 +38,11 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     })
     if(pathArr.length===4){//显示顶层的work文件
       saveAGroupOfSameParentIdWorkFilesAction({ ParentId: '' , arr:worksFile });
-      if(oneFileData){
-        abc.push(oneFileData.myId);
-        this.setState({
-          WorkFilesMenuListDataId:abc
-        })
-      }
+      let arr = [];
+      arr.push(currentfileId);
+      this.setState({
+        WorkFilesMenuListDataId:arr
+      })
     }else if(pathArr.length===5){
       saveAGroupOfSameParentIdWorkFilesAction({ ParentId: pathArr[4]  ,  arr:worksFile });
       let AllKey = Object.keys(WorkFileMoveAndCopyMaskData);
@@ -66,9 +63,8 @@ class MoveOrCopyWorkFilesMask extends React.Component {
 
   //点击 个人项目，查询项目文件下的work文件
   clickToSearchWorkFilesInsideAprojectFile = (e) => {
-    let { 
-      showTopLevelWorkFilesAction,
-       } = this.props;
+    let { showTopLevelWorkFilesAction } = this.props;
+    let { WorkFilesMenuListDataId } = this.state;
     let t = e.target;
     if(t.nodeName !== 'LI') return;
     let fileId = t.dataset.id*1;
@@ -77,8 +73,10 @@ class MoveOrCopyWorkFilesMask extends React.Component {
         showTopLevelWorkFilesAction({ ParentId: '' , arr:data.data })
       }
     })
+    WorkFilesMenuListDataId.splice(0,1,fileId)
     this.setState({
-      currentfileId:fileId
+      currentfileId:fileId,
+      WorkFilesMenuListDataId
     })
   }
 
@@ -94,7 +92,6 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       for(let attr in WorkFileMoveAndCopyMaskData){ 
           arr.push(WorkFileMoveAndCopyMaskData[attr])
       }
-      // console.log(arr)
       if(t.nodeName==="UL") return;
       let pUl = t.parentNode;
       let Lis = pUl.getElementsByTagName('li');
@@ -115,20 +112,17 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       for(let attr in WorkFileMoveAndCopyMaskData){
         num++;
         if(attr===ulId){
-          console.log('attr',attr)
-          console.log('ulId',ulId)
           index = num;
+          break;
         }
       }
       /**
        * ----------------------------------------------------
        * 点击的时候，渲染的UL的data-id没有更新对，连续两个Ul的data-id相同，后一个就会被删除
        */
-      console.log(index)
       GetAllWorksFileUnderParentWorksFileServer({fileId,parentId: clickedLiId }).then(({data})=>{
         if(data.success){
           if(index===-1){//如果父级的id不存在，就说明是最后一组ul的里，就查询被点击的li的id,存到reducer对象里面
-            console.log(data.data)
             pushAWorkFilesMenuListAction({ ParentId: clickedLiId , arr:data.data }) 
             console.log('添加')
           }else{//如果存在，就把循环看点击的ul是第几个ul，然后把之后的几组数据删掉
@@ -137,8 +131,9 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           }
         }
       })
-      openFirstLiHighLight.splice(len-1)
+      openFirstLiHighLight.splice(len-1);
       WorkFilesMenuListDataId.splice(len-1);
+
       WorkFilesMenuListDataId.push(t.dataset.id);
       this.setState({
         WorkFilesMenuListDataId,
