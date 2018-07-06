@@ -129,7 +129,7 @@ class ThumbNailWorkFileItem extends Component {
                 location , 
                 GetAllWorksFileUnderParentWorksFileAction ,
                 dbClickToWorkFileInsideAction ,
-                state: { worksFile  } 
+                state: { worksFile , WorkFileMoveAndCopyMaskData } 
             } = this.props;
         let t = e.target;
         let rej = (//点击到的是文件夹
@@ -212,6 +212,7 @@ class ThumbNailWorkFileItem extends Component {
                     if(data.success){
                         dbClickToWorkFileInsideAction({workFileName,myId})//记录面包屑
                         GetAllWorksFileUnderParentWorksFileAction(data.data)
+                        localStorage.setItem('WorkFileMoveAndCopyMaskData',JSON.stringify(WorkFileMoveAndCopyMaskData)) 
                     }
                 })
 

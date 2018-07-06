@@ -249,3 +249,11 @@ export const keepSyncAction = (myId) => {
         myId
     }       
 }
+
+//有一个works文件移动成功
+export const AWorkFileAlreadyMovedAction = (myId) => {
+    return {
+        type:'A_WORKFILE_ALREADY_MOVED_ACTION',
+        myId
+    } 
+}

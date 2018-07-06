@@ -169,7 +169,12 @@ class WorkFileItem extends React.Component {
             }
             if(worksFile){
                 //被点击的文件的文件名
-                let workFileName = worksFile.find(val=>val.myId===myId).workFileName;
+                let workFileName;
+                if(worksFile.find(val=>val.myId===myId)){
+                    workFileName = worksFile.find(val=>val.myId===myId).workFileName;
+                }else{
+                    return;
+                }
                 history.push({pathname:newpath,state:{t:'works'}})
                 GetAllWorksFileUnderParentWorksFileServer({
                     fileId,parentId:myId

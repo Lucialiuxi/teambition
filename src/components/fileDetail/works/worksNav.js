@@ -8,7 +8,6 @@ import { ToSwitchCheckAllWorkFileServer ,
          DeleteCheckedWorkFilesServer ,
          ChangeWorksViewTypeServer
      } from '@/server/requestData.js';
-import MoveOrCopyWorkFilesMask from '@/components/mask/MoveOrCopyWorkFilesMask.js';
 import cookie from 'react-cookies';
 import * as allAction from '@/actions/workAction.js';
 
@@ -106,14 +105,12 @@ class WorksNav extends Component {
             if(t.classList.contains('ThumbnailView-Icon') && !t.classList.contains('active')){//缩略图模式
                 ChangeWorksViewTypeServer({ username , worksViewType:'ThumbnailView' }).then(({data})=>{
                     if(data.success){
-                        console.log('改为缩略图模式')
                         ChangeWorksViewTypeAction({worksViewType: data.data})
                     }
                 })
             }else if(t.classList.contains('ListView-Icon') && !t.classList.contains('active')){//列表模式
                 ChangeWorksViewTypeServer({ username , worksViewType:'ListView' }).then(({data})=>{
                     if(data.success){
-                        console.log('改为列表模式')
                         ChangeWorksViewTypeAction({worksViewType: data.data})
                     }
                 })
@@ -143,7 +140,6 @@ class WorksNav extends Component {
                     <span className="alreadyCheckedCount">
                         已经选中{checkedCount}项
                     </span>
-                    <MoveOrCopyWorkFilesMask checkedCount={checkedCount}/>
                     <span className="deleteCheckedWorkFile" onClick={this.deleteCheckedWorkFiles}>
                         <Icon type="delete" />
                         删除

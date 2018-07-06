@@ -112,6 +112,9 @@ const worksFile = ( state = [] , action ) => {
             return val;
         })  
 
+        //有一个works文件移动成功
+        case 'A_WORKFILE_ALREADY_MOVED_ACTION':
+        return [...state].filter(val=>val.myId !== action.myId) 
     default:
         return state;
     }

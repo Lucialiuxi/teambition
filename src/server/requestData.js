@@ -209,8 +209,16 @@ export const ChangeWorksViewTypeServer = (param) => {
 }
 
 /**
+ * 根据myId查询works文件的完整信息
+ * @param {myId: String} param 
+ */
+export const GetAWorksFileInformationByIdServer = (param) => {
+    return axios.post('/GetAWorksFileInformationById',param)   
+}
+
+/**
  * 移动OR复制一个workFile到其他文件夹下 keyWord:'复制'/'移动'
- * @param { myId: String , keyWord:Sting , NewfileId: Number , NewParentId:String } param 
+ * @param { username: String , myId: String , keyWord:Sting , NewfileId: Number , NewParentId:String ,lastestModifyTime: Number} param 
  */
 export const MoveOrCopyOneWorkFileServer = (param) => {
     return axios.post('/MoveOrCopyOneWorkFile',param)   
@@ -218,7 +226,7 @@ export const MoveOrCopyOneWorkFileServer = (param) => {
 
 /**
  * 移动OR复制一组workFiles到其他文件夹下 keyWord:'复制'/'移动'
- * @param { fileId: Number , parentId:String , keyWord:Sting , NewfileId: Number , NewParentId:String } param 
+ * @param { username: String , fileId: Number , parentId:String , keyWord:Sting , NewfileId: Number , NewParentId:String ,lastestModifyTime: Number} param 
  */
 export const MoveOrCopyOneGroupWorkFilesServer = (param) => {
     return axios.post('/MoveOrCopyOneGroupWorkFiles',param)   

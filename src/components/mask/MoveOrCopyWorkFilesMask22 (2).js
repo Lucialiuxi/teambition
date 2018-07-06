@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as workAction from '@/actions/workAction.js';
-import { GetAllWorksFileUnderParentWorksFileServer ,
-         GetAWorksFileInformationByIdServer,
-         MoveOrCopyOneWorkFileServer,
-     } from '@/server/requestData.js';
 import classnames from 'classnames';
+import { GetAllWorksFileUnderParentWorksFileServer ,
+  GetAWorksFileInformationByIdServer,
+  MoveOrCopyOneWorkFileServer,
+} from '@/server/requestData.js';
 import cookie from 'react-cookies';
 
 /**
@@ -30,11 +30,10 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     //把当前所在的项目文件下的数据存到reducer中
     let { 
       location: { pathname }, 
-      state:{ worksFile , WorkFileMoveAndCopyMaskData },
+      state:{ worksFile },
       saveAGroupOfSameParentIdWorkFilesAction,
       oneFileData
     } = this.props;
-    let { WorkFilesMenuListDataId:abc } = this.state;
     let pathArr = pathname.split('/');
     let currentfileId = pathArr[2]*1;
     this.setState({ 
@@ -42,19 +41,19 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     })
     if(pathArr.length===4){//显示顶层的work文件
       saveAGroupOfSameParentIdWorkFilesAction({ ParentId: '' , arr:worksFile });
-      if(oneFileData){
-        abc.push(oneFileData.myId);
-        this.setState({
-          WorkFilesMenuListDataId:abc
-        })
-      }
+      let arr = [];
+      arr.push(currentfileId);
+      this.setState({
+        WorkFilesMenuListDataId:arr
+      })
     }else if(pathArr.length===5){
       saveAGroupOfSameParentIdWorkFilesAction({ ParentId: pathArr[4]  ,  arr:worksFile });
+      let WorkFileMoveAndCopyMaskData = JSON.parse(localStorage.getItem('WorkFileMoveAndCopyMaskData'));
       let AllKey = Object.keys(WorkFileMoveAndCopyMaskData);
       if(oneFileData){
         AllKey = AllKey.concat(oneFileData.myId);
         if(AllKey[0]===''){
-          AllKey = AllKey.filter(val => val !== '');
+          AllKey[0] = currentfileId;
         }
       }
       this.setState({
@@ -68,9 +67,8 @@ class MoveOrCopyWorkFilesMask extends React.Component {
 
   //点击 个人项目，查询项目文件下的work文件
   clickToSearchWorkFilesInsideAprojectFile = (e) => {
-    let { 
-      showTopLevelWorkFilesAction,
-       } = this.props;
+    let { showTopLevelWorkFilesAction } = this.props;
+    let { WorkFilesMenuListDataId } = this.state;
     let t = e.target;
     if(t.nodeName !== 'LI') return;
     let fileId = t.dataset.id*1;
@@ -79,8 +77,10 @@ class MoveOrCopyWorkFilesMask extends React.Component {
         showTopLevelWorkFilesAction({ ParentId: '' , arr:data.data })
       }
     })
+    WorkFilesMenuListDataId.splice(0,1,fileId)
     this.setState({
-      currentfileId:fileId
+      currentfileId:fileId,
+      WorkFilesMenuListDataId
     })
   }
 
@@ -92,7 +92,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
             UpdateWorkFileMoveAndCopyMaskDataAction
           } = this.props;
       let { WorkFilesMenuListDataId , openFirstLiHighLight } = this.state;
-      let arr=[];
+      let arr=[];//拿到所有渲染文件目录的work文件数据
       for(let attr in WorkFileMoveAndCopyMaskData){ 
           arr.push(WorkFileMoveAndCopyMaskData[attr])
       }
@@ -103,7 +103,8 @@ class MoveOrCopyWorkFilesMask extends React.Component {
         val.classList.remove('active');
       })
       t.classList.add('active');
-      let fileId = pathname.match(/\d+/g)[0]*1;
+      //点击选择了高亮的项目文件的id
+      let fileId = document.getElementsByClassName('projectFileMenuItem active')[0].dataset.id*1;
       let len = arr.length;
       let clickedLiId = t.dataset.id;//当前被点击的li的id
       let ulId = t.parentNode.dataset.id;//当前被点击的li的父级ul的data-id
@@ -112,13 +113,18 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       //记录找到的ul是第几个
       let num = -1; 
       let index = -1;
+      console.log(ulId)
       for(let attr in WorkFileMoveAndCopyMaskData){
         num++;
-        if(attr===ulId){
+        if(Number(ulId) || attr===ulId){
           index = num;
+          break;
         }
       }
-      console.log(index)
+      /**
+       * ----------------------------------------------------
+       * 点击的时候，渲染的UL的data-id没有更新对，连续两个Ul的data-id相同，后一个就会被删除
+       */
       GetAllWorksFileUnderParentWorksFileServer({fileId,parentId: clickedLiId }).then(({data})=>{
         if(data.success){
           if(index===-1){//如果父级的id不存在，就说明是最后一组ul的里，就查询被点击的li的id,存到reducer对象里面
@@ -130,7 +136,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           }
         }
       })
-      openFirstLiHighLight.splice(len-1)
+      openFirstLiHighLight.splice(len-1);
       WorkFilesMenuListDataId.splice(len-1);
       WorkFilesMenuListDataId.push(t.dataset.id);
       this.setState({
@@ -223,7 +229,6 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       visible: false,
     });
   }
-
 
   handleCancel = (e) => {
     let { closeWorkFileMoveAndCopyMaskAction } = this.props;

@@ -34,18 +34,20 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       saveAGroupOfSameParentIdWorkFilesAction,
       oneFileData
     } = this.props;
-    let { WorkFilesMenuListDataId:abc } = this.state;
     let pathArr = pathname.split('/');
     let currentfileId = pathArr[2]*1;
-    this.setState({ 
-      currentfileId:currentfileId
-    })
+    if(this._isMounted){
+      this.setState({ 
+        currentfileId:currentfileId
+      })
+    }
     if(pathArr.length===4){//显示顶层的work文件
       saveAGroupOfSameParentIdWorkFilesAction({ ParentId: '' , arr:worksFile });
-      if(oneFileData){
-        abc.push(oneFileData.myId);
+      let arr = [];
+      arr.push(currentfileId);
+      if(this._isMounted){
         this.setState({
-          WorkFilesMenuListDataId:abc
+          WorkFilesMenuListDataId:arr
         })
       }
     }else if(pathArr.length===5){
@@ -57,9 +59,11 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           AllKey = AllKey.filter(val => val !== '');
         }
       }
-      this.setState({
-        WorkFilesMenuListDataId:AllKey
-      })
+      if(this._isMounted){
+        this.setState({
+          WorkFilesMenuListDataId:AllKey
+        })
+      }
     }
   }
   shouldComponentUpdate(nextProps){
@@ -68,9 +72,8 @@ class MoveOrCopyWorkFilesMask extends React.Component {
 
   //点击 个人项目，查询项目文件下的work文件
   clickToSearchWorkFilesInsideAprojectFile = (e) => {
-    let { 
-      showTopLevelWorkFilesAction,
-       } = this.props;
+    let { showTopLevelWorkFilesAction } = this.props;
+    let { WorkFilesMenuListDataId } = this.state;
     let t = e.target;
     if(t.nodeName !== 'LI') return;
     let fileId = t.dataset.id*1;
@@ -79,20 +82,23 @@ class MoveOrCopyWorkFilesMask extends React.Component {
         showTopLevelWorkFilesAction({ ParentId: '' , arr:data.data })
       }
     })
-    this.setState({
-      currentfileId:fileId
-    })
+    WorkFilesMenuListDataId.splice(0,1,fileId)
+    if(this._isMounted){
+      this.setState({
+        currentfileId:fileId,
+        WorkFilesMenuListDataId
+      })
+    }
   }
 
-  chooseWorkFile = (e) => {//点击WorkFilesMenuList下的li
+  chooseWorkFile = (myId,e) => {//点击WorkFilesMenuList下的li
       let t = e.target;
       let { state:{WorkFileMoveAndCopyMaskData } , 
-            location: {pathname} ,
             pushAWorkFilesMenuListAction ,
             UpdateWorkFileMoveAndCopyMaskDataAction
           } = this.props;
       let { WorkFilesMenuListDataId , openFirstLiHighLight } = this.state;
-      let arr=[];
+      let arr=[];//拿到所有渲染文件目录的work文件数据
       for(let attr in WorkFileMoveAndCopyMaskData){ 
           arr.push(WorkFileMoveAndCopyMaskData[attr])
       }
@@ -100,43 +106,56 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       let pUl = t.parentNode;
       let Lis = pUl.getElementsByTagName('li');
       Array.from(Lis).forEach(val=>{
-        val.classList.remove('active');
+        if(t.dataset.id!==val.dataset.id){
+          val.classList.remove('active');
+        }
       })
       t.classList.add('active');
-      let fileId = pathname.match(/\d+/g)[0]*1;
-      let len = arr.length;
-      let clickedLiId = t.dataset.id;//当前被点击的li的id
-      let ulId = t.parentNode.dataset.id;//当前被点击的li的父级ul的data-id
-      //如果父级的id不存在，就说明是最后一组ul的里，就查询被点击的li的id,存到reducer对象里面，
-      //如果存在，就把循环看点击的ul是第几个ul，然后把之后的几组数据删掉，在把查询的li的数据存起来
-      //记录找到的ul是第几个
-      let num = -1; 
-      let index = -1;
-      for(let attr in WorkFileMoveAndCopyMaskData){
-        num++;
-        if(attr===ulId){
-          index = num;
-        }
-      }
-      console.log(index)
-      GetAllWorksFileUnderParentWorksFileServer({fileId,parentId: clickedLiId }).then(({data})=>{
-        if(data.success){
-          if(index===-1){//如果父级的id不存在，就说明是最后一组ul的里，就查询被点击的li的id,存到reducer对象里面
-            pushAWorkFilesMenuListAction({ ParentId: clickedLiId , arr:data.data }) 
-            console.log('添加')
-          }else{//如果存在，就把循环看点击的ul是第几个ul，然后把之后的几组数据删掉
-            console.log('替换')
-            UpdateWorkFileMoveAndCopyMaskDataAction({ ulDataId:ulId , ParentId:clickedLiId, arr:data.data })
+      //点击选择了高亮的项目文件的id
+      if(document.getElementsByClassName('projectFileMenuItem active')[0]){
+        let fileId = document.getElementsByClassName('projectFileMenuItem active')[0].dataset.id*1;
+        let len = arr.length;
+        let clickedLiId = t.dataset.id;//当前被点击的li的id
+        let ulId = t.parentNode.dataset.id;//当前被点击的li的父级ul的data-id
+        //如果父级的id不存在，就说明是最后一组ul的里，就查询被点击的li的id,存到reducer对象里面，
+        //如果存在，就把循环看点击的ul是第几个ul，然后把之后的几组数据删掉，在把查询的li的数据存起来
+        //记录找到的ul是第几个
+        let num = -1; 
+        let index = -1;
+        for(let attr in WorkFileMoveAndCopyMaskData){
+          num++;
+          if(attr===ulId){
+            index = num;
+            break;
           }
         }
-      })
-      openFirstLiHighLight.splice(len-1)
-      WorkFilesMenuListDataId.splice(len-1);
-      WorkFilesMenuListDataId.push(t.dataset.id);
-      this.setState({
-        WorkFilesMenuListDataId,
-        openFirstLiHighLight
-      })
+        /**
+         * ----------------------------------------------------
+         * 点击的时候，渲染的UL的data-id没有更新对，连续两个Ul的data-id相同，后一个就会被删除
+         */
+        GetAllWorksFileUnderParentWorksFileServer({fileId,parentId: clickedLiId }).then(({data})=>{
+          if(data.success){
+            if(index===-1){//如果父级的id不存在，就说明是最后一组ul的里，就查询被点击的li的id,存到reducer对象里面
+              pushAWorkFilesMenuListAction({ ParentId: clickedLiId , arr:data.data }) 
+              console.log('添加')
+            }else{//如果存在，就把循环看点击的ul是第几个ul，然后把之后的几组数据删掉
+              console.log('替换',ulId,clickedLiId)
+              UpdateWorkFileMoveAndCopyMaskDataAction({ ulDataId:ulId , ParentId:clickedLiId, arr:data.data })
+            }
+          }
+        })
+        openFirstLiHighLight.splice(len-1);
+        WorkFilesMenuListDataId.splice(len-1);
+  
+        WorkFilesMenuListDataId.push(t.dataset.id);
+        if(this._isMounted){
+          this.setState({
+            WorkFilesMenuListDataId,
+            openFirstLiHighLight
+          })
+        }
+
+      }
   }
   //移动和复制 work文件的弹框 显示
   showModal = (myId,e) => {
@@ -149,26 +168,34 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     if(myId){
       arr.push(myId)
     }
-    this.setState({
-      openFirstLiHighLight:arr
-    })
+    if(this._isMounted){
+      this.setState({
+        openFirstLiHighLight:arr
+      })
+    }
     let t = e.target;
     if(t.classList.contains('moveCheckedWorkFile') || 
       t.classList.contains('moveCheckedWorkFileIcon')
     ){
-      this.setState({
-        title:'移动'
-      })
+      if(this._isMounted){
+        this.setState({
+          title:'移动'
+        })
+      }
     }else if(t.classList.contains('copyCheckedWorkFile') || 
             t.classList.contains('copyCheckedWorkFileIcon')
     ){
-      this.setState({
-        title:'复制'
-      })
+      if(this._isMounted){
+        this.setState({
+          title:'复制'
+        })
+      }
     }
-    this.setState({
-      visible: true,
-    });
+    if(this._isMounted){
+      this.setState({
+        visible: true,
+      });
+    }
   }
 
   handleOk = async (myId,e) => {
@@ -224,25 +251,38 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     });
   }
 
-
   handleCancel = (e) => {
     let { closeWorkFileMoveAndCopyMaskAction } = this.props;
     closeWorkFileMoveAndCopyMaskAction(this.WorkFileMoveAndCopyMaskData)
-    this.setState({
-      visible: false,
-    });
+    if(this._isMounted){
+      this.setState({
+        visible: false,
+      });
+    }
   }
-
+  componentDidMount(){
+    this._isMounted = true;
+  }
+  componentWillUnmount(){
+    this._isMounted = false;
+  }
   render() {
     let { title , visible , WorkFilesMenuListDataId , currentfileId , openFirstLiHighLight } = this.state;
     let { checkedCount , 
           insideLi , 
           oneFileData,
-          state:{ getFileInfo , WorkFileMoveAndCopyMaskData },
+          state:{ getFileInfo , WorkFileMoveAndCopyMaskData , worksFilrCrumb},
         } = this.props;
     let arr=[];
     for(let attr in WorkFileMoveAndCopyMaskData){ 
         arr.push(WorkFileMoveAndCopyMaskData[attr])
+    }
+    if(!WorkFilesMenuListDataId[0] && WorkFilesMenuListDataId.length===1){
+      worksFilrCrumb.forEach(val=>{
+        if(val){
+          WorkFilesMenuListDataId.push(val.myId)
+        }
+      })
     }
     return (
       <div className="MoveOrCopyWorkFilesMaskWrap"> 
@@ -270,7 +310,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           <section id="MoveOrCopyWorkFilesMaskContent">
               <div className="projectFileMenuContainer">
                   <h3 className="projectFileMenuTitle">个人项目</h3>
-                  <ul className="projectFileMenuList" onClick={this.clickToSearchWorkFilesInsideAprojectFile}>
+                  <ul className="projectFileMenuList" onClick={this.clickToSearchWorkFilesInsideAprojectFile} data-id={currentfileId}>
                     {getFileInfo.map(val=>{
                         return <li 
                                   className={classnames({'projectFileMenuItem':true,'active':val.fileId===currentfileId})}
@@ -287,7 +327,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
                                 className="WorkFilesMenuList" 
                                 key={index} 
                                 data-id={WorkFilesMenuListDataId[index]}
-                                onClick={this.chooseWorkFile}
+                                onClick={this.chooseWorkFile.bind(this,oneFileData?oneFileData.myId:null)}
                               >
                               {
                                 val.map((e,i)=>{

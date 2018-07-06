@@ -40,7 +40,7 @@ class Works extends React.Component {
     }
     shouldComponentUpdate(nextProps){
         let { location: { pathname } , 
-              state: { WorkFileMoveAndCopyMaskData,worksFilrCrumb } ,
+              state: { worksFilrCrumb } ,
               keepSyncAction
             } = nextProps;
         let wfc = this.props.state.worksFilrCrumb;
