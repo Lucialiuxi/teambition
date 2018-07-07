@@ -20,7 +20,7 @@ import FileInside from '@/components/fileDetail/fileInside';
 import * as fileActions  from '@/actions/fileAction';
 import * as workActions  from '@/actions/workAction';
 import { getAllFilesInfo , GetWorkFileViewTypeServer } from '@/server/requestData';
-
+import ProjectHomeLoading from '@/components/projectPage/projectHomeLoading';
 
 const { Header, Content } = Layout;
 /** 项目文件信息  
@@ -38,7 +38,8 @@ class Project  extends Component {
         this.state = {
             data:{
                 currentFileId:'',
-                activeBar:''
+                activeBar:'',
+                isLoading:true
             }
         }
     }
@@ -81,6 +82,11 @@ class Project  extends Component {
         }
         //请求项目文件信息数据
         getAllFilesInfo({userLoginName:user}).then(({data})=>{
+            if(data.success){
+                this.setState({
+                    isLoading:false
+                })
+            }
             if(data.AllFilesInfoData.length>0){
                 AllFileInfoArr(data.AllFilesInfoData)
             }
@@ -147,6 +153,7 @@ class Project  extends Component {
     }
     render() {
         let t = this.state.activeBar ? this.state.activeBar : '';
+        let { isLoading } = this.state;
         let { location: {pathname} } = this.props;
         let arr = pathname.split('/');
         let myId = ''
@@ -160,7 +167,7 @@ class Project  extends Component {
                         {/* 公共导航 */}
                         <CommonNav {...this.props}/>
                     </Header>
-                    <Content  className="projectPageContent">
+                    {!isLoading ? <Content  className="projectPageContent">
                         <Switch>
                         <Router>
                             <div id="ct">
@@ -196,7 +203,7 @@ class Project  extends Component {
                             </div>
                         </Router>
                         </Switch>
-                    </Content>
+                    </Content> : <ProjectHomeLoading/> }
                 </Layout>
            </div>
         )

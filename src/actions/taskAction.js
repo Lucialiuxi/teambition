@@ -2,21 +2,21 @@
 //生成默认的项目列表 未完成 已完成 进行中 --开发显示自己看返回的数据
 export  const CreateDefaultTaskItemsAction = arr => {
     return {
-        type: 'Create_Default_TaskItems',
+        type: 'CREATE_DEFAULT_TASKITEMS_ACTION',
         arr
     }
 }
 //新建一个项目列表
 export  const CreateATaskItemAction = obj => {
     return {
-        type: 'Create_A_TaskItem',
+        type: 'CREATE_A_TASKITEM_ACTION',
         obj
     }
 }
 //删除一个项目列表
 export  const deleteATaskItemAction = taskItemId => {
     return {
-        type: 'delete_A_TaskItem_Action',
+        type: 'DELETE_A_TASKITEM_ACTION',
         taskItemId
     }
 }
@@ -30,7 +30,7 @@ export const ModifyATaskItemNameAction = obj => {
 //进入文件的时候把当前的项目列表信息存进state中
 export  const TaskItemsInCurrentFileAction = arr => {
     return {
-        type: 'TaskItems_In_CurrentFile_Action',
+        type: 'TASKITEMS_IN_CURRENTFILE_ACTION',
         arr
     }
 }
@@ -40,14 +40,14 @@ export  const TaskItemsInCurrentFileAction = arr => {
  //控制【任务编辑框】  的显示隐藏 被点击的那个【添加任务】才显示
 export  const SubTaskCreatorIsShowAction = taskItemId => {
     return {
-        type: 'SubTask_Creator_Is_Show_Action',
+        type: 'SUBTASK_CREATOR_IS_SHOW_ACTION',
         taskItemId
     }
 }
 //隐藏所有的新建任务列表的【任务编辑框】
 export  const HideAllSubTaskCreatorsAction = (close) => {
     return {
-        type: 'Hide_All_SubTaskCreators_Action',
+        type: 'HIDE_ALL_SUBTASK_CREATORS_ACTION',
         close
     }
 }
@@ -56,7 +56,7 @@ export  const HideAllSubTaskCreatorsAction = (close) => {
 //控制 【任务编辑框的日历】 显示
 export  const TaskItemCalenderIsShowAction = taskItemId => {
     return {
-        type: 'TaskItem_Calender_IsShow_Action',
+        type: 'TASKITEM_CALENDER_IS_SHOW_ACTION',
         taskItemId
     }
 }
@@ -64,7 +64,7 @@ export  const TaskItemCalenderIsShowAction = taskItemId => {
 //所有的【任务编辑框的日历】 隐藏
 export  const HideAllTaskItemCalenderAction = (close) => {
     return {
-        type: 'Hide_All_TaskItem_Calender_Action',
+        type: 'HIDE_ALL_TASKITEM_CALENDER_ACTION',
         close
     }
 }
@@ -72,7 +72,7 @@ export  const HideAllTaskItemCalenderAction = (close) => {
 //控制 【紧急选择框】 显示
 export  const ShowChoiceUrgencyLevelAction = taskItemId => {
     return {
-        type: 'Show_Choice_UrgencyLevel_Action',
+        type: 'SHOW_CHOICE_URGENCY_LEVEL_ACTION',
         taskItemId
     }
 }
@@ -80,7 +80,7 @@ export  const ShowChoiceUrgencyLevelAction = taskItemId => {
 //【紧急选择框】 隐藏
 export  const HideChoiceUrgencyLevelAction = (close) => {
     return {
-        type: 'Hide_Choice_UrgencyLevel_Action',
+        type: 'HIDE_CHOICE_URGENCY_LEVEL_ACTION',
         close
     }
 }
@@ -89,42 +89,42 @@ export  const HideChoiceUrgencyLevelAction = (close) => {
 //控制任务列表的【下拉列表框】的显示 
 export  const TaskItemDropDownContainerShowAction = taskItemId => {
     return {
-        type: 'TaskItem_DropDownContainer_Show_Action',
+        type: 'TASKITEM_DROPDOWN_CONTAINER_SHOW_ACTION',
         taskItemId
     }
 }
 //隐藏【下拉列表框】
 export  const HideTaskItemDropDownContainerAction = (close) => {
     return {
-        type: 'Hide_TaskItem_DropDownContainer',
+        type: 'HIDE_TASKITEM_DROPDOWN_CONTAINER_ACTION',
         close
     }
 }
 //编辑任务列表 框显示
 export  const ModifyTaskItemAction = (taskItemId) => {
     return {
-        type: 'Modify_TaskItem_Action',
+        type: 'MODIFY_TASKITEM_ACTION',
         taskItemId
     }
 }
 //在此后添加新任务列表 框显示
 export  const addATaskItemAfterThisAction = (taskItemId) => {
     return {
-        type: 'add_A_TaskItem_After_This_Action',
+        type: 'ADD_A_TASKITEM_AFTER_THIS_ACTION',
         taskItemId
     }
 }
 //移动本任务列表所有任务 框显示
 export  const moveAllSubTasksFromThisToOtherAction = (taskItemId) => {
     return {
-        type: 'move_All_SubTasks_From_This_To_Other_Action',
+        type: 'MOVE_ALL_SUBTASKS_FROM_THIS_TO_OTHER_ACTION',
         taskItemId
     }
 }
 //复制本任务列表所有任务 框显示
 export  const copyAllSubTasksInsideThisAction = (taskItemId) => {
     return {
-        type: 'copy_All_SubTasks_Inside_This_Action',
+        type: 'COPEY_ALL_SUBTASKS_IINSIDE_THIS_ACTION',
         taskItemId
     }
 }
@@ -194,21 +194,21 @@ export const CopySubTasksForAnotherTaskItemAction = arr => {
 //清空本任务列表所有任务 框显示
 export  const deleteAllSubTasksInsideThisAction = (taskItemId) => {
     return {
-        type: 'delete_All_SubTasks_Inside_This_Action',
+        type: 'DELETE_ALL_SUBTASKS_INSIDE_THIS_ACTION',
         taskItemId
     }
 }
 //删除任务列表 框显示
 export  const deleteThisTaskItemAction = (taskItemId) => {
     return {
-        type: 'delete_This_TaskItem_Action',
+        type: 'DELETE_THIS_TASKITEM_ACTION',
         taskItemId
     }
 }
 //显示 下拉列表框主页
 export  const showDropDownContainerMainListAction = (taskItemId) => {
     return {
-        type: 'show_DropDownContainer_MainList_Action',
+        type: 'SHOW_DROPDOWN_CONTAINER_MAINLIST_ACTION',
         taskItemId
     }
 }
@@ -216,14 +216,14 @@ export  const showDropDownContainerMainListAction = (taskItemId) => {
 //新建项目列表框 显示 -->标识写在getFileInfo的项目文件信息
 export  const ShowTaskItemCreatorAction = (fileId) => {
     return {
-        type: 'TaskItem_Creator_Is_Show_Action',
+        type: 'SHOW_TASKITEM_CREATOR_ACTION',
         fileId
     }
 }
 //新建项目列表框 隐藏
 export  const HideTaskItemCreatorAction = (close) => {
     return {
-        type: 'Hide_TaskItem_Creator_Action',
+        type: 'HIDE_TASKITEM_CREATOR_ACTION',
         close
     }
 }
@@ -232,21 +232,21 @@ export  const HideTaskItemCreatorAction = (close) => {
 //创建一个任务
 export const createASubTaskAction = (obj) => {
     return {
-        type: 'create_A_SubTask_Action',
+        type: 'CREATE_A_SUBTASK_ACTION',
         obj
     }
 }
 //查询一个项目文件下的所有任务
 export const findAllSubTasksInsideAfileAction = (arr) => {
     return {
-        type:'find_All_SubTasks_Inside_A_file_Action',
+        type:'FIND_ALL_SUBTASKS_INSIDE_A_FILE_ACTION',
         arr
     }
 }
 //删除一个任务列表下的任务
 export const deleteSubTasksInATaskItemAction = (taskItemId) => {
     return {
-        type:'delete_SubTasks_In_A_TaskItem_Action',
+        type:'DELETE_SUBTASKS_IN_A_TASKITEM_ACTION',
         taskItemId
     }
 }

@@ -2,14 +2,14 @@
 //每次登录的时候先清空state里面的数据
 export  const ClearStateAction = () => {
     return {
-        type: 'Clear_State_Action'
+        type: 'CLEAR_STATE_ACTION'
     }
 }
 
 //新建项目文件夹
 export  const CreateAFile = obj => {
     return {
-        type: 'Create_A_File',
+        type: 'CREATE_A_FILE',
         obj
     }
 }
@@ -17,7 +17,7 @@ export  const CreateAFile = obj => {
 //刷新页面请求大图标文件数据
 export  const AllFileInfoArr = arr => {
     return {
-        type: 'get_All_files_Info',
+        type: 'ALL_FILE_INFO_ARR',
         arr
     }
 }
@@ -25,7 +25,7 @@ export  const AllFileInfoArr = arr => {
 //修改大图标文件信息
 export  const ModifyAFileInfo = obj => {
     return {
-        type: 'Modify_file_Info',
+        type: 'MODIFY_A_FILE_INFO',
         obj
     }
 }
@@ -33,7 +33,7 @@ export  const ModifyAFileInfo = obj => {
 //切换标星
 export  const ToggleFileStar = obj => {
     return {
-        type: 'Toggle_File_Star',
+        type: 'TOGGLE_FILE_STAR',
         obj
     }
 }
@@ -41,7 +41,7 @@ export  const ToggleFileStar = obj => {
 //移动文件到回收站
 export  const MoveFileToRecycleBin = obj => {
     return {
-        type: 'Move_File_To_RecycleBin',
+        type: 'MOVE_FILE_TO_RECYCLEBIN',
         obj
     }
 }
@@ -49,7 +49,7 @@ export  const MoveFileToRecycleBin = obj => {
 //删除一个项目文件夹
 export  const DeleteAFlieAction = obj => {
     return {
-        type: 'Delete_A_Flie_Action',
+        type: 'DELETE_A_FILE_ACTION',
         obj
     }
 }

@@ -103,14 +103,12 @@ class ModifyFileInfoMask extends Component {
         if(this.projectNameinput.value.trim() === FileName &&
             this.FileAbstract.value.trim() === FileAbstract
         ){
-            console.log(this.save)
             this.save.setAttribute('disabled','disabled')
         }else{
             this.save.removeAttribute('disabled')
         }
     }
     render() { 
-        // console.log(this.props)
         let { FileName , FileAbstract } = this.state;
         return ( 
             <div 

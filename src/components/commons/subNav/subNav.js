@@ -13,6 +13,7 @@ import { GetTaskItemServer ,
 import * as taskActions from '@/actions/taskAction';
 import * as workActions from '@/actions/workAction.js';
 import cookie from 'react-cookies';
+import ProjectHomeLoading from '@/components/projectPage/projectHomeLoading';
 
 const TabPane = Tabs.TabPane;
 
@@ -21,7 +22,9 @@ class SubNav extends Component {
         super(props);
         this.state = {
             activeKey:'1',
-            currentFile:{}
+            currentFile:{},
+            isLoadingTask:true,
+            isloadingWork:true
         }
     }
     //点击切换 任务  分享 文件 日程 群聊
@@ -75,11 +78,21 @@ class SubNav extends Component {
         if(CurrentFileId){
             //请求项目文件对应的任务列表
             GetTaskItemServer({fileId:CurrentFileId}).then(({data})=>{
-                TaskItemsInCurrentFileAction(data.CurrentTaskItemInfo)
+                if(data.success){
+                    TaskItemsInCurrentFileAction(data.CurrentTaskItemInfo)
+                    this.setState({
+                        isLoadingTask:false
+                    })
+                }
             })
             //请求任务列表数据
             GetAllSubTasksServer({fileId:CurrentFileId}).then(({data})=>{
-                findAllSubTasksInsideAfileAction(data.subTasksData)
+                if(data.success){
+                    findAllSubTasksInsideAfileAction(data.subTasksData)
+                    this.setState({
+                        isloadingWork:false
+                    })
+                }
             })
             this.setState({
                 fId:CurrentFileId,
@@ -103,7 +116,7 @@ class SubNav extends Component {
     }
     render() {
         let { location , state:{getFileInfo} } = this.props;
-        let { activeKey } = this.state;
+        let { activeKey , isLoadingTask , isloadingWork } = this.state;
         //拿到当前项目文件的id
         let fileId = location.pathname.match(/\d+/g)[0]*1;
         let currentFile;
@@ -128,10 +141,10 @@ class SubNav extends Component {
                     onChange={this.tabToOther}
                 >
                     <TabPane tab="任务" key="1" >
-                        <Tasks/>
+                    { !isLoadingTask ? <Tasks/> : <ProjectHomeLoading/> }
                     </TabPane>
                     <TabPane tab="文件" key="3">
-                        <Works/>
+                    { !isloadingWork ? <Works/> : <ProjectHomeLoading/> }
                     </TabPane>
                 </Tabs>
             </div> 

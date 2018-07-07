@@ -343,3 +343,10 @@ ul{
 #root .App{
     overflow-x: hidden;
 }
+.ant-spin-spinning{
+    height: 96%;
+    background-color: #fff;
+}
+.ant-spin-spinning .anticon-spin:before{
+    line-height: 500px;
+}

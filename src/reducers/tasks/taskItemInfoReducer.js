@@ -1,15 +1,15 @@
 const taskItemInfo = (state = [], action) =>{
     switch (action.type){
       //新建项目文件的时候创建默认的项目列表，开发自己看数据
-      case 'Create_Default_TaskItems':
+      case 'CREATE_DEFAULT_TASKITEMS_ACTION':
         return action.arr;
   
       //新建一个项目列表   
-      case 'Create_A_TaskItem':
+      case 'CREATE_A_TASKITEM_ACTION':
         return [...state,action.obj];
   
       //删除一个项目列表   
-      case 'delete_A_TaskItem_Action':
+      case 'DELETE_A_TASKITEM_ACTION':
         state = state.filter(val=>val.taskItemId!==action.taskItemId)
         return state;
   
@@ -23,7 +23,7 @@ const taskItemInfo = (state = [], action) =>{
         })
 
       //【进入】 项目文件夹和 【刷新】 的时候请求项目列表
-      case 'TaskItems_In_CurrentFile_Action':
+      case 'TASKITEMS_IN_CURRENTFILE_ACTION':
         return action.arr.map((val)=>{
             val.IsCreating = false;//显示创建子任务框
             val.IsChoiceDeadline = false; //显示创建子任务框的截止时间日历 的框
@@ -42,14 +42,14 @@ const taskItemInfo = (state = [], action) =>{
           })
   
        //控制新建任务列表的  子任务  的显示隐藏 被点击的那个新建框才显示
-      case 'SubTask_Creator_Is_Show_Action':
+      case 'SUBTASK_CREATOR_IS_SHOW_ACTION':
         return state.map((val)=>{
             (action.taskItemId===val.taskItemId) ? (val.IsCreating=true) : (val.IsCreating=false)
             return val;
           })
           
        //隐藏所有的新建任务列表的子任务编辑框
-       case 'Hide_All_SubTaskCreators_Action':
+       case 'HIDE_ALL_SUBTASK_CREATORS_ACTION':
         return state.map((val)=>{
           if(action.close==='close'){
             val.IsCreating=false
@@ -58,14 +58,14 @@ const taskItemInfo = (state = [], action) =>{
         })
   
        //项目列表的 子任务编辑框的日历 显示
-       case 'TaskItem_Calender_IsShow_Action':
+       case 'TASKITEM_CALENDER_IS_SHOW_ACTION':
         return state.map((val)=>{
             (action.taskItemId===val.taskItemId) ? (val.IsChoiceDeadline=true) : (val.IsChoiceDeadline=false)
             return val;
           })
           
        //项目列表的 子任务编辑框的日历  隐藏
-       case 'Hide_All_TaskItem_Calender_Action':
+       case 'HIDE_ALL_TASKITEM_CALENDER_ACTION':
           return state.map((val)=>{
             if(action.close==='close'){
               val.IsChoiceDeadline=false
@@ -74,14 +74,14 @@ const taskItemInfo = (state = [], action) =>{
           })
   
        //项目列表的   紧急选择框 显示
-       case 'Show_Choice_UrgencyLevel_Action':
+       case 'SHOW_CHOICE_URGENCY_LEVEL_ACTION':
           return state.map((val)=>{
               (action.taskItemId===val.taskItemId) ? (val.IsChoiceUrgencyLevel=true) : (val.IsChoiceUrgencyLevel=false)
               return val;
             })
   
        //项目列表的   紧急选择框  隐藏
-       case 'Hide_Choice_UrgencyLevel_Action':
+       case 'HIDE_CHOICE_URGENCY_LEVEL_ACTION':
           return state.map((val)=>{
             if(action.close==='close'){
               val.IsChoiceUrgencyLevel=false
@@ -90,14 +90,14 @@ const taskItemInfo = (state = [], action) =>{
           })
   
        //项目列表的 下拉列表框 显示
-       case 'TaskItem_DropDownContainer_Show_Action':
+       case 'TASKITEM_DROPDOWN_CONTAINER_SHOW_ACTION':
           return state.map((val)=>{
               (action.taskItemId===val.taskItemId) ? (val.IsShowDropDownContainer=true) : (val.IsShowDropDownContainer=false)
               return val;
             })
   
        //项目列表的 下拉列表框 隐藏
-       case 'Hide_TaskItem_DropDownContainer':
+       case 'HIDE_TASKITEM_DROPDOWN_CONTAINER_ACTION':
           return state.map((val)=>{
             if(action.close==='close'){
               val.IsShowDropDownContainer = false;
@@ -114,28 +114,28 @@ const taskItemInfo = (state = [], action) =>{
           })
   
         //编辑任务列表 显示
-        case 'Modify_TaskItem_Action':
+        case 'MODIFY_TASKITEM_ACTION':
           return state.map((val)=>{
               (action.taskItemId===val.taskItemId) ? (val.isModifyTaskItem=true) : (val.isModifyTaskItem=false)
               return val;
           })
   
         //在此后添加新任务列表 显示
-        case 'add_A_TaskItem_After_This_Action':
+        case 'ADD_A_TASKITEM_AFTER_THIS_ACTION':
           return state.map((val)=>{
               (action.taskItemId===val.taskItemId) ? (val.addATaskItemAfterThis=true) : (val.addATaskItemAfterThis=false)
               return val;
           })
   
         //移动本任务列表所有子任务 显示
-        case 'move_All_SubTasks_From_This_To_Other_Action':
+        case 'MOVE_ALL_SUBTASKS_FROM_THIS_TO_OTHER_ACTION':
           return state.map((val)=>{
               (action.taskItemId===val.taskItemId) ? (val.moveAllSubTasksFromThisToOther=true) : (val.moveAllSubTasksFromThisToOther=false)
               return val;
           })
   
         //复制本任务列表所有子任务 显示
-        case 'copy_All_SubTasks_Inside_This_Action':
+        case 'COPEY_ALL_SUBTASKS_IINSIDE_THIS_ACTION':
           return state.map((val)=>{
               (action.taskItemId===val.taskItemId) ? (val.copyAllSubTasksInsideThis=true) : (val.copyAllSubTasksInsideThis=false)
               return val;
@@ -175,21 +175,21 @@ const taskItemInfo = (state = [], action) =>{
 
 
         //清空本任务列表所有子任务 显示
-        case 'delete_All_SubTasks_Inside_This_Action':
+        case 'DELETE_ALL_SUBTASKS_INSIDE_THIS_ACTION':
           return state.map((val)=>{
               (action.taskItemId===val.taskItemId) ? (val.deleteAllSubTasksInsideThis=true) : (val.deleteAllSubTasksInsideThis=false)
               return val;
           })
   
         //删除任务列表 显示
-        case 'delete_This_TaskItem_Action':
+        case 'DELETE_THIS_TASKITEM_ACTION':
           return state.map((val)=>{
               (action.taskItemId===val.taskItemId) ? (val.deleteThisTaskItem=true) : (val.deleteThisTaskItem=false)
               return val;
           }) 
    
         //显示下拉列表框主页
-        case 'show_DropDownContainer_MainList_Action':
+        case 'SHOW_DROPDOWN_CONTAINER_MAINLIST_ACTION':
           return state.map((val)=>{
               if(action.taskItemId===val.taskItemId){
                 val.isModifyTaskItem = false; 

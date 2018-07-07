@@ -11,9 +11,6 @@ import { GetAllWorksFileUnderParentWorksFileServer ,
 import classnames from 'classnames';
 import cookie from 'react-cookies';
 
-/**
- * 点击的时候，存上一次的parentId，然后拿此次的myId作为新的parentId，到reducer里去替换
- */
 //移动和复制 work文件的弹框
 class MoveOrCopyWorkFilesMask extends React.Component {
   constructor(props) {
@@ -37,16 +34,20 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     let { WorkFilesMenuListDataId:abc } = this.state;
     let pathArr = pathname.split('/');
     let currentfileId = pathArr[2]*1;
-    this.setState({ 
-      currentfileId:currentfileId
-    })
+    if(this._Mounted){
+      this.setState({ 
+        currentfileId:currentfileId
+      })
+    }
     if(pathArr.length===4){//显示顶层的work文件
       saveAGroupOfSameParentIdWorkFilesAction({ ParentId: '' , arr:worksFile });
       if(oneFileData){
         abc.push(oneFileData.myId);
-        this.setState({
-          WorkFilesMenuListDataId:abc
-        })
+        if(this._Mounted){
+          this.setState({
+            WorkFilesMenuListDataId:abc
+          })
+        }
       }
     }else if(pathArr.length===5){
       saveAGroupOfSameParentIdWorkFilesAction({ ParentId: pathArr[4]  ,  arr:worksFile });
@@ -57,9 +58,11 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           AllKey = AllKey.filter(val => val !== '');
         }
       }
-      this.setState({
-        WorkFilesMenuListDataId:AllKey
-      })
+      if(this._Mounted){
+        this.setState({
+          WorkFilesMenuListDataId:AllKey
+        })
+      }
     }
   }
   shouldComponentUpdate(nextProps){
@@ -73,15 +76,23 @@ class MoveOrCopyWorkFilesMask extends React.Component {
        } = this.props;
     let t = e.target;
     if(t.nodeName !== 'LI') return;
+    let pUl = t.parentNode;
+    let Lis = pUl.getElementsByTagName('li');
+    Array.from(Lis).forEach(val=>{
+      val.classList.remove('active');
+    })
+    t.classList.add('active');
     let fileId = t.dataset.id*1;
     GetAllWorksFileUnderParentWorksFileServer({fileId,parentId:''}).then(({data})=>{
       if(data.success){
         showTopLevelWorkFilesAction({ ParentId: '' , arr:data.data })
       }
     })
-    this.setState({
-      currentfileId:fileId
-    })
+    if(this._Mounted){
+      this.setState({
+        currentfileId:fileId
+      }) 
+    }
   }
 
   chooseWorkFile = (e) => {//点击WorkFilesMenuList下的li
@@ -118,14 +129,11 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           index = num;
         }
       }
-      console.log(index)
       GetAllWorksFileUnderParentWorksFileServer({fileId,parentId: clickedLiId }).then(({data})=>{
         if(data.success){
           if(index===-1){//如果父级的id不存在，就说明是最后一组ul的里，就查询被点击的li的id,存到reducer对象里面
             pushAWorkFilesMenuListAction({ ParentId: clickedLiId , arr:data.data }) 
-            console.log('添加')
           }else{//如果存在，就把循环看点击的ul是第几个ul，然后把之后的几组数据删掉
-            console.log('替换')
             UpdateWorkFileMoveAndCopyMaskDataAction({ ulDataId:ulId , ParentId:clickedLiId, arr:data.data })
           }
         }
@@ -149,26 +157,34 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     if(myId){
       arr.push(myId)
     }
-    this.setState({
-      openFirstLiHighLight:arr
-    })
+    if(this._Mounted){
+      this.setState({
+        openFirstLiHighLight:arr
+      })
+    }
     let t = e.target;
     if(t.classList.contains('moveCheckedWorkFile') || 
       t.classList.contains('moveCheckedWorkFileIcon')
     ){
-      this.setState({
-        title:'移动'
-      })
+      if(this._Mounted){
+        this.setState({
+          title:'移动'
+        })
+      }
     }else if(t.classList.contains('copyCheckedWorkFile') || 
             t.classList.contains('copyCheckedWorkFileIcon')
     ){
+      if(this._Mounted){
+        this.setState({
+          title:'复制'
+        })
+      }
+    }
+    if(this._Mounted){
       this.setState({
-        title:'复制'
+        visible: true,
       })
     }
-    this.setState({
-      visible: true,
-    });
   }
 
   handleOk = async (myId,e) => {
@@ -219,31 +235,44 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       }
     }
     closeWorkFileMoveAndCopyMaskAction(this.WorkFileMoveAndCopyMaskData)
-    this.setState({
-      visible: false,
-    });
+    if(this._Mounted){
+      this.setState({
+        visible: false,
+      })
+    }
   }
 
 
   handleCancel = (e) => {
     let { closeWorkFileMoveAndCopyMaskAction } = this.props;
     closeWorkFileMoveAndCopyMaskAction(this.WorkFileMoveAndCopyMaskData)
-    this.setState({
-      visible: false,
-    });
+    if(this._Mounted){
+      this.setState({
+        visible: false,
+      })
+    }
   }
 
+  componentDidMount(){
+    this._Mounted=true;
+  }
+  componentWillUnmount(){
+    this._Mounted=false;
+  }
   render() {
-    let { title , visible , WorkFilesMenuListDataId , currentfileId , openFirstLiHighLight } = this.state;
+    let { title , visible , WorkFilesMenuListDataId , openFirstLiHighLight } = this.state;
     let { checkedCount , 
           insideLi , 
           oneFileData,
+          location:{pathname},
           state:{ getFileInfo , WorkFileMoveAndCopyMaskData },
         } = this.props;
     let arr=[];
     for(let attr in WorkFileMoveAndCopyMaskData){ 
         arr.push(WorkFileMoveAndCopyMaskData[attr])
     }
+    let currentfileId = pathname.match(/\d+/g)[0]*1;
+    
     return (
       <div className="MoveOrCopyWorkFilesMaskWrap"> 
         { (oneFileData && insideLi) || checkedCount>0 ?
