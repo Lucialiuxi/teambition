@@ -10,6 +10,7 @@ import { ToSwitchCheckAllWorkFileServer ,
      } from '@/server/requestData.js';
 import cookie from 'react-cookies';
 import * as allAction from '@/actions/workAction.js';
+import MoveOrCopyWorkFilesMask from '@/components/mask/MoveOrCopyWorkFilesMask.js'
 
 class WorksNav extends Component {
     constructor(props) {
@@ -136,10 +137,12 @@ class WorksNav extends Component {
                     disabled={worksFile&&worksFile[0] ? false : true}
                     checked={checkAll}
                 />
+                
                 {groupDeal ? <div className="worksNavWhenChecked">
                     <span className="alreadyCheckedCount">
                         已经选中{checkedCount}项
                     </span>
+                    <MoveOrCopyWorkFilesMask checkedCount={checkedCount}/>
                     <span className="deleteCheckedWorkFile" onClick={this.deleteCheckedWorkFiles}>
                         <Icon type="delete" />
                         删除

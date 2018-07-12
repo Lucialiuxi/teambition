@@ -7,7 +7,6 @@ import * as workAction from '@/actions/workAction.js';
 import { GetAllWorksFileUnderParentWorksFileServer ,
          GetAWorksFileInformationByIdServer,
          MoveOrCopyOneWorkFileServer,
-         MoveOrCopyOneGroupWorkFilesServer
      } from '@/server/requestData.js';
 import classnames from 'classnames';
 import cookie from 'react-cookies';
@@ -79,13 +78,6 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     if(t.nodeName !== 'LI') return;
     let pUl = t.parentNode;
     let Lis = pUl.getElementsByTagName('li');
-    this.setState({
-      openFirstLiHighLight:[]
-    })
-    let WorkFilesMenuItems = pUl.parentNode.nextElementSibling.getElementsByClassName('WorkFilesMenuItem active');
-    Array.from(WorkFilesMenuItems).forEach(val=>{
-      val.classList.remove('active');
-    })
     Array.from(Lis).forEach(val=>{
       val.classList.remove('active');
     })
@@ -123,11 +115,6 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       })
       t.classList.add('active');
       let fileId = pathname.match(/\d+/g)[0]*1;
-
-      let highlightli = document.getElementsByClassName('projectFileMenuItem active')[0];
-      if(highlightli){
-        fileId = highlightli.dataset.id*1;
-      }
       let len = arr.length;
       let clickedLiId = t.dataset.id;//当前被点击的li的id
       let ulId = t.parentNode.dataset.id;//当前被点击的li的父级ul的data-id
@@ -139,11 +126,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       for(let attr in WorkFileMoveAndCopyMaskData){
         num++;
         if(attr===ulId){
-          if(document.getElementsByClassName('WorkFilesMenuList')[0].dataset.id===document.getElementsByClassName('WorkFilesMenuList')[1].dataset.id){
-            index=-1;
-          }else{
-            index = num;
-          }
+          index = num;
         }
       }
       GetAllWorksFileUnderParentWorksFileServer({fileId,parentId: clickedLiId }).then(({data})=>{
@@ -211,138 +194,46 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       多个复制OR移动: 移动到的目的地文件夹是当前选中移动的一个，就不操作；否则就把移动的文件夹的parentId和项目文件id进行修改
     */
     let { title } = this.state;
-    let { closeWorkFileMoveAndCopyMaskAction ,
-          AWorkFileAlreadyMovedAction , 
-          AGroupWorkFileAlreadyMovedAction,
-          location:{pathname}
+    let { closeWorkFileMoveAndCopyMaskAction ,AWorkFileAlreadyMovedAction
         } = this.props;
-    let username= cookie.load('UserName');
-    let ARR = pathname.split('/');
-    let oldFileId = ARR[2]*1;
-    let oldParentId;
-    if(ARR.length===4){
-      oldParentId = '';
-    }else{
-      oldParentId = ARR[4];
-    }
     let HightLightWorkFilesLi = document.getElementsByClassName('WorkFilesMenuItem active');
-    let HightLightProjectFileId = document.getElementsByClassName('projectFileMenuItem active')[0].dataset.id*1;
-    if(!HightLightWorkFilesLi[0]){//移动到某个项目文件夹的顶层的时候
-      if(myId && oldParentId!==HightLightProjectFileId){//移动一个通过myId 复制OR移动 --> parentId 和 fileId
-        if(title==='移动'){
-          let Move = await MoveOrCopyOneWorkFileServer({ 
-              username , 
-              myId , 
-              keyWord:'移动' , 
-              NewfileId: HightLightProjectFileId , 
-              NewParentId:'' ,
-              lastestModifyTime: Date.now()
-            })
-            if(Move.data.success){
-              AWorkFileAlreadyMovedAction(Move.data.data.myId)
-            }
-        }else if(title==='复制'){
-          MoveOrCopyOneWorkFileServer({ 
-            username , 
-            myId , 
-            keyWord:'复制' , 
-            NewfileId: HightLightProjectFileId , 
-            NewParentId:'' ,
-            lastestModifyTime: Date.now() 
-          })
-        }
-      }else if(!myId && oldParentId!==HightLightProjectFileId){//群组操作
-        if(title==='移动'){
-          let MoveGroup = await MoveOrCopyOneGroupWorkFilesServer({ 
-            username , 
-            fileId: oldFileId , 
-            parentId:oldParentId , 
-            keyWord: '移动' , 
-            NewfileId: HightLightProjectFileId , 
-            NewParentId:'' ,
-            lastestModifyTime:Date.now()
-          })
-          console.log(MoveGroup)
-          if(MoveGroup.data.success){
-            AGroupWorkFileAlreadyMovedAction()
-          }
-        }else if(title==='复制'){
-          MoveOrCopyOneGroupWorkFilesServer({ 
-            username , 
-            fileId: oldFileId , 
-            parentId:oldParentId , 
-            keyWord: '移动' , 
-            NewfileId: HightLightProjectFileId , 
-            NewParentId:'' ,
-            lastestModifyTime:Date.now()
-          })
-        }
-      }
-    }else{
-      let destinationWorkFileId = HightLightWorkFilesLi[HightLightWorkFilesLi.length-1].dataset.id;
-      let a = Array.from(HightLightWorkFilesLi);
-      let sss = true;
-      for(let i = 0; i < a.length-1; i++){
-        if(a[i].dataset.id===myId){//如果目的地文件夹是文件夹所在文件或者子孙文件都不移动
-          sss = false
-        }
-      }
-      let GetAWorksFileInformationById = await GetAWorksFileInformationByIdServer({myId:destinationWorkFileId});
-      let dworkfile = GetAWorksFileInformationById.data.data;
-      let {myId:nmyId,fileId} = dworkfile;//目的地文件夹
-
-      if(myId && sss){//移动一个通过myId 复制OR移动 --> parentId 和 fileId
-        if(title==='移动'){
-          let Move = await MoveOrCopyOneWorkFileServer({ 
-              username , 
-              myId , 
-              keyWord:'移动' , 
-              NewfileId: fileId , 
-              NewParentId:nmyId ,
-              lastestModifyTime: Date.now()
-            })
-            if(Move.data.success){
-              AWorkFileAlreadyMovedAction(Move.data.data.myId)
-            }
-        }else if(title==='复制'){
-          MoveOrCopyOneWorkFileServer({ 
-            username , 
-            myId , 
-            keyWord:'复制' , 
-            NewfileId: fileId , 
-            NewParentId:nmyId ,
-            lastestModifyTime: Date.now() 
-          })
-        }
-      }else if(!myId && sss){//群组操作
-        if(title==='移动'){
-          let MoveGroup = await MoveOrCopyOneGroupWorkFilesServer({ 
-            username , 
-            fileId: oldFileId , 
-            parentId:oldParentId , 
-            keyWord: '移动' , 
-            NewfileId: fileId , 
-            NewParentId:nmyId ,
-            lastestModifyTime:Date.now()
-          })
-          console.log(MoveGroup)
-          if(MoveGroup.data.success){
-            AGroupWorkFileAlreadyMovedAction()
-          }
-        }else if(title==='复制'){
-          MoveOrCopyOneGroupWorkFilesServer({ 
-            username , 
-            fileId: oldFileId , 
-            parentId:oldParentId , 
-            keyWord: '复制' , 
-            NewfileId: fileId , 
-            NewParentId:nmyId ,
-            lastestModifyTime:Date.now()
-          })
-        }
+    let destinationWorkFileId = HightLightWorkFilesLi[HightLightWorkFilesLi.length-1].dataset.id;
+    let a = Array.from(HightLightWorkFilesLi);
+    let sss = true;
+    for(let i = 0; i < a.length-1; i++){
+      if(a[i].dataset.id===myId){//如果目的地文件夹是文件夹所在文件或者子孙文件都不移动
+        sss = false
       }
     }
-    
+    let username= cookie.load('UserName');
+    let GetAWorksFileInformationById = await GetAWorksFileInformationByIdServer({myId:destinationWorkFileId});
+    let dworkfile = GetAWorksFileInformationById.data.data;
+    let {myId:nmyId,fileId} = dworkfile;
+    if(myId && sss){//移动一个通过myId 复制OR移动 --> parentId 和 fileId
+      if(title==='移动'){
+        let Move = await MoveOrCopyOneWorkFileServer({ 
+            username , 
+            myId , 
+            keyWord:'移动' , 
+            NewfileId: fileId , 
+            NewParentId:nmyId ,
+            lastestModifyTime: Date.now()
+          })
+          console.log(Move.data)
+          if(Move.data.success){
+            AWorkFileAlreadyMovedAction(Move.data.data.myId)
+          }
+      }else if(title==='复制'){
+        MoveOrCopyOneWorkFileServer({ 
+          username , 
+          myId , 
+          keyWord:'复制' , 
+          NewfileId: fileId , 
+          NewParentId:nmyId ,
+          lastestModifyTime: Date.now() 
+        })
+      }
+    }
     closeWorkFileMoveAndCopyMaskAction(this.WorkFileMoveAndCopyMaskData)
     if(this._Mounted){
       this.setState({
@@ -350,6 +241,8 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       })
     }
   }
+
+
   handleCancel = (e) => {
     let { closeWorkFileMoveAndCopyMaskAction } = this.props;
     closeWorkFileMoveAndCopyMaskAction(this.WorkFileMoveAndCopyMaskData)
@@ -372,20 +265,14 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           insideLi , 
           oneFileData,
           location:{pathname},
-          state:{ getFileInfo , WorkFileMoveAndCopyMaskData , worksFilrCrumb},
+          state:{ getFileInfo , WorkFileMoveAndCopyMaskData },
         } = this.props;
     let arr=[];
     for(let attr in WorkFileMoveAndCopyMaskData){ 
         arr.push(WorkFileMoveAndCopyMaskData[attr])
     }
     let currentfileId = pathname.match(/\d+/g)[0]*1;
-    if(!WorkFilesMenuListDataId[0]){
-      worksFilrCrumb.forEach(val=>{
-        if(WorkFilesMenuListDataId.indexOf(val.myId)===-1){
-          WorkFilesMenuListDataId.push(val.myId)
-        }
-      })
-    }
+    
     return (
       <div className="MoveOrCopyWorkFilesMaskWrap"> 
         { (oneFileData && insideLi) || checkedCount>0 ?

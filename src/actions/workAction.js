@@ -156,6 +156,12 @@ export const emptyAGroupOfSameParentIdWorkFilesAction = () => {
         type: 'EMPTY_A_GROUP_OF_SAME_PARENTID_WOKRFILES_ACTION',
     }
 }
+//点击面包屑 路由走到'/project/fileId/works' --->只剩顶层文件数据
+export const stayAtFirstLevelAction = () => {
+    return {
+        type: 'STAY_AT_FIRST_LEVEL_ACTION',
+    }
+}
 
 /**点击移动和复制 workfile的弹框的个人项目目录，后只显示顶层文件
  * { ParentId: String  ,  arr:[{},{},...] }
@@ -255,5 +261,12 @@ export const AWorkFileAlreadyMovedAction = (myId) => {
     return {
         type:'A_WORKFILE_ALREADY_MOVED_ACTION',
         myId
+    } 
+}
+
+//有一组works文件夹移动成功
+export const AGroupWorkFileAlreadyMovedAction = () => {
+    return {
+        type:'A_GROUP_WORKFILE_ALREADY_MOVED_ACTION'
     } 
 }

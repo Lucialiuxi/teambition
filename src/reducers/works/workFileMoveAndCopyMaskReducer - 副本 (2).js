@@ -62,14 +62,6 @@ const WorkFileMoveAndCopyMaskData = ( state = {} , action ) => {
             }
         return copysyncState;
         
-        case 'STAY_AT_FIRST_LEVEL_ACTION':
-            let OBJ = {};
-            for(let attr in state){
-                if(attr===''){
-                    OBJ[attr]=state[attr]
-                }
-            }
-        return OBJ;
     default:
         return state;
     }
