@@ -5,7 +5,8 @@ const worksViewType = (state={},action) => {
         case 'SAVE_WORKS_VIEW_TYPE':
             let b = {forCreate:false}; 
             let s = {sortByModifyTime:'descend'};//ascend /descend
-            state = {...action.obj, ...b,...s};
+            let o = {searchBoxShow:false}
+            state = {...action.obj, ...b,...s,...o};
         return state;
 
         //点击创建文件夹
@@ -28,7 +29,9 @@ const worksViewType = (state={},action) => {
             let newState = Object.assign({},state,{ worksViewType: action.obj.worksViewType });    
         return newState;
 
-
+        case 'HIDE_OR_SHOW_SEARCH_BOX_ACTION':
+            let NewState = Object.assign({},state,{ searchBoxShow: action.isShow.isShow });    
+        return NewState;
     default:
         return state;
     }

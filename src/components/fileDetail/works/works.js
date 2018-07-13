@@ -25,7 +25,7 @@ class Works extends React.Component {
     componentWillMount(){
         let { location: { pathname } , 
               getBreadCrumbAction , 
-              getWorkFileMoveAndCopyMaskDataAction 
+              getWorkFileMoveAndCopyMaskDataAction
             } = this.props;
         if(pathname.split('/').length===4){
             if(cookie.load('BreadCrumb')){
@@ -73,7 +73,11 @@ class Works extends React.Component {
         return true;
     }
     componentDidMount(){
-        let { toHideDelteCoverAction , toHideModifyWorkFileMenuCoverAction } = this.props;
+        let { 
+            toHideDelteCoverAction , 
+            toHideModifyWorkFileMenuCoverAction ,
+            hideOrShowSearchBoxAction
+        } = this.props;
         //鼠标点击的不是 li删除定位框deleteCover的时候，关闭它
         document.onclick = (e) =>{
             let t = e.target;
@@ -138,9 +142,17 @@ class Works extends React.Component {
             if(!deleteCoverTag && !ModifyMenuCoverTag){//隐藏确认删除文件夹定位框
                 toHideDelteCoverAction()
             }
+            if(t.classList.contains('anticon-search') ||
+            t.classList.contains('searchProject') ){
+                hideOrShowSearchBoxAction({isShow:true})
+            }else{
+                hideOrShowSearchBoxAction({isShow:false})
+            }
         }
     }
+
     render() {
+        
         let { 
             location:{ pathname } , 
             state:{worksViewType}

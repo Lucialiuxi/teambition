@@ -270,3 +270,10 @@ export const AGroupWorkFileAlreadyMovedAction = () => {
         type:'A_GROUP_WORKFILE_ALREADY_MOVED_ACTION'
     } 
 }
+
+export const hideOrShowSearchBoxAction = (isShow) => {
+    return {
+        type:'HIDE_OR_SHOW_SEARCH_BOX_ACTION',
+        isShow
+    }     
+}

@@ -8,6 +8,7 @@ a{
 }
 a:hover{
     color: #383838;
+    text-decoration: none;
 }
 h1,h2,h3,h4,h5{
     margin: 0
@@ -65,6 +66,26 @@ ul{
     top: 12px;
     left: 310px;
     cursor: pointer;
+}
+.projectPageHead .Nav-bar-left .search_result{
+    position: absolute !important;
+    top: 40px;
+    left: 0px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+}
+.projectPageHead .Nav-bar-left .search_result li{
+    width: 285px;
+    line-height: 30px;
+}
+.search_result li a{
+    color: gray;
+    width: 100%;
+    height: 100%;
+    text-align: start;
+    text-indent: 20px;
+    display: block;
 }
 .projectPageHead .search-bar i{
     position: absolute;

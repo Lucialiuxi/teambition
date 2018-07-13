@@ -262,7 +262,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
             NewParentId:'' ,
             lastestModifyTime:Date.now()
           })
-          console.log(MoveGroup)
+          // console.log(MoveGroup)
           if(MoveGroup.data.success){
             AGroupWorkFileAlreadyMovedAction()
           }
@@ -301,6 +301,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
               NewParentId:nmyId ,
               lastestModifyTime: Date.now()
             })
+
             if(Move.data.success){
               AWorkFileAlreadyMovedAction(Move.data.data.myId)
             }
@@ -312,6 +313,10 @@ class MoveOrCopyWorkFilesMask extends React.Component {
             NewfileId: fileId , 
             NewParentId:nmyId ,
             lastestModifyTime: Date.now() 
+          }).then(({data})=>{
+            if(data.success){
+              this.findAllChildWorkFiles(myId,oldFileId,fileId,nmyId)
+            }
           })
         }
       }else if(!myId && sss){//群组操作
@@ -325,7 +330,6 @@ class MoveOrCopyWorkFilesMask extends React.Component {
             NewParentId:nmyId ,
             lastestModifyTime:Date.now()
           })
-          console.log(MoveGroup)
           if(MoveGroup.data.success){
             AGroupWorkFileAlreadyMovedAction()
           }
@@ -350,6 +354,19 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       })
     }
   }
+
+  findAllChildWorkFiles = (myId,fileId,newFileId,newParentId) => {
+    let username= cookie.load('UserName');
+    GetAllWorksFileUnderParentWorksFileServer({
+      username , 
+      fileId: fileId,
+      parentId: myId 
+    }).then(({data})=>{
+      console.log(data)
+    })
+  }
+
+
   handleCancel = (e) => {
     let { closeWorkFileMoveAndCopyMaskAction } = this.props;
     closeWorkFileMoveAndCopyMaskAction(this.WorkFileMoveAndCopyMaskData)

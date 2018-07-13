@@ -8,8 +8,31 @@ import * as taskActions from '@/actions/taskAction';
 
 import CanlenderMode from './calenderMode';
 
-import './tasks.css';
+/**
+ *在新建项目文件夹的时候就创建好默认的任务列表  
+  删除项目文件夹的时候要删除对应的任务列表
+ */
 
+import './tasks.css';
+/** 
+ 任务列表 taskItem
+    fileId: Number,项目文件id
+    taskItemId: Number,任务列表id
+    taskItemName: String,任务列表名
+ */
+/** 
+ 子任务 subTask
+    fileId: Number,项目文件id
+    taskItemId: Number,任务列表id
+    subTaskId: String,子任务列表id  //从这里开始，id由后端生成
+    subTaskName: String,任务列表名
+    deadline:String,任务截止时间
+    urgencyLevel:String,紧急程度：普通normal  紧急urgency  非常紧急emtreme urgency
+    tag:String,标签
+    checked:Boolean,
+    index:Number
+
+ */
 class Tasks extends Component {
     constructor(props) {
         super(props);
@@ -27,11 +50,13 @@ class Tasks extends Component {
             ToHideShowCurrentTaskItemNameCoverAction,
             HideTaskItemCreatorAction,
             HideTaskItemDropDownContainerAction,
-            ToHideShowFileNameCoverAction,
-            hideOrShowSearchBoxAction
+            ToHideShowFileNameCoverAction
             } = this.props;
         document.onclick=(e)=>{
             let target = e.target;
+            /**\
+             * 点击最外层/用户名/创建标签外层div 都没有反应
+             */
             //日历所有标签
             let CanlenderCondition = (
                 target.classList.contains('CommonCanlender')||
@@ -214,7 +239,7 @@ class Tasks extends Component {
             }else if(target.classList.contains('confirmCreacteBtn')){
                 //创建子任务
             }else{
-                HideChoiceUrgencyLevelAction('close');
+                    HideChoiceUrgencyLevelAction('close');
                 // 关闭 新建子任务框
                 HideAllSubTaskCreatorsAction('close');
                 //关闭日历
@@ -263,13 +288,6 @@ class Tasks extends Component {
                 //新建项目列表框 隐藏
                 HideTaskItemCreatorAction('close');
             }
-            if(target.classList.contains('anticon-search') ||
-            target.classList.contains('searchProject') ){
-                hideOrShowSearchBoxAction({isShow:true})
-            }else{
-                hideOrShowSearchBoxAction({isShow:false})
-                document.getElementsByClassName('searchProject')[0].value = '';
-            }
         } 
     }
     GoToCreateSubTask=(id)=>{// 显示 新建子任务框
@@ -307,7 +325,6 @@ class Tasks extends Component {
     componentWillUnmount(){
         this._isMounted = false;
     }
-
     render() { 
         let { deadlineData } = this.state;
         let { state:{ taskItemInfo , getFileInfo , subTaskInfo } , location:{pathname} } = this.props;

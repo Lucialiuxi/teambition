@@ -8,10 +8,14 @@ import ThumbNailWorkFileItem from './ThumbnailView/ThumbnailworkFileItem.js';
 import { GetAllWorksFileUnderParentWorksFileServer } from '@/server/requestData.js';
 import * as allAction from '@/actions/workAction.js';
 
+import ProjectHomeLoading from '@/components/projectPage/projectHomeLoading';
+
 class WorkFileBox extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = { 
+            isloading:true
+         }
     }
     async componentWillMount(){
         let { location:{ pathname } , 
@@ -30,6 +34,9 @@ class WorkFileBox extends React.Component {
         })
         if(data.data.success){
             GetAllWorksFileUnderParentWorksFileAction(data.data.data)
+            this.setState({
+                isloading:false
+            })
         }
     }
     render() { 
@@ -52,7 +59,7 @@ class WorkFileBox extends React.Component {
         }
         return (
             <ul className="workFilesWrap">
-                <div className="forScrollBar">
+                {this.state.isloading ? <ProjectHomeLoading/> : <div className="forScrollBar">
                     {forCreate && tp==='ListView' ?<WorkFileItem forCreate={forCreate}/> : null}
                     {forCreate && tp==='ThumbnailView' ?<ThumbNailWorkFileItem forCreate={forCreate}/> : null}
                     { worksFile && worksFile[0] && tp === 'ListView' ? 
@@ -66,7 +73,7 @@ class WorkFileBox extends React.Component {
                         })                   
                     : null }
                     {!worksFile[0] && !forCreate ? <EmptyWorkFile/> : null}
-                </div>
+                </div>}
             </ul>
             )
     }

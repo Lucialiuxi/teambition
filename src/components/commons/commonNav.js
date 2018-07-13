@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
+import { withRouter , Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import cookie from 'react-cookies';
-
+import { getAllFilesInfo } from '@/server/requestData.js';
 import { Icon , List, Avatar } from 'antd';
+import * as workAction from '@/actions/workAction.js';
+import { bindActionCreators } from 'C:/Users/lhm14/AppData/Local/Microsoft/TypeScript/2.9/node_modules/redux';
 
 const ProjectTypes = [
     {
@@ -25,6 +27,8 @@ const ProjectTypes = [
           super(props);
           this.state = { 
               changePath:false,
+              searchResultArr:[]
+
            }
       }
       clickLoginOut=()=>{
@@ -76,32 +80,105 @@ const ProjectTypes = [
       }
       componentDidMount(){
         this._mouted = true;
+        
         document.onclick = (e) => {
+            let {hideOrShowSearchBoxAction} = this.props;
             let t = e.target;
-            let ProjectTypeSelectTag = (
-                t.classList.contains('extendBtn') ||
-                t.classList.contains('ProjectTypeSelect') ||
-                t.classList.contains('ant-spin-nested-loading')
-            )
-            if(!ProjectTypeSelectTag && this._mouted){
-                this.setState({
-                    changePath:false,
-                })
+            if(t.classList.contains('anticon-search') ||
+                t.classList.contains('searchProject') ){
+                hideOrShowSearchBoxAction({isShow:true})
+            }else{
+                hideOrShowSearchBoxAction({isShow:false})
+                if(this._mouted){
+                    this.setState({
+                        searchResultArr:[]
+                    })
+                }   
+                if(document.getElementsByClassName('searchProject')){
+                    document.getElementsByClassName('searchProject')[0].value = '';
+                }
+            }
+
+            if( !(t.classList.contains('ProjectTypeSelect') ||
+                t.classList.contains('ant-spin-nested-loading') ||
+                t.classList.contains('ant-spin-container') ||
+                t.classList.contains('ant-list-item') ||
+                t.classList.contains('ant-list-item-meta ProjectTypeItem') ||
+                t.classList.contains('ant-list-item-meta-avatar') ||
+                t.classList.contains('ant-list-item-meta-content')  ||
+                t.classList.contains('anticon-folder-open')  ||
+                t.classList.contains('ant-list-item-meta-title') ) && !t.classList.contains('extendBtn')){
+                    if(this._mouted){
+                        this.setState({
+                            changePath:false,
+                        })
+                    }  
             }
         }
       }
       componentWillUnmount(){
         this._mouted = false;
       }
+
+      searchOnKeyUp = async (e) => {
+        let {hideOrShowSearchBoxAction} = this.props;
+        let username= cookie.load('UserName');
+        let val = e.target.value.trim();
+        if(!val && this._mouted){
+            this.setState({
+                searchResultArr:[]
+            })
+        }else{
+            hideOrShowSearchBoxAction({isShow:true})
+            let data = await getAllFilesInfo({userLoginName:username});
+            if(data.data.success){
+                let arr = data.data.AllFilesInfoData;
+                let fitArr = arr.filter(el => {
+                    if(el.FileName.indexOf(val)!==-1){
+                        return el
+                    }
+                });
+                if(this._mouted){
+                    this.setState({
+                        searchResultArr:fitArr
+                    })
+                }
+            }
+        }
+      }
+      componentWillReceiveProps(nextProps){
+        let { location:{pathname} } = nextProps;
+        if(this.props.location.pathname !== pathname){
+            this.setState({
+                currentFileId:pathname.match(/\d+/g)[0]*1,
+                searchResultArr:[]
+            })
+        }
+    }
       render() { 
-          let { changePath } = this.state;
+          let { changePath , searchResultArr } = this.state;
+          let { state:{worksViewType:{searchBoxShow}} } = this.props;
           let user = cookie.load('UserName');
           return ( 
             <div className="commonNav">
                 <div className="Nav-bar-left">
                     <div className="search-bar">
                         <Icon type="search"/>
-                        <input type="text" className="searchProject" placeholder="搜索个人项目"/>
+                        <input 
+                            type="text" 
+                            className="searchProject" 
+                            placeholder="搜索个人项目"
+                            onKeyUp={this.searchOnKeyUp.bind(this)}
+                        />
+                        {searchBoxShow ? <ul className="search_result" >
+                            {
+                                searchResultArr.map(val=>{
+                                    return <li key={val.fileId} className="resultItem">
+                                                <Link to={`/project/${val.fileId}/tasks`} className="linka">{val.FileName}</Link>
+                                           </li>
+                                })
+                            }
+                        </ul> :null}
                     </div>
                     {/* 下拉选择项目 */}
                     <Icon 
@@ -136,5 +213,13 @@ const ProjectTypes = [
            )
       }
   }
-   
-  export default withRouter(connect()(CommonNav));
+  
+const mapStateToProps = (state) => {
+    return {
+        state
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators(workAction,dispatch)
+}
+  export default withRouter(connect(mapStateToProps,mapDispatchToProps)(CommonNav));

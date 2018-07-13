@@ -39,6 +39,7 @@ export  const TaskItemsInCurrentFileAction = arr => {
 //---------------------------各种显示框-----------------------------------
  //控制【任务编辑框】  的显示隐藏 被点击的那个【添加任务】才显示
 export  const SubTaskCreatorIsShowAction = taskItemId => {
+
     return {
         type: 'SUBTASK_CREATOR_IS_SHOW_ACTION',
         taskItemId
@@ -46,6 +47,7 @@ export  const SubTaskCreatorIsShowAction = taskItemId => {
 }
 //隐藏所有的新建任务列表的【任务编辑框】
 export  const HideAllSubTaskCreatorsAction = (close) => {
+
     return {
         type: 'HIDE_ALL_SUBTASK_CREATORS_ACTION',
         close
@@ -55,6 +57,7 @@ export  const HideAllSubTaskCreatorsAction = (close) => {
 
 //控制 【任务编辑框的日历】 显示
 export  const TaskItemCalenderIsShowAction = taskItemId => {
+
     return {
         type: 'TASKITEM_CALENDER_IS_SHOW_ACTION',
         taskItemId
@@ -63,6 +66,7 @@ export  const TaskItemCalenderIsShowAction = taskItemId => {
 
 //所有的【任务编辑框的日历】 隐藏
 export  const HideAllTaskItemCalenderAction = (close) => {
+
     return {
         type: 'HIDE_ALL_TASKITEM_CALENDER_ACTION',
         close

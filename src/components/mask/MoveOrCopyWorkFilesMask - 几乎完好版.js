@@ -10,7 +10,6 @@ import { GetAllWorksFileUnderParentWorksFileServer ,
      } from '@/server/requestData.js';
 import classnames from 'classnames';
 import cookie from 'react-cookies';
-import { createSocket } from 'dgram';
 
 //移动和复制 work文件的弹框
 class MoveOrCopyWorkFilesMask extends React.Component {

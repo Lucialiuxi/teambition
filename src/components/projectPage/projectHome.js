@@ -140,20 +140,31 @@ class Project  extends Component {
     }
     componentWillReceiveProps(nextProps){
         let { location:{pathname} } = nextProps;
-        let arr = pathname.split('/');
-        if(arr[arr.length-1]==='tasks'){
-           this.setState({
-                activeBar:'1'
-           }) 
-        }else if(arr[arr.length-1]==='works'){
-            this.setState({
-                 activeBar:'3'
-            }) 
+        if(this.props.location.pathname===pathname){
+            let arr = pathname.split('/');
+            if(arr[arr.length-1]==='tasks'){
+               this.setState({
+                    activeBar:'1'
+               }) 
+            }else if(arr[arr.length-1]==='works'){
+                this.setState({
+                     activeBar:'3'
+                }) 
+            }
         }
+    }
+    shouldComponentUpdate(nextProps){
+        let { location:{pathname} } = nextProps;
+        if(this.props.location.pathname !== pathname){
+            this.setState({
+                currentFileId:pathname.split('/')[2]*1
+            })
+        }
+        return true
     }
     render() {
         let t = this.state.activeBar ? this.state.activeBar : '';
-        let { isLoading } = this.state;
+        let { isLoading , currentFileId } = this.state;
         let { location: {pathname} } = this.props;
         let arr = pathname.split('/');
         let myId = ''
@@ -169,39 +180,39 @@ class Project  extends Component {
                     </Header>
                     {!isLoading ? <Content  className="projectPageContent">
                         <Switch>
-                        <Router>
-                            <div id="ct">
-                                {/* 首页文件图标区 */}
-                                <Route 
-                                    path="/projects" 
-                                    exact 
-                                    render={()=><FileCover 
-                                                    clickInToTheFile={this.clickInToTheFile}
-                                                />
-                                    }
-                                />
-                                {/* 项目文件详情 */}
-                                <Route 
-                                    path={`/project/:${this.state.currentFileId}/:${t}`}
-                                    render={()=><FileInside 
-                                                    tabBar={this.clickTabBar}
-                                                    activeBar={t}
-                                                    currentFileId={this.state.currentFileId}
-                                                />
-                                    }
-                                />
-                                {/* works文件 */}
-                                <Route 
-                                    path={`/project/:${this.state.currentFileId}/works/:${myId}`}
-                                    render={()=><FileInside 
-                                                    tabBar={this.clickTabBar}
-                                                    activeBar='3'
-                                                    currentFileId={this.state.currentFileId}
-                                                />
-                                    }
-                                />
-                            </div>
-                        </Router>
+                            <Router>
+                                <div id="ct">
+                                    {/* 首页文件图标区 */}
+                                    <Route 
+                                        path="/projects" 
+                                        exact 
+                                        render={()=><FileCover 
+                                                        clickInToTheFile={this.clickInToTheFile}
+                                                    />
+                                        }
+                                    />
+                                    {/* 项目文件详情 */}
+                                    <Route 
+                                        path={`/project/:${currentFileId}/:${t}`}
+                                        render={()=><FileInside 
+                                                        tabBar={this.clickTabBar}
+                                                        activeBar={t}
+                                                        currentFileId={currentFileId}
+                                                    />
+                                        }
+                                    />
+                                    {/* works文件 */}
+                                    <Route 
+                                        path={`/project/:${currentFileId}/works/:${myId}`}
+                                        render={()=><FileInside 
+                                                        tabBar={this.clickTabBar}
+                                                        activeBar='3'
+                                                        currentFileId={currentFileId}
+                                                    />
+                                        }
+                                    />
+                                </div>
+                            </Router>
                         </Switch>
                     </Content> : <ProjectHomeLoading/> }
                 </Layout>

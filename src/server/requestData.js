@@ -231,3 +231,10 @@ export const MoveOrCopyOneWorkFileServer = (param) => {
 export const MoveOrCopyOneGroupWorkFilesServer = (param) => {
     return axios.post('/MoveOrCopyOneGroupWorkFiles',param)   
 }
+
+/**
+ * @param {userLoginName:String,FileName:String} param 
+ */
+export const SearchFileByFileNameServer = (param) => {
+    return axios.post('/SearchFileByFileName',param)   
+}

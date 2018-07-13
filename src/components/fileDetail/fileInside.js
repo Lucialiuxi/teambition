@@ -6,7 +6,9 @@ class FileInside extends Component {
         super(props);
         this.state = {  }
     }
-
+    shouldComponentUpdate(){
+        return true;
+    }
     render() {
         return ( 
             <div id="fileInsideWrap">
