@@ -24,6 +24,7 @@ class SubNav extends Component {
             activeKey:'1',
             currentFile:{},
             isLoadingTask:true,
+            isLoadingTaskItem:true
         }
     }
     //点击切换 任务  分享 文件 日程 群聊
@@ -80,7 +81,7 @@ class SubNav extends Component {
                 if(data.success){
                     TaskItemsInCurrentFileAction(data.CurrentTaskItemInfo)
                     this.setState({
-                        isloadingWork:false
+                        isLoadingTask:false
                     })
                 }
             })
@@ -89,7 +90,7 @@ class SubNav extends Component {
                 if(data.success){
                     findAllSubTasksInsideAfileAction(data.subTasksData)
                     this.setState({
-                        isloadingWork:false
+                        isLoadingTaskItem:false
                     })
                 }
             })
@@ -112,7 +113,7 @@ class SubNav extends Component {
     }
     render() {
         let { location , state:{getFileInfo} } = this.props;
-        let { activeKey , isLoadingTask  } = this.state;
+        let { activeKey , isLoadingTask ,isLoadingTaskItem } = this.state;
         //拿到当前项目文件的id
         let fileId = location.pathname.match(/\d+/g)[0]*1;
         let currentFile;
@@ -137,7 +138,7 @@ class SubNav extends Component {
                     onChange={this.tabToOther}
                 >
                     <TabPane tab="任务" key="1" >
-                    { isLoadingTask ? <ProjectHomeLoading/> : <Tasks/>  }
+                        { isLoadingTask && isLoadingTaskItem ? <ProjectHomeLoading/> : <Tasks/> }
                     </TabPane>
                     <TabPane tab="文件" key="3">
                         <Works/>

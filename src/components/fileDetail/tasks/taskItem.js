@@ -27,7 +27,6 @@ class TaskItem extends Component {
         this.setState({
             allSubTasksData:nextProps.subTaskInfo
         })
-
     }
     render() { 
         let { taskItemInfo , 

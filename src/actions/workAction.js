@@ -277,3 +277,13 @@ export const hideOrShowSearchBoxAction = (isShow) => {
         isShow
     }     
 }
+
+/** 
+ * @param {isShowProjectTypeSelect:Boolean} OBJ 
+ */
+export const hideOrShowProjectTypeSelectAction = (OBJ) => {
+    return {
+        type:'HIDE_OR_SHOW_PROJECT_TYPE_SELECT_ACTION',
+        OBJ
+    }     
+}

@@ -20,27 +20,15 @@ import FileInside from '@/components/fileDetail/fileInside';
 import * as fileActions  from '@/actions/fileAction';
 import * as workActions  from '@/actions/workAction';
 import { getAllFilesInfo , GetWorkFileViewTypeServer } from '@/server/requestData';
-import ProjectHomeLoading from '@/components/projectPage/projectHomeLoading';
 
 const { Header, Content } = Layout;
-/** 项目文件信息  
-    loginName:String,用户的登录名是唯一的
-    FileName:  String,
-    FileAbstract: String,
-    fileId: Number,
-    star: Boolean, 
-    inRecycleBin: Boolean
- */
-
 class Project  extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:{
-                currentFileId:'',
-                activeBar:'',
-                isLoading:true
-            }
+            currentFileId:0,
+            activeBar:'',
+            isLoadingProjectFile:true,
         }
     }
     componentWillMount(){
@@ -52,7 +40,7 @@ class Project  extends Component {
         } = this.props;
         if(location.pathname==='/projects'){//如果是大图标文件页面，就清空当前文件id和所在的项目文件区
             this.setState({
-                currentFileId:'',
+                currentFileId:0,
                 activeBar:''
             })
         //每次登录的时候先清空state里面的大图标文件数据
@@ -61,6 +49,9 @@ class Project  extends Component {
             let {t} = this.props.match.params;
             let path = this.props.location.pathname;
             let arr = path.split('/');
+            this.setState({
+                currentFileId:arr[2]*1
+            })
             if(arr.length===4){
                 t = arr[arr.length-1]
             }else if(arr.length===5){
@@ -84,7 +75,7 @@ class Project  extends Component {
         getAllFilesInfo({userLoginName:user}).then(({data})=>{
             if(data.success){
                 this.setState({
-                    isLoading:false
+                    isLoadingProjectFile:false
                 })
             }
             if(data.AllFilesInfoData.length>0){
@@ -102,7 +93,7 @@ class Project  extends Component {
     clickInToTheFile=(fileId,userLoginName,FileName)=>{
         let { history } = this.props;
         this.setState({
-            currentFileId:fileId
+            currentFileId:fileId*1
         })
         let o = {pathname:`/project/${fileId}/tasks`,state: {FileName}};
         history.push(o);
@@ -113,7 +104,7 @@ class Project  extends Component {
         let { history } = this.props;
         this.setState({
             activeBar:k,
-            currentFileId:fId
+            currentFileId:fId*1
         })
         history.push(`/project/${fId}/${t}`)
     }
@@ -164,13 +155,14 @@ class Project  extends Component {
     }
     render() {
         let t = this.state.activeBar ? this.state.activeBar : '';
-        let { isLoading , currentFileId } = this.state;
+        let { isLoadingProjectFile , currentFileId } = this.state;
         let { location: {pathname} } = this.props;
         let arr = pathname.split('/');
         let myId = ''
         if(arr[arr.length-2]==='work'){
             myId = arr[arr.length-1];
         }
+        // console.log(isLoadingProjectFile , currentFileId,t)
         return ( 
            <div className="projectPageWrap">
                 <Layout  className="projectPage">
@@ -178,7 +170,7 @@ class Project  extends Component {
                         {/* 公共导航 */}
                         <CommonNav {...this.props}/>
                     </Header>
-                    {!isLoading ? <Content  className="projectPageContent">
+                    <Content  className="projectPageContent">
                         <Switch>
                             <Router>
                                 <div id="ct">
@@ -188,6 +180,7 @@ class Project  extends Component {
                                         exact 
                                         render={()=><FileCover 
                                                         clickInToTheFile={this.clickInToTheFile}
+                                                        isloading={isLoadingProjectFile}
                                                     />
                                         }
                                     />
@@ -214,7 +207,7 @@ class Project  extends Component {
                                 </div>
                             </Router>
                         </Switch>
-                    </Content> : <ProjectHomeLoading/> }
+                    </Content>
                 </Layout>
            </div>
         )

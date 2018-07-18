@@ -6,6 +6,7 @@ import FileItem from './fileItem';
 import FileItemInRecyCleBin from './fileItemInRecycleBin';
 import CreateFile from './CreateFile';
 import './file.css';
+import ProjectHomeLoading from '@/components/projectPage/projectHomeLoading';
 
   
 class FileCover extends Component {
@@ -24,7 +25,7 @@ class FileCover extends Component {
     }
     render() { 
         let { RecycleFlieIsShow } = this.state;
-        let { state , clickInToTheFile } = this.props;
+        let { state , clickInToTheFile , isloading } = this.props;
         let myOwnProjects =  state.getFileInfo.filter(val=>{
             return val.inRecycleBin ? null : val;
         });
@@ -46,38 +47,42 @@ class FileCover extends Component {
         });
         return ( 
             <div  className="fileCover">
-                {starProjects[0] && <div className="starFlies">
-                    <h2>
-                        <span className="title">星标项目</span>
-                    </h2>
-                    <ul className="myOwnfiles">
-                    {
-                        starProjects.map((val,i)=>{
-                            return <FileItem key={val.fileId+i} {...val}/>
-                        })
-                    }
-                    </ul>
-                </div>}
-                <div className="myOwnFlies">
-                    <h2>
-                        <span className="title">我拥有的项目</span>
-                    </h2>
-                    <ul className="myOwnfiles">
-                    {
-                        myOwnProjects.map((val,i)=>{
-                            return <FileItem  key={val.fileId+i} {...val}/>
-                        })
-                    }
-                    <CreateFile />
-                    </ul>
+                {isloading ? <ProjectHomeLoading/>:
+                <div>
+                    {starProjects[0] && <div className="starFlies">
+                        <h2>
+                            <span className="title">星标项目</span>
+                        </h2>
+                        <ul className="myOwnfiles">
+                        {
+                            starProjects.map((val,i)=>{
+                                return <FileItem key={val.fileId+i} {...val}/>
+                            })
+                        }
+                        </ul>
+                    </div>}
+                    <div className="myOwnFlies">
+                        <h2>
+                            <span className="title">我拥有的项目</span>
+                        </h2>
+                        <ul className="myOwnfiles">
+                        {
+                            myOwnProjects.map((val,i)=>{
+                                return <FileItem  key={val.fileId+i} {...val}/>
+                            })
+                        }
+                        <CreateFile />
+                        </ul>
+                    </div>
+                    <div className="recycledFlies">
+                        <h2>
+                            <span className="title">项目回收站</span>
+                            <span className="switchIsShow" onClick={this.ToggleRecycleFlieShow}>{RecycleFlieIsShow?'隐藏':'显示'}</span>
+                        </h2>
+                        <ul className="myOwnfiles">{recycled}</ul>
+                    </div>
                 </div>
-                <div className="recycledFlies">
-                    <h2>
-                        <span className="title">项目回收站</span>
-                        <span className="switchIsShow" onClick={this.ToggleRecycleFlieShow}>{RecycleFlieIsShow?'隐藏':'显示'}</span>
-                    </h2>
-                    <ul className="myOwnfiles">{recycled}</ul>
-                </div>
+                }
             </div>
          )
     }

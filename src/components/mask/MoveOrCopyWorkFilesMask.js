@@ -25,6 +25,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       }
   }
   componentWillMount(){ 
+    
     //把当前所在的项目文件下的数据存到reducer中
     let { 
       location: { pathname }, 

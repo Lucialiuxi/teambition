@@ -26,7 +26,6 @@ const ProjectTypes = [
       constructor(props) {
           super(props);
           this.state = { 
-              changePath:false,
               searchResultArr:[]
 
            }
@@ -41,7 +40,10 @@ const ProjectTypes = [
       }
       GoToOtherPath = (e) => {//跳转路由
         let t = e.target;
-        let { location: {pathname} , history } = this.props;
+        let { location: {pathname} , 
+              history , 
+              hideOrShowProjectTypeSelectAction 
+            } = this.props;
         if(t.classList.contains('ProjectTypeSelect') ||
            t.classList.contains('ant-spin-nested-loading') ||
            t.classList.contains('ant-spin-container')
@@ -66,23 +68,16 @@ const ProjectTypes = [
         if(nextPath){
             history.push(nextPath);
         }
-        if(this._mouted){
-            this.setState({
-                changePath:false,
-            })
-        }
+        hideOrShowProjectTypeSelectAction({ProjectTypeSelectIsShow:false})
       }
       showOrHideProjectTypeSelect = () => {
-        let { changePath } = this.state;
-        this.setState({
-            changePath:!changePath
-        })
+        let { hideOrShowProjectTypeSelectAction , state:{worksViewType:{ProjectTypeSelectIsShow}} } = this.props;
+        hideOrShowProjectTypeSelectAction({ProjectTypeSelectIsShow:!ProjectTypeSelectIsShow})
       }
       componentDidMount(){
         this._mouted = true;
-        
         document.onclick = (e) => {
-            let {hideOrShowSearchBoxAction} = this.props;
+            let {hideOrShowSearchBoxAction,hideOrShowProjectTypeSelectAction} = this.props;
             let t = e.target;
             if(t.classList.contains('anticon-search') ||
                 t.classList.contains('searchProject') ){
@@ -94,11 +89,12 @@ const ProjectTypes = [
                         searchResultArr:[]
                     })
                 }   
-                if(document.getElementsByClassName('searchProject')){
+                if(document.getElementsByClassName('searchProject')&&
+                  document.getElementsByClassName('searchProject')[0]
+                ){
                     document.getElementsByClassName('searchProject')[0].value = '';
                 }
             }
-
             if( !(t.classList.contains('ProjectTypeSelect') ||
                 t.classList.contains('ant-spin-nested-loading') ||
                 t.classList.contains('ant-spin-container') ||
@@ -108,11 +104,7 @@ const ProjectTypes = [
                 t.classList.contains('ant-list-item-meta-content')  ||
                 t.classList.contains('anticon-folder-open')  ||
                 t.classList.contains('ant-list-item-meta-title') ) && !t.classList.contains('extendBtn')){
-                    if(this._mouted){
-                        this.setState({
-                            changePath:false,
-                        })
-                    }  
+                    hideOrShowProjectTypeSelectAction({ProjectTypeSelectIsShow:false})
             }
         }
       }
@@ -137,6 +129,7 @@ const ProjectTypes = [
                     if(el.FileName.indexOf(val)!==-1){
                         return el
                     }
+                    return null;
                 });
                 if(this._mouted){
                     this.setState({
@@ -156,8 +149,8 @@ const ProjectTypes = [
         }
     }
       render() { 
-          let { changePath , searchResultArr } = this.state;
-          let { state:{worksViewType:{searchBoxShow}} } = this.props;
+          let { searchResultArr } = this.state;
+          let { state:{worksViewType:{searchBoxShow,ProjectTypeSelectIsShow}} } = this.props;
           let user = cookie.load('UserName');
           return ( 
             <div className="commonNav">
@@ -187,7 +180,7 @@ const ProjectTypes = [
                         style={{ fontSize: 20, color: '#3b93ff' }} 
                         onClick={this.showOrHideProjectTypeSelect}
                     />
-                    { changePath ? <List
+                    { ProjectTypeSelectIsShow ? <List
                         className="ProjectTypeSelect"
                         itemLayout="horizontal"
                         dataSource={ProjectTypes}

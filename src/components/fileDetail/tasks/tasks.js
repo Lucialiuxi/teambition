@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import TaskItem from './taskItem';
 import TaskItemCreator from './taskItemCreator';
 import * as taskActions from '@/actions/taskAction';
+import * as workActions from '@/actions/workAction.js';
 
 import CanlenderMode from './calenderMode';
 
@@ -28,7 +29,8 @@ class Tasks extends Component {
             HideTaskItemCreatorAction,
             HideTaskItemDropDownContainerAction,
             ToHideShowFileNameCoverAction,
-            hideOrShowSearchBoxAction
+            hideOrShowSearchBoxAction,
+            hideOrShowProjectTypeSelectAction
             } = this.props;
         document.onclick=(e)=>{
             let target = e.target;
@@ -264,11 +266,26 @@ class Tasks extends Component {
                 HideTaskItemCreatorAction('close');
             }
             if(target.classList.contains('anticon-search') ||
-            target.classList.contains('searchProject') ){
+                target.classList.contains('searchProject') ){
                 hideOrShowSearchBoxAction({isShow:true})
             }else{
                 hideOrShowSearchBoxAction({isShow:false})
-                document.getElementsByClassName('searchProject')[0].value = '';
+                if(document.getElementsByClassName('searchProject') &&
+                   document.getElementsByClassName('searchProject')[0]
+                ){
+                    document.getElementsByClassName('searchProject')[0].value = '';
+                }
+            }
+            if( !(target.classList.contains('ProjectTypeSelect') ||
+                target.classList.contains('ant-spin-nested-loading') ||
+                target.classList.contains('ant-spin-container') ||
+                target.classList.contains('ant-list-item') ||
+                target.classList.contains('ant-list-item-meta ProjectTypeItem') ||
+                target.classList.contains('ant-list-item-meta-avatar') ||
+                target.classList.contains('ant-list-item-meta-content')  ||
+                target.classList.contains('anticon-folder-open')  ||
+                target.classList.contains('ant-list-item-meta-title') ) && !target.classList.contains('extendBtn')){
+                hideOrShowProjectTypeSelectAction({ProjectTypeSelectIsShow:false})
             }
         } 
     }
@@ -307,7 +324,6 @@ class Tasks extends Component {
     componentWillUnmount(){
         this._isMounted = false;
     }
-
     render() { 
         let { deadlineData } = this.state;
         let { state:{ taskItemInfo , getFileInfo , subTaskInfo } , location:{pathname} } = this.props;
@@ -351,6 +367,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators(taskActions,dispatch)
+    return bindActionCreators(Object.assign(taskActions,workActions),dispatch)
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Tasks));

@@ -76,7 +76,8 @@ class Works extends React.Component {
         let { 
             toHideDelteCoverAction , 
             toHideModifyWorkFileMenuCoverAction ,
-            hideOrShowSearchBoxAction
+            hideOrShowSearchBoxAction,
+            hideOrShowProjectTypeSelectAction
         } = this.props;
         //鼠标点击的不是 li删除定位框deleteCover的时候，关闭它
         document.onclick = (e) =>{
@@ -147,6 +148,17 @@ class Works extends React.Component {
                 hideOrShowSearchBoxAction({isShow:true})
             }else{
                 hideOrShowSearchBoxAction({isShow:false})
+            }
+            if( !(t.classList.contains('ProjectTypeSelect') ||
+                t.classList.contains('ant-spin-nested-loading') ||
+                t.classList.contains('ant-spin-container') ||
+                t.classList.contains('ant-list-item') ||
+                t.classList.contains('ant-list-item-meta ProjectTypeItem') ||
+                t.classList.contains('ant-list-item-meta-avatar') ||
+                t.classList.contains('ant-list-item-meta-content')  ||
+                t.classList.contains('anticon-folder-open')  ||
+                t.classList.contains('ant-list-item-meta-title') ) && !t.classList.contains('extendBtn')){
+                hideOrShowProjectTypeSelectAction({ProjectTypeSelectIsShow:false})
             }
         }
     }
