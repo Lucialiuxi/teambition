@@ -19,6 +19,15 @@ export const createAFileServer = (param) => {
     return axios.post('/createFile',param)
 }
 
+
+/**
+ * 通过id查询项目文件信息
+ * @param {fileId: Number} param 
+ */
+export const findAFileInfoServer = (param) => {
+    return axios.post('/findAFileInfoServer',param)
+}
+
 //进入或者刷新大图标文件区的时候，请求文件数据 param--->{userLoginName:XXX}
 export const getAllFilesInfo = (param) => {
     return axios.post('/AllFilesInfo',param)

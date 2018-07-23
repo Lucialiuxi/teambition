@@ -162,7 +162,6 @@ class Project  extends Component {
         if(arr[arr.length-2]==='work'){
             myId = arr[arr.length-1];
         }
-        // console.log(isLoadingProjectFile , currentFileId,t)
         return ( 
            <div className="projectPageWrap">
                 <Layout  className="projectPage">

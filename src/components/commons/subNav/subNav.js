@@ -5,9 +5,9 @@ import { Tabs ,Icon} from 'antd';
 import { withRouter , Link } from 'react-router-dom';
 import Tasks from '@/components/fileDetail/tasks/tasks';
 import Works  from '@/components/fileDetail/works/works';
-import { GetTaskItemServer ,
-         GetAllSubTasksServer ,
-         GetAllWorksFileUnderParentWorksFileServer
+import { GetTaskItemServer ,    
+         GetAllWorksFileUnderParentWorksFileServer,
+         findAFileInfoServer
 } from '@/server/requestData';
 
 import * as taskActions from '@/actions/taskAction';
@@ -24,7 +24,7 @@ class SubNav extends Component {
             activeKey:'1',
             currentFile:{},
             isLoadingTask:true,
-            isLoadingTaskItem:true
+            currentFileInfo:{}
         }
     }
     //点击切换 任务  分享 文件 日程 群聊
@@ -67,8 +67,7 @@ class SubNav extends Component {
         let { 
                 location , 
                 match:{path} ,  
-                TaskItemsInCurrentFileAction,
-                findAllSubTasksInsideAfileAction 
+                TaskItemsInCurrentFileAction
             } = this.props;
         //确定刷新的时候的TabPane固定在哪一个
         this.setState({
@@ -85,12 +84,10 @@ class SubNav extends Component {
                     })
                 }
             })
-            //请求任务列表数据
-            GetAllSubTasksServer({fileId:CurrentFileId}).then(({data})=>{
+            findAFileInfoServer({fileId:CurrentFileId}).then(({data})=>{
                 if(data.success){
-                    findAllSubTasksInsideAfileAction(data.subTasksData)
                     this.setState({
-                        isLoadingTaskItem:false
+                        currentFileInfo:data.data
                     })
                 }
             })
@@ -113,12 +110,15 @@ class SubNav extends Component {
     }
     render() {
         let { location , state:{getFileInfo} } = this.props;
-        let { activeKey , isLoadingTask ,isLoadingTaskItem } = this.state;
+        let { activeKey , isLoadingTask ,currentFileInfo } = this.state;
         //拿到当前项目文件的id
         let fileId = location.pathname.match(/\d+/g)[0]*1;
         let currentFile;
         if(fileId){
             currentFile = getFileInfo.filter(val=>val.fileId===Number(fileId))[0];
+            if(!currentFile || !currentFile.fileId){
+                currentFile = currentFileInfo
+            }
         }
         return (
             <div id="subNavWrap">
@@ -138,7 +138,7 @@ class SubNav extends Component {
                     onChange={this.tabToOther}
                 >
                     <TabPane tab="任务" key="1" >
-                        { isLoadingTask && isLoadingTaskItem ? <ProjectHomeLoading/> : <Tasks/> }
+                        { isLoadingTask===true ? <ProjectHomeLoading/> : <Tasks/> }
                     </TabPane>
                     <TabPane tab="文件" key="3">
                         <Works/>

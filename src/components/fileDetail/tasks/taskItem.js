@@ -11,6 +11,7 @@ import CheckedSubTasks from './checkedSubTasks';
 import SubTaskCreator from './subTaskCreator';
 //【添加任务的显示】 点击去 显示新建子任务编辑框
 import ToShowSubTaskCreator from './clickToShowSubTaskCreator';
+import ProjectHomeLoading from '@/components/projectPage/projectHomeLoading';
 
 class TaskItem extends Component {
     constructor(props) {
@@ -32,7 +33,8 @@ class TaskItem extends Component {
         let { taskItemInfo , 
             GoToCreateSubTask , 
             GoToChoiceSubTaskDeadline ,
-            deadline
+            deadline,
+            isLoadingTaskItem
         } = this.props;
         let { allSubTasksData } = this.state;
         let SubTasksUnderCurrentTaskItem = allSubTasksData.filter(val=>val.taskItemId===taskItemInfo.taskItemId);
@@ -55,24 +57,27 @@ class TaskItem extends Component {
                         className="ToDropDownIcon"
                     />
                 </header>
-                <div className="subTasksContent dls-thin-scroll">
-                    {/* 没有被选中的子任务 */}
-                    { allSubTasks.map(val=><SubTask key={val.subTaskId} {...val}/>) }
+                { isLoadingTaskItem===true ? <ProjectHomeLoading/> :
+                    <div className="subTasksContent dls-thin-scroll">
+                        {/* 没有被选中的子任务 */}
+                        { allSubTasks.map(val=><SubTask key={val.subTaskId} {...val}/>) }
 
-                    {/* 被选中的子任务 */}
-                   { allCheckedSubtasks.map(val=><CheckedSubTasks key={val.subTaskId} {...val}/>) }
-                    {/* 新建子任务编辑框 */}
-                    {taskItemInfo.IsCreating ? <SubTaskCreator 
-                        deadline={deadline ? deadline : null}
-                        id={taskItemInfo.taskItemId}
-                        GoToChoiceSubTaskDeadline={GoToChoiceSubTaskDeadline}
-                    /> : null }
-                    {/*【添加任务的显示】 点击 显示新建子任务编辑框*/}
-                    {!taskItemInfo.IsCreating ? <ToShowSubTaskCreator  
-                        id={taskItemInfo.taskItemId} 
-                        GoToCreateSubTask={GoToCreateSubTask}
-                    /> : null }
-                </div>
+                        {/* 被选中的子任务 */}
+                        { allCheckedSubtasks.map(val=><CheckedSubTasks key={val.subTaskId} {...val}/>) }
+                        {/* 新建子任务编辑框 */}
+                        {taskItemInfo.IsCreating ? <SubTaskCreator 
+                            deadline={deadline ? deadline : null}
+                            id={taskItemInfo.taskItemId}
+                            GoToChoiceSubTaskDeadline={GoToChoiceSubTaskDeadline}
+                        /> : null }
+                        {/*【添加任务的显示】 点击 显示新建子任务编辑框*/}
+                        {!taskItemInfo.IsCreating ? <ToShowSubTaskCreator  
+                            id={taskItemInfo.taskItemId} 
+                            GoToCreateSubTask={GoToCreateSubTask}
+                        /> : null }
+                    </div>
+                }
+                
             </div>
          )
     }

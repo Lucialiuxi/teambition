@@ -6,6 +6,9 @@ import TaskItem from './taskItem';
 import TaskItemCreator from './taskItemCreator';
 import * as taskActions from '@/actions/taskAction';
 import * as workActions from '@/actions/workAction.js';
+import { 
+         GetAllSubTasksServer 
+} from '@/server/requestData';
 
 import CanlenderMode from './calenderMode';
 
@@ -15,7 +18,22 @@ class Tasks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            deadlineData:{}
+            deadlineData:{},
+            isLoadingTaskItem:true
+        }
+    }
+    componentWillMount(){
+        let { location:{pathname} , findAllSubTasksInsideAfileAction } = this.props;
+        let CurrentFileId = pathname.match(/\d+/g)[0]*1;
+        if(CurrentFileId){
+            GetAllSubTasksServer({fileId:CurrentFileId}).then(({data})=>{
+                if(data.success){
+                    findAllSubTasksInsideAfileAction(data.subTasksData)
+                    this.setState({
+                        isLoadingTaskItem:false
+                    })
+                }
+            })
         }
     }
     componentDidMount(){
@@ -325,7 +343,7 @@ class Tasks extends Component {
         this._isMounted = false;
     }
     render() { 
-        let { deadlineData } = this.state;
+        let { deadlineData , isLoadingTaskItem} = this.state;
         let { state:{ taskItemInfo , getFileInfo , subTaskInfo } , location:{pathname} } = this.props;
         let fileId = Number(pathname.match(/\d+/g)[0]);
         taskItemInfo = taskItemInfo.filter(val=>val.fileId === fileId)
@@ -350,6 +368,7 @@ class Tasks extends Component {
                                     GoToShowDropDownContainer={this.GoToShowDropDownContainer}
                                     GoToChoiceSubTaskDeadline={this.GoToChoiceSubTaskDeadline}
                                     subTaskInfo={subTaskInfo}
+                                    isLoadingTaskItem={isLoadingTaskItem}
                                 />
                            </li>
                 })}

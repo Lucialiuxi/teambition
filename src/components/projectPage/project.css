@@ -366,7 +366,7 @@ ul{
 }
 .ant-spin-spinning{
     height: 96%;
-    background-color: #fff;
+    background-color: transparent;
 }
 .ant-spin-spinning .anticon-spin:before{
     line-height: 500px;
