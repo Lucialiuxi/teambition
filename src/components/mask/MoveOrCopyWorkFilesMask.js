@@ -206,12 +206,7 @@ class MoveOrCopyWorkFilesMask extends React.Component {
   }
 
   handleOk = async (myId,e) => {
-    /*
-    点击确认  
-      单个复制OR移动：如果要移动到的文件夹就是自己，那么不进行操作 ；否则就把移动的文件夹的parentId和项目文件id进行修改
-      多个复制OR移动: 移动到的目的地文件夹是当前选中移动的一个，就不操作；否则就把移动的文件夹的parentId和项目文件id进行修改
-    */
-    let { title } = this.state;
+    let { title , openFirstLiHighLight } = this.state;
     let { closeWorkFileMoveAndCopyMaskAction ,
           AWorkFileAlreadyMovedAction , 
           AGroupWorkFileAlreadyMovedAction,
@@ -225,6 +220,12 @@ class MoveOrCopyWorkFilesMask extends React.Component {
       oldParentId = '';
     }else{
       oldParentId = ARR[4];
+    }
+    if(openFirstLiHighLight[0]){
+      let a = openFirstLiHighLight.find(val=>val===myId)
+      if(a){
+        return
+      }
     }
     let HightLightWorkFilesLi = document.getElementsByClassName('WorkFilesMenuItem active');
     let HightLightProjectFileId = document.getElementsByClassName('projectFileMenuItem active')[0].dataset.id*1;
@@ -263,7 +264,6 @@ class MoveOrCopyWorkFilesMask extends React.Component {
             NewParentId:'' ,
             lastestModifyTime:Date.now()
           })
-          // console.log(MoveGroup)
           if(MoveGroup.data.success){
             AGroupWorkFileAlreadyMovedAction()
           }
@@ -367,7 +367,6 @@ class MoveOrCopyWorkFilesMask extends React.Component {
     })
   }
 
-
   handleCancel = (e) => {
     let { closeWorkFileMoveAndCopyMaskAction } = this.props;
     closeWorkFileMoveAndCopyMaskAction(this.WorkFileMoveAndCopyMaskData)
@@ -403,6 +402,9 @@ class MoveOrCopyWorkFilesMask extends React.Component {
           WorkFilesMenuListDataId.push(val.myId)
         }
       })
+    }
+    if(getFileInfo[0]){
+      getFileInfo = getFileInfo.filter(val=>!val.inRecycleBin)
     }
     return (
       <div className="MoveOrCopyWorkFilesMaskWrap"> 
