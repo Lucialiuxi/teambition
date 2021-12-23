@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { withRouter , Link } from 'react-router-dom'
+import { withRouter , Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import cookie from 'react-cookies';
 import { getAllFilesInfo } from '@/server/requestData.js';
 import { Icon , List, Avatar } from 'antd';
 import * as workAction from '@/actions/workAction.js';
-import { bindActionCreators } from 'C:/Users/lhm14/AppData/Local/Microsoft/TypeScript/2.9/node_modules/redux';
+import { bindActionCreators } from 'redux';
 
 const ProjectTypes = [
     {

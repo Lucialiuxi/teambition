@@ -40,6 +40,7 @@ class TaskItem extends Component {
         let SubTasksUnderCurrentTaskItem = allSubTasksData.filter(val=>val.taskItemId===taskItemInfo.taskItemId);
         let allSubTasks = SubTasksUnderCurrentTaskItem.filter(val=>val.checked===false);
         let allCheckedSubtasks =  SubTasksUnderCurrentTaskItem.filter(val=>val.checked===true);
+
         return ( 
             <div className="underTaskItemDiv">
                 {/* 下拉编辑框 */}
@@ -65,7 +66,8 @@ class TaskItem extends Component {
                         {/* 被选中的子任务 */}
                         { allCheckedSubtasks.map(val=><CheckedSubTasks key={val.subTaskId} {...val}/>) }
                         {/* 新建子任务编辑框 */}
-                        {taskItemInfo.IsCreating ? <SubTaskCreator 
+                        {taskItemInfo.IsCreating ? <SubTaskCreator
+                            taskItemInfo={taskItemInfo}
                             deadline={deadline ? deadline : null}
                             id={taskItemInfo.taskItemId}
                             GoToChoiceSubTaskDeadline={GoToChoiceSubTaskDeadline}

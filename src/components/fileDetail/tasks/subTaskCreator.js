@@ -19,7 +19,14 @@ class SubTaskCreator extends Component {
         GoToChoiceSubTaskDeadline(id)
     }
     CreateASubTask=()=>{//创建子任务
-        let { id , dispatch , deadline , state:{subTaskInfo}} = this.props;
+        let { 
+            id, 
+            dispatch, 
+            deadline, 
+            state:{subTaskInfo},
+            taskItemInfo: { fileId, taskItemId } 
+        } = this.props;
+        console.log(this.props)
         let val = this.subTaskValue.value.trim();
         if(val){
             this.subTaskValue.value='';
@@ -37,7 +44,17 @@ class SubTaskCreator extends Component {
             }
             deadline = deadline ? deadline : '';
             //发送要创建子任务的数据到后端
-            CreateASubTaskServer({id,subTaskName:val,deadline,urgencyLevel,tag,index,checked:false}).then(({data})=>{
+            CreateASubTaskServer({
+                subTaskName:val,
+                deadline,
+                urgencyLevel,
+                tag,
+                index,
+                checked:false,
+                fileId, 
+                taskItemId, 
+                index
+            }).then(({data})=>{
                 dispatch(createASubTaskAction(data.newSubTaskInfo))
             })
         }

@@ -12,9 +12,9 @@ class SubTask extends Component {
     ToCheckSubTask = (taskItemId,subTaskId,checked) => {
         let { dispatch } = this.props;
         SwitchToCheckSubtaskServer({taskItemId,subTaskId,checked:!checked}).then(({data})=>{
-            if(data.code === 201 ){
-                let { subTaskId:id , checked:bl } = data.data;
-                dispatch(SwitchToCheckSubtaskAction({ subTaskId:id , checked:bl }))
+            if(data.success){
+                let { subTaskId, checked } = data.data;
+                dispatch(SwitchToCheckSubtaskAction({ subTaskId , checked }))
             }
         })
     }
@@ -28,6 +28,7 @@ class SubTask extends Component {
             taskItemId, 
             subTaskId
         } = this.props;
+        console.log('5555',this.props)
         let a ;
         if(urgencyLevel==='普通'){
             a =  'bg-priority-0'

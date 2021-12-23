@@ -1,5 +1,8 @@
-// const { injectBabelPlugin } = require('react-app-rewired');
-// module.exports = function override(config, env) {
-// config = injectBabelPlugin(['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }], config);
-//   return config;
-// };
+const { override, addWebpackAlias} = require('customize-cra');
+const path = require('path');
+
+ module.exports = override(
+   addWebpackAlias({
+     '@': path.resolve(__dirname, './src'),
+   })
+);

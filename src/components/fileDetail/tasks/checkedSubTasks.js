@@ -12,12 +12,10 @@ class CheckedSubTasks extends Component {
     }
     ToCheckSubTask = (taskItemId,subTaskId,checked) => {
         let { dispatch } = this.props;
-        console.log(taskItemId,subTaskId,!checked)
         SwitchToCheckSubtaskServer({taskItemId,subTaskId,checked:!checked}).then(({data})=>{
-            if(data.code === 201 ){
-                console.log(data)
-                let { data:{subTaskId:id , checked:bl} } = data;
-                dispatch(SwitchToCheckSubtaskAction({ subTaskId:id , checked:bl }))
+            if(data.success){
+                let { subTaskId, checked } = data.data;
+                dispatch(SwitchToCheckSubtaskAction({ subTaskId, checked }))
             }
         })
     }
