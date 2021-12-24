@@ -31,8 +31,6 @@ const subTaskInfo = (state = [] , action) => {
 
       //切换任务的选中状态
       case 'SWITCH_TO_CHECK_SUBTASK_ACTIOIN':
-      console.log('==state=', state)
-      console.log('==action.obj=', action.obj)
         return state.map(val => {
           const newVal = Object.assign({}, val);
           if(newVal.subTaskId === action.obj.subTaskId){

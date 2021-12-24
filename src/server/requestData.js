@@ -133,8 +133,8 @@ export const GetAllSubTasksServer = (param) => {
     return axios.post('/task/GetAllSubTasks',param)
 }
 
-//删除一个任务列表下的所有任务
-/**
+
+/**删除一个任务列表下的所有任务
  * @param {fileId: Number, taskItemId: Number} param 
  */
 export const DeleteAllSubTasksServer = (param) => {
@@ -142,7 +142,7 @@ export const DeleteAllSubTasksServer = (param) => {
 }
 
 
-/**修改项目列表的名字
+/**修改某个任务列表的名字
 *  @param {fileId:Number , taskItemId:Number , taskItemName:String} param 
 */
 export const ModifyATaskItemNameServer = (param) =>{
