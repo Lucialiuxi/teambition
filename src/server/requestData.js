@@ -186,14 +186,14 @@ export const GetAllWorksFileUnderParentWorksFileServer = (param) => {
 }
 
 /**删除文件夹一个项目文件夹
- * @param {myId:Srting} param 
+ * @param {myId:String} param 
  */
 export const DeleteAWorksFileServer = (param) => {
     return axios.post('/works/DeleteAWorksFile',param)   
 }
 
 /**修改work文件名
- * @param {myId:Srting,workFileName:Srting} param 
+ * @param {myId:String,workFileName:String} param 
  */
 export const ModifyAWorkFileNameServer = (param) => {
     return axios.post('/works/ModifyAWorkFileName',param)

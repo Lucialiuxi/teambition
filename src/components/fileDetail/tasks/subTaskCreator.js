@@ -26,7 +26,7 @@ class SubTaskCreator extends Component {
             state:{subTaskInfo},
             taskItemInfo: { fileId, taskItemId } 
         } = this.props;
-        console.log(this.props)
+
         let val = this.subTaskValue.value.trim();
         if(val){
             this.subTaskValue.value='';

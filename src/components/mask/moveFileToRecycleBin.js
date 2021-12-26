@@ -30,7 +30,7 @@ import { MoveFileToRecycleBinServer } from '@/server/requestData'
         // })
       }
       render() { 
-        //   console.log(this.props)
+
           return ( 
               <div>
                   <Button 

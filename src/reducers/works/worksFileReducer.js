@@ -48,12 +48,12 @@ const worksFile = ( state = [] , action ) => {
 
         //切换文件选中状态obj->{myId,check}
         case 'TO_SWITCH_CHECK_A_WORKFILE_ACTION':
-        return state.map( val => {
-            if(action.obj.myId===val.myId){
-                val.check = action.obj.check;
-            }
-            return val
-        });
+           return state.map( val => {
+                if(action.obj.myId===val.myId){
+                    val.check = action.obj.check;
+                }
+                return val;
+            });
 
         //切换全选选中状态 obj->{check}
         case 'TO_SWITCH_CHECK_ALL_WORKFILE_ACTION':

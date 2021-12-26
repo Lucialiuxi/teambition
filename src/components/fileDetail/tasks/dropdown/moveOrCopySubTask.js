@@ -50,7 +50,7 @@ class MoveOrCopySubTask extends Component {
         let { choosedFileId } = this.state;
         let currentTaskItem = taskItemInfo.filter(val=>val.taskItemId===taskItemId)[0];
         ToSeeShowCurrentTaskItemNameCoverAction({taskItemId,isShowCurrentTaskItemName:!currentTaskItem.isShowCurrentTaskItemName})
-        // console.log(choosedFileId, currentTaskItem.fileId)
+
         //如果选择要到的文件夹跟不是当前所在的文件夹，就需要请求
         if(choosedFileId !== currentTaskItem.fileId){
             GetTaskItemServer({fileId:choosedFileId}).then(({data})=>{
@@ -101,7 +101,7 @@ class MoveOrCopySubTask extends Component {
             } = this.props;
         let { choosedFileId , choosedTaskItemId } = this.state;
         let S = document.getElementById('dropdown-container').innerText;
-        // console.log('choosedTaskItemId',choosedTaskItemId)
+
         if(choosedTaskItemId!==taskItemId){
            if(S.indexOf('移动本列表所有任务')!==-1){
                 MoveOrCopySubtaskToAnotherTaskItemServer({fileId:choosedFileId,

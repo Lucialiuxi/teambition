@@ -27,7 +27,9 @@ const worksViewType = (state={},action) => {
 
         //切换 缩略图模式ThumbnailView / 列表模式ListView
         case 'CHANGE_WORKSViEWTYPE_ACTION':
+            console.log('action.obj===', action.obj)
             let newState = Object.assign({},state,{ worksViewType: action.obj.worksViewType });    
+            console.log('newState===', newState)
         return newState;
 
         case 'HIDE_OR_SHOW_SEARCH_BOX_ACTION':

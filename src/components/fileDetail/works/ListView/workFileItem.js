@@ -38,8 +38,7 @@ class WorkFileItem extends React.Component {
         let myId= this.ccc.rcCheckbox.input.dataset.id;
         ToSwitchCheckAWorkFileServer({myId,check:e.target.checked}).then(({data})=>{
             if(data && data.success){
-                let { myId , check } = data.data;
-                ToSwitchCheckAWorkFileAction({myId,check})
+                ToSwitchCheckAWorkFileAction(data.data)
             }
         })
 
