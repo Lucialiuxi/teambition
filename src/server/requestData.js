@@ -75,7 +75,7 @@ export const CreateTaskItemServer = (param) => {
     arr[0].taskItemName='待处理';
     arr[1].taskItemName='进行中';
     arr[2].taskItemName='已完成';
-    return axios.post('/CreateTaskItem', {param,arr})
+    return axios.post('/task/CreateTaskItem', {param,arr})
 }
 
 //新建一个任务列表param:{index:XXX,taskItemName:XXX,fileId:Number}

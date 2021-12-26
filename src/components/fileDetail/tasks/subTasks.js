@@ -28,7 +28,6 @@ class SubTask extends Component {
             taskItemId, 
             subTaskId
         } = this.props;
-        console.log('5555',this.props)
         let a ;
         if(urgencyLevel==='普通'){
             a =  'bg-priority-0'

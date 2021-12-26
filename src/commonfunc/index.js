@@ -28,7 +28,7 @@ export function CustomeLink({ tag,to,event,className,label}) {
 export function timeFormat(timestamp){//补零
     function add0(m){return m<10?'0'+m:m }
   //timestamp是整数，否则要parseInt转换,不会出现少个0的情况
-    var time = new Date(timestamp);
+    var time = new Date(Number(timestamp));
     var year = time.getFullYear();
     var month = time.getMonth()+1;
     var date = time.getDate();
